@@ -1,9 +1,9 @@
-import { Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useForm, Controller } from 'react-hook-form';
 import * as Font from 'expo-font';
 import { useEffect, useState } from "react";
-import InputField from "../../components/inputField";
+import InputTextType from "../../components/InputTextType";
 
 export default LoginForm = () => {
     const [fontLoaded, setFontLoaded] = useState(false);
@@ -19,6 +19,11 @@ export default LoginForm = () => {
             password: ""
         },
     });
+
+    const onSubmit = async (data) => {
+        console.log(data);
+        reset();
+    }
 
     useEffect(() => {
         async function loadFonts() {
@@ -36,19 +41,29 @@ export default LoginForm = () => {
 
     return (
         <Modal animationType="slide" transparent >
-            <LinearGradient colors={['#004A8E', '#4E729A']} style={styles.formView}>
+            <LinearGradient colors={['#004A8E', '#4E729A']} style={styles.formView} >
                 <Text style={styles.formHeading}>Sign in</Text>
                 <Text style={styles.formDesc}><Text>Welcome ! </Text>Please login to continue</Text>
                 <Controller
                     control={control}
                     name="userName"
                     rules={{
-                        required: "Please enter your username",
+                        required: "Please enter your username !",
                     }}
                     render={({ field: { onChange, value } }) => (
-                        <View style={styles.inputFieldContainer}>
-                            <Image source={require('../../../assets/icons/userNameIcon.png')} style={{ width: 25, height: 25 }} />
-                            <InputField inputName={"Email Address"} changeValue={onChange} errors={errors.userName} />
+                        <View>
+                            <View style={[styles.inputFieldContainer, { borderColor: errors.userName ? 'red' : '#004A8E' }]}>
+                                <View style={{ flex: 1 }}>
+                                    <Image source={require('../../../assets/icons/userNameIcon.png')} style={{ width: 25, height: 25 }} />
+                                </View>
+                                <View style={{ flex: 11 }}>
+                                    <InputTextType inputName={"Email Address"} changeValue={onChange} value={value} />
+                                </View>
+                            </View>
+                            {
+                                errors.userName &&
+                                <Text style={{ color: 'red', fontSize: 10 }}>{errors.userName.message}</Text>
+                            }
                         </View>
                     )}
                 />
@@ -56,22 +71,26 @@ export default LoginForm = () => {
                     control={control}
                     name="password"
                     rules={{
-                        required: "Please enter your password",
+                        required: "Please enter your password !",
                     }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <View style={styles.inputFieldContainer}>
-                            <Image source={require('../../../assets/icons/passwordIcon.png')} style={{ width: 25, height: 25 }} />
-                            <TextInput
-                                style={[styles.inputField, { borderColor: errors.password ? "red" : "black" }]}
-                                placeholder="Password"
-                                onBlur={onBlur}
-                                onChangeText={onChange}
-                                value={value}
-                            />
+                    render={({ field: { onChange, value } }) => (
+                        <View>
+                            <View style={[styles.inputFieldContainer, { borderColor: errors.password ? 'red' : '#004A8E' }]}>
+                                <View style={{ flex: 1 }}>
+                                    <Image source={require('../../../assets/icons/passwordIcon.png')} style={{ width: 25, height: 25 }} />
+                                </View>
+                                <View style={{ flex: 11 }}>
+                                    <InputTextType inputName={"Password"} changeValue={onChange} value={value} />
+                                </View>
+                            </View>
+                            {
+                                errors.password &&
+                                <Text style={{ color: 'red', fontSize: 10 }}>{errors.password.message}</Text>
+                            }
                         </View>
                     )}
                 />
-                <TouchableOpacity style={styles.loginButton}>
+                <TouchableOpacity style={styles.loginButton} onPress={handleSubmit(onSubmit)}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
             </LinearGradient>
@@ -81,7 +100,7 @@ export default LoginForm = () => {
 
 const styles = StyleSheet.create({
     formView: {
-        height: "50%",
+        height: "51%",
         width: '100%',
         padding: 20,
         backgroundColor: 'white',
@@ -89,7 +108,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        gap: 20
+        gap: 18
     },
     formHeading: {
         fontSize: 28,
@@ -119,6 +138,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
         paddingHorizontal: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        borderWidth: 1.5
     }
 });

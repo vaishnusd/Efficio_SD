@@ -1,5 +1,4 @@
 import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import * as Font from 'expo-font';
 import { useEffect, useState } from 'react';
 import LoginForm from './LoginForm';
