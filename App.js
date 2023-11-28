@@ -1,12 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import navigate from './src/navigation/navigate';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>This is Vaishnu's branch!</Text>
-      <StatusBar style="auto" />
+    <NavigationContainer>
+    <View style={{ flex: 1 }}>
+    <StatusBar
+  backgroundColor={'#00293A'}  barStyle="light-content" /> 
+      <navigate/> 
     </View>
+  </NavigationContainer>
   );
 }
 
