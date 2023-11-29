@@ -1,12 +1,13 @@
 import { StyleSheet, TextInput } from "react-native";
 
-export default InputTextType = ({inputName, changeValue, value}) => {
+export default InputTextType = ({ inputName, changeValue, value, type }) => {
     return (
         <TextInput
             style={styles.inputField}
             placeholder={inputName}
             onChangeText={changeValue}
             value={value}
+            textContentType={type === "email" ? 'emailAddress' : 'name'}
             secureTextEntry={inputName === "Password"}
         />
     );
@@ -15,11 +16,11 @@ export default InputTextType = ({inputName, changeValue, value}) => {
 const styles = StyleSheet.create({
     inputField: {
         backgroundColor: 'white',
-        height: 50,
+        height: 45,
         padding: 10,
         borderTopRightRadius: 10,
         borderBottomRightRadius: 10,
         width: '100%',
-        fontSize: 20
+        fontSize: 18
     },
 });
