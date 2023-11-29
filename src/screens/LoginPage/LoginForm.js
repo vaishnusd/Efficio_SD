@@ -1,4 +1,4 @@
-import { Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, KeyboardAvoidingView, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useForm, Controller } from 'react-hook-form';
 import * as Font from 'expo-font';
@@ -58,7 +58,7 @@ export default LoginForm = () => {
                                     <Image source={require('../../../assets/icons/userNameIcon.png')} style={{ width: 25, height: 25 }} />
                                 </View>
                                 <View style={{ flex: 11 }}>
-                                    <InputTextType inputName={"Email Address"} changeValue={onChange} value={value} />
+                                    <InputTextType inputName={"Email Address"} changeValue={onChange} value={value} type={"email"} />
                                 </View>
                             </View>
                             {
@@ -75,7 +75,7 @@ export default LoginForm = () => {
                         required: "Please enter your password !",
                     }}
                     render={({ field: { onChange, value } }) => (
-                        <View>
+                        <KeyboardAvoidingView>
                             <View style={[styles.inputFieldContainer, { borderColor: errors.password ? 'red' : '#004A8E' }]}>
                                 <View style={{ flex: 1 }}>
                                     <Image source={require('../../../assets/icons/passwordIcon.png')} style={{ width: 25, height: 25 }} />
@@ -88,7 +88,7 @@ export default LoginForm = () => {
                                 errors.password &&
                                 <Text style={{ color: 'red', fontSize: 10 }}>{errors.password.message}</Text>
                             }
-                        </View>
+                        </KeyboardAvoidingView>
                     )}
                 />
                 <TouchableOpacity style={styles.loginButton} onPress={handleSubmit(onSubmit)}>
