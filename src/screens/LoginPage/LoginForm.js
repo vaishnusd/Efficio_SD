@@ -22,6 +22,7 @@ export default LoginForm = () => {
 
     const onSubmit = async (data) => {
         console.log(data);
+        
         reset();
     }
 
