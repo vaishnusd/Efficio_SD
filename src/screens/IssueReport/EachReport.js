@@ -1,8 +1,8 @@
-import { Text, View } from "react-native"
+import { Modal, StyleSheet, Text, View } from "react-native"
 
 export default EachReport = ({ dataToSend }) => {
     return (
-        <View>
+        <View style={styles.listItemCard}>
             <Text>{dataToSend.Issue_No}</Text>
             <Text>{dataToSend.Line}</Text>
             <Text>{dataToSend.Station}</Text>
@@ -30,3 +30,9 @@ export default EachReport = ({ dataToSend }) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    listItemCard: {
+        backgroundColor: 'white',
+    }
+});
