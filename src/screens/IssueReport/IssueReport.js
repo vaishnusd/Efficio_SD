@@ -9,7 +9,7 @@ export default IssueReport = () => {
             <View style={styles.reportTableHeader}>
                 <Text style={[styles.columnHeading,{flex: 1}]}>Issue No.</Text>
                 <Text style={[styles.columnHeading,{flex: 3}]}>Issue</Text>
-                <Text style={[styles.columnHeading,{flex: 1}]}>Line & Station</Text>
+                <Text style={[styles.columnHeading,{flex: 1}]}>Station</Text>
                 <Text style={[styles.columnHeading,{flex: 2}]}>Plant</Text>
             </View>
             <FlatList
@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     allData : {
-        gap: 10
+        paddingHorizontal: 2,
+        gap: 4
     },
     reportTableHeader: {
         justifyContent: 'space-between',
@@ -47,5 +48,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
         textAlign: 'center'
-    }
+    },
+    
 });
