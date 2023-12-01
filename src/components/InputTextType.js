@@ -5,7 +5,7 @@ export default InputTextType = ({ inputName, changeValue, value, type }) => {
         <TextInput
             style={styles.inputField}
             placeholder={inputName}
-            onChangeText={changeValue}
+            onChangeText={changeValue} 
             value={value}
             textContentType={type === "email" ? 'emailAddress' : 'name'}
             secureTextEntry={inputName === "Password"}

@@ -7,6 +7,7 @@ export default Login = () => {
 
     const [fontLoaded, setFontLoaded] = useState(false);
 
+
     useEffect(() => {
         async function loadFonts() {
             await Font.loadAsync({
