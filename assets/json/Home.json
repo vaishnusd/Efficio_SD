@@ -1,0 +1,22 @@
+{
+  
+    "imagePath": "img/Line/CR 2.jpeg",
+    "lineName": "CR",
+    "modelName": "AF33H",
+    "serialNo": null,
+
+
+    "running": "<div class='flex-grid'><div class='grid-box success-bx'> <a href='Notification.aspx?Filter=Stationwise&Line=CR&PlantName=Grundfos&Station=Name plate printing'>Name plate printing</a> </div><div class='grid-box success-bx'> <a href='Notification.aspx?Filter=Stationwise&Line=CR&PlantName=Grundfos&Station=Stage 1'>Stage 1</a> </div><div class='grid-box success-bx'> <a href='Notification.aspx?Filter=Stationwise&Line=CR&PlantName=Grundfos&Station=Stage 2'>Stage 2</a> </div><div class='grid-box success-bx'> <a href='Notification.aspx?Filter=Stationwise&Line=CR&PlantName=Grundfos&Station=Stage 3'>Stage 3</a> </div><div class='grid-box success-bx'> <a href='Notification.aspx?Filter=Stationwise&Line=CR&PlantName=Grundfos&Station=Testing'>Testing</a> </div><div class='grid-box success-bx'> <a href='Notification.aspx?Filter=Stationwise&Line=CR&PlantName=Grundfos&Station=Packing'>Packing</a> </div></div>",
+    "runningHeaders":"",
+    "available": "Available",
+    "target": null,
+    "downtime": "0",
+    "todayQty": null,
+    "issueNo": "0",
+    "chartPerc": "65",
+    "linewiseURL": "Notification.aspx?Filter=Linewise&Line=CR&PlantName=Grundfos",      
+    "stationwiseURL": null,
+    "raiseIssue":""
+
+}
+
