@@ -4,9 +4,11 @@ import { useForm, Controller } from 'react-hook-form';
 import * as Font from 'expo-font';
 import { useEffect, useState } from "react";
 import InputTextType from "../../components/InputTextType";
+import APICall from "../../utils/APICall";
 
 export default LoginForm = () => {
     const [fontLoaded, setFontLoaded] = useState(false);
+    const apiGot = "https://androidapi220230605081325.azurewebsites.net/api/approval/VerifyUserName";
 
     const {
         control,
@@ -15,13 +17,18 @@ export default LoginForm = () => {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            userName: "",
-            password: ""
+            UserName: "",
+            Password: ""
         },
     });
 
+    function resultFunc(resultCame) {
+        console.log("Checked - ", resultCame );
+    }
+
     const onSubmit = async (data) => {
-        console.log(data);
+        console.log("Data - " ,data);
+        APICall(apiGot, data, resultFunc, "checkAuthentication")
         reset();
     }
 
@@ -46,13 +53,13 @@ export default LoginForm = () => {
                 <Text style={styles.formDesc}><Text>Welcome ! </Text>Please login to continue</Text>
                 <Controller
                     control={control}
-                    name="userName"
+                    name="UserName"
                     rules={{
                         required: "Please enter your username !",
                     }}
                     render={({ field: { onChange, value } }) => (
                         <View>
-                            <View style={[styles.inputFieldContainer, { borderColor: errors.userName ? 'red' : '#004A8E' }]}>
+                            <View style={[styles.inputFieldContainer, { borderColor: errors.UserName ? 'red' : '#004A8E' }]}>
                                 <View style={{ flex: 1 }}>
                                     <Image source={require('../../../assets/icons/userNameIcon.png')} style={{ width: 25, height: 25 }} />
                                 </View>
@@ -61,21 +68,21 @@ export default LoginForm = () => {
                                 </View>
                             </View>
                             {
-                                errors.userName &&
-                                <Text style={{ color: 'red', fontSize: 10 }}>{errors.userName.message}</Text>
+                                errors.UserName &&
+                                <Text style={{ color: 'red', fontSize: 10 }}>{errors.UserName.message}</Text>
                             }
                         </View>
                     )}
                 />
                 <Controller
                     control={control}
-                    name="password"
+                    name="Password"
                     rules={{
                         required: "Please enter your password !",
                     }}
                     render={({ field: { onChange, value } }) => (
                         <KeyboardAvoidingView>
-                            <View style={[styles.inputFieldContainer, { borderColor: errors.password ? 'red' : '#004A8E' }]}>
+                            <View style={[styles.inputFieldContainer, { borderColor: errors.Password ? 'red' : '#004A8E' }]}>
                                 <View style={{ flex: 1 }}>
                                     <Image source={require('../../../assets/icons/passwordIcon.png')} style={{ width: 25, height: 25 }} />
                                 </View>
@@ -84,8 +91,8 @@ export default LoginForm = () => {
                                 </View>
                             </View>
                             {
-                                errors.password &&
-                                <Text style={{ color: 'red', fontSize: 10 }}>{errors.password.message}</Text>
+                                errors.Password &&
+                                <Text style={{ color: 'red', fontSize: 10 }}>{errors.Password.message}</Text>
                             }
                         </KeyboardAvoidingView>
                     )}
