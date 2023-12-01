@@ -52,7 +52,7 @@ export default IssueReport = () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#CFEBFF',
-        paddingTop: 40,
+        paddingTop: 30,
         flex: 1
     },
     allData: {
