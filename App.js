@@ -6,8 +6,8 @@ import IssueReport from './src/screens/IssueReport/IssueReport';
 export default function App() {
   return (
     <SafeAreaView style={{flex: 1}}>
-      {/* <Login/> */}
-      <IssueReport />
+      <Login/>
+      {/* <IssueReport /> */}
       <StatusBar style="auto"   />
     </SafeAreaView>
   );

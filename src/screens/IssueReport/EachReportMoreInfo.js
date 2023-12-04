@@ -11,15 +11,11 @@ export default EachReportMoreInfo = ({ isVisible, onClose, dataToSend }) => {
                             <View style={{ flex: 4, gap: 10 }}>
                                 <View>
                                     <Text style={styles.dataProperty}>Issue No.</Text>
-                                    <Text style={[styles.dataValue, { fontSize: 24 }]}>{dataToSend.issueNo}</Text>
+                                    <Text style={[styles.dataValue]}>{dataToSend.issueNo}</Text>
                                 </View>
                                 <View>
                                     <Text style={styles.dataProperty}>Issue:</Text>
-                                    <Text style={styles.dataValue}>{dataToSend.issueDetails}</Text>
-                                </View>
-                                <View>
-                                    <Text style={styles.dataProperty}>Problem:</Text>
-                                    <Text style={styles.dataValue}>{dataToSend.problemStatement}</Text>
+                                    <Text style={[styles.dataValue, { fontSize: 15 }]}>{dataToSend.issueDetails}</Text>
                                 </View>
                             </View>
                             <View style={styles.firstHeadSecCol}>
@@ -27,27 +23,47 @@ export default EachReportMoreInfo = ({ isVisible, onClose, dataToSend }) => {
                                     <Text style={styles.dataValue}>{dataToSend.plantName}</Text>
                                 </View>
                                 <LinearGradient colors={['rgba(214, 214, 214, 0.27)', 'rgba(255, 255, 255, 0.26)']} style={styles.mainInfo}>
-                                    <Text style={styles.dataProperty}>Line:</Text>
-                                    <Text style={styles.dataValue}>{dataToSend.line}</Text>
-                                    <Text style={styles.dataProperty}>Station:</Text>
-                                    <Text style={styles.dataValue}>{dataToSend.station}</Text>
+                                    <Text style={[styles.dataProperty, { alignSelf: 'center' }]}>Line:</Text>
+                                    <Text style={[styles.dataValue, { alignSelf: 'center' }]}>{dataToSend.line}</Text>
+                                    <Text style={[styles.dataProperty, { alignSelf: 'center' }]}>Station:</Text>
+                                    <Text style={[styles.dataValue, { alignSelf: 'center' }]}>{dataToSend.station}</Text>
                                 </LinearGradient>
                             </View>
+                        </View>
+                        <View>
+                            <Text style={styles.dataProperty}>Problem:</Text>
+                            <Text style={styles.dataValue}>{dataToSend.problemStatement}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.dataProperty}>Assigned To:</Text>
+                            <Text style={styles.dataValue}>{dataToSend.assignedTo}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.dataProperty}>Counter Measure:</Text>
+                            <Text style={styles.dataValue}>{dataToSend.counterMeasure}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.dataProperty}>Corrective Action:</Text>
+                            <Text style={styles.dataValue}>{dataToSend.correctiveAction}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.dataProperty}>Action Taken:</Text>
+                            <Text style={styles.dataValue}>{dataToSend.ActionTaken}</Text>
                         </View>
                         <View style={styles.tableRow}>
                             <View style={styles.rowData}>
                                 <Text style={styles.rowHeads}>Started At:</Text>
-                                <Text style={styles.firstRowValue}>{dataToSend.started?.slice(0,10)}</Text>
+                                <Text style={styles.firstRowValue}>{dataToSend.started?.slice(0, 10)}</Text>
                                 <Text style={styles.firstRowValue}>{dataToSend.started?.slice(11,)}</Text>
                             </View>
                             <View style={styles.rowData}>
                                 <Text style={styles.rowHeads}>Acknowledged At:</Text>
-                                <Text style={styles.firstRowValue}>{dataToSend.acknowledged?.slice(0,10)}</Text>
+                                <Text style={styles.firstRowValue}>{dataToSend.acknowledged?.slice(0, 10)}</Text>
                                 <Text style={styles.firstRowValue}>{dataToSend.ackowledged?.slice(11,)}</Text>
                             </View>
                             <View style={styles.rowData}>
                                 <Text style={styles.rowHeads}>Ended At:</Text>
-                                <Text style={styles.firstRowValue}>{dataToSend.ended?.slice(0,10)}</Text>
+                                <Text style={styles.firstRowValue}>{dataToSend.ended?.slice(0, 10)}</Text>
                                 <Text style={styles.firstRowValue}>{dataToSend.ended?.slice(11,)}</Text>
                             </View>
                         </View>
@@ -74,22 +90,6 @@ export default EachReportMoreInfo = ({ isVisible, onClose, dataToSend }) => {
                                 <Text style={styles.rowHeads}>Resolved By:</Text>
                                 <Text style={styles.firstRowValue}>{dataToSend.ResolvedBy ? dataToSend.ResolvedBy : "Hello"}</Text>
                             </View>
-                        </View>
-                        <View>
-                            <Text style={styles.dataProperty}>Assigned To:</Text>
-                            <Text style={styles.dataValue}>{dataToSend.assignedTo}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.dataProperty}>Counter Measure:</Text>
-                            <Text style={styles.dataValue}>{dataToSend.counterMeasure}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.dataProperty}>Corrective Action:</Text>
-                            <Text style={styles.dataValue}>{dataToSend.correctiveAction}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.dataProperty}>Action Taken:</Text>
-                            <Text style={styles.dataValue}>{dataToSend.ActionTaken}</Text>
                         </View>
                     </LinearGradient>
                 </TouchableOpacity>
