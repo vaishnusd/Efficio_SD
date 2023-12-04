@@ -1,9 +1,18 @@
 import { useState } from "react";
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import EachReportMoreInfo from "./EachReportMoreInfo";
+import { useFonts } from "expo-font";
 
 export default EachReport = ({ dataToSend }) => {
     const [infoModalView, setInfoModalView] = useState(false);
+    const [loaded] = useFonts({
+        'Poppins-Regular': require('../../../assets/fonts/Poppins/Poppins-Regular.ttf'),
+    });
+
+    if (!loaded) {
+        return null;
+    }
+
     function toggleInfoModal() {
         setInfoModalView(infoModalView ? false : true);
     }
@@ -12,18 +21,20 @@ export default EachReport = ({ dataToSend }) => {
         <View>
             <TouchableOpacity style={styles.reportTableHeader} activeOpacity={0.6} onPress={toggleInfoModal}>
                 <View style={{ flex: 2, paddingHorizontal: 2 }}>
-                    <Text style={[styles.columnHeading, { flex: 1 }]}>{dataToSend.Issue_No}</Text>
+                    <Text style={[styles.columnHeading, { flex: 1 }]}>{dataToSend.issueNo}</Text>
                 </View>
                 <View style={{ flex: 5, borderLeftWidth: 0.2, borderColor: 'white', paddingHorizontal: 10 }}>
-                    <Text style={[styles.columnHeading, { flex: 3 }]}>{dataToSend.Issue}</Text>
+                    <Text style={[styles.columnHeading, { flex: 3 }]}>{dataToSend.issueDetails}</Text>
                 </View>
                 <View style={{ flex: 2, borderLeftWidth: 0.2, borderColor: 'white', paddingHorizontal: 10 }}>
-                    <Text style={styles.columnHeading}>{dataToSend.Station} </Text>
+                    <Text style={[styles.columnHeading, { fontSize: 9 }]}>{dataToSend.line} </Text>
+                    <Text style={[styles.columnHeading, { fontSize: 9 }]}>...</Text>
+                    <Text style={[styles.columnHeading, { fontSize: 9 }]}>{dataToSend.station} </Text>
                 </View>
                 <View style={{ flex: 3, borderLeftWidth: 0.2, borderColor: 'white', alignItems: 'center', paddingHorizontal: 10 }}>
-                    <Text style={styles.columnHeading}>{dataToSend.PlantName}</Text>
-                    <TouchableOpacity style={styles.seeMoreButton}>
-                        <Text style={styles.columnHeading}>See More</Text>
+                    <Text style={styles.columnHeading}>{dataToSend.plantName}</Text>
+                    <TouchableOpacity style={styles.seeMoreButton} onPress={toggleInfoModal}>
+                        <Text style={[styles.columnHeading,{fontSize: 11}]}>See More</Text>
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
@@ -38,7 +49,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#489CFF',
         paddingHorizontal: 5,
         paddingVertical: 10,
-        gap: 10,
         borderBottomWidth: 0.5,
         borderBottomColor: '#CFEBFF',
         marginTop: 4,
@@ -46,9 +56,8 @@ const styles = StyleSheet.create({
         minHeight: 80
     },
     columnHeading: {
-        fontFamily: 'Poppins',
+        fontFamily: 'Poppins-Regular',
         fontSize: 14,
-        fontWeight: 'bold',
         color: 'white',
         textAlign: 'center',
         flex: 1,

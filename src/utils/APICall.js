@@ -14,6 +14,7 @@ export default APICall = (apiGot, jsonDataToPassInApi, result, action) => {
             );
             if (api.ok) {
                 if (action === 'getReport') {
+                    console.log("Hello Get Report");
                     const resp = await api.json();
                     const ans = resp['members'];
                     result(ans, null);
