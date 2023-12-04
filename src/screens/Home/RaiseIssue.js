@@ -4,10 +4,6 @@ import { Controller, useForm } from 'react-hook-form';
 import CustomInput from '../../components/CustomInput';
 
 const RaiseIssue = () => {
-    console.log('RaiseIssue');
- 
-
-
     const {
         control,
         handleSubmit,
@@ -32,7 +28,6 @@ const RaiseIssue = () => {
                 <Text style={styles.mainHeaderText}>Raise Andon Issue</Text>
             </View>
             <View style={styles.mainComponent}>
-
                 <View>
                     <Controller
                         control={control}
