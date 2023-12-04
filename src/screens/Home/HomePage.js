@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ProductionStatus from './ProductionStatus';
 import APICall from '../../utils/APICall';
 import BottomNavigator from '../../navigation/BottomNavigator';
+import SideMenu from '../../navigation/SideMenu';
 
 const HomePage = () => {
 	const IssueReportData = require('../../../assets/json/IssueReports.json');
@@ -14,6 +15,11 @@ const HomePage = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [apiError, setAPIError] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
+	const [menuView, setMenuView] = useState(false);
+
+	function toggleMenuView() {
+		setMenuView(menuView ? false : true);
+	}
 
 	const apiGot =
 		'https://androidapi220230605081325.azurewebsites.net/api/approval/GetLineDetails';
@@ -90,7 +96,8 @@ const HomePage = () => {
 					}
 				/>
 			</View>
-			<BottomNavigator />
+			<SideMenu isVisible={menuView} />
+			<BottomNavigator toggleMenu={toggleMenuView} />
 		</View>
 	);
 };

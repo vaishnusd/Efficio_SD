@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Login from '../screens/LoginPage/Login';
 import HomePage from '../screens/Home/HomePage';
 import RaiseIssue from '../screens/Home/RaiseIssue';
+import IssueReport from '../screens/IssueReport/IssueReport';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,11 @@ export default Navigate = () => {
 				<Stack.Screen
 					name='Login'
 					component={Login}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name='IssueReport'
+					component={IssueReport}
 					options={{ headerShown: false }}
 				/>
 				<Stack.Screen

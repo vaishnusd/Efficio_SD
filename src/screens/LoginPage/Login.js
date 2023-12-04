@@ -4,9 +4,7 @@ import { useEffect, useState } from 'react';
 import LoginForm from './LoginForm';
 
 export default Login = () => {
-
     const [fontLoaded, setFontLoaded] = useState(false);
-
 
     useEffect(() => {
         async function loadFonts() {
