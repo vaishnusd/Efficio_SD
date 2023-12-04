@@ -10,7 +10,6 @@ export default EachReport = ({ dataToSend }) => {
 
     return (
         <View>
-
             <TouchableOpacity style={styles.reportTableHeader} activeOpacity={0.6} onPress={toggleInfoModal}>
                 <View style={{ flex: 2, paddingHorizontal: 2 }}>
                     <Text style={[styles.columnHeading, { flex: 1 }]}>{dataToSend.Issue_No}</Text>

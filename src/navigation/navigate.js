@@ -25,13 +25,11 @@ export default Navigate = () => {
 					component={HomePage}
 					options={{ headerShown: false }}
 				/>
-
 				<Stack.Screen
 					name='RaiseIssue'
 					component={RaiseIssue}
 					options={{ headerShown: false }}
 				/>
-
 			</Stack.Navigator>
 		</NavigationContainer>
 
