@@ -5,11 +5,8 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native';
 
 export default ProductionStatus = (dataToSend) => {
-    // console.log(dataToSend)
-    const data = dataToSend.dataToSend
-
+    const data = dataToSend.dataToSend;
     const navigation = useNavigation();
-
     return (
         <View style={styles.mainContainer}>
             <View>
@@ -22,20 +19,12 @@ export default ProductionStatus = (dataToSend) => {
                     </View>
 
                 </View>
-                <LinearGradient
-                    colors={['rgba(85, 144, 215, 1)',
-                        'rgba(0, 33, 73, 1)']}
-                    style={styles.productionLineStatus}
-
-
-                >
+                <LinearGradient colors={['rgba(85, 144, 215, 1)','rgba(0, 33, 73, 1)']} style={styles.productionLineStatus}>
                     <View>
                         <Image source={{
                             uri:
                                 'https://androidapi220211216164156.azurewebsites.net/api/Approval/DownloadFile?filename=' + data
                         }} style={styles.signatureImage} />
-
-
                     </View>
                     <View style={styles.options}>
                         <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
@@ -120,9 +109,9 @@ const styles = StyleSheet.create({
 
 
     },
-    signatureImage:{
-        width:108,
-        height:189,
+    signatureImage: {
+        width: 108,
+        height: 189,
     },
     options: {
         alignItems: 'center',

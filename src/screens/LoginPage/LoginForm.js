@@ -5,9 +5,12 @@ import * as Font from 'expo-font';
 import { useEffect, useState } from "react";
 import InputTextType from "../../components/InputTextType";
 import APICall from "../../utils/APICall";
+import { useNavigation } from '@react-navigation/native';
+
 
 export default LoginForm = () => {
     const [fontLoaded, setFontLoaded] = useState(false);
+    const navigation = useNavigation();
     const apiGot = "https://androidapi220230605081325.azurewebsites.net/api/approval/VerifyUserName";
 
     const {
@@ -24,11 +27,13 @@ export default LoginForm = () => {
 
     function resultFunc(resultCame) {
         console.log("Checked - ", resultCame );
+        if(resultCame === "User Authentication Success"){
+            navigation.navigate('Home');
+        }
     }
 
     const onSubmit = async (data) => {
         console.log("Data - " ,data);
-        
         APICall(apiGot, data, resultFunc, "checkAuthentication")
         reset();
     }
