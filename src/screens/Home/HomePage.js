@@ -8,7 +8,6 @@ import APICall from '../../utils/APICall';
 
 const HomePage = () => {
 
-	const IssueReportData = require('../../../assets/json/IssueReports.json');
 	const navigation = useNavigation();
 
 	const [data, setData] = useState([]);
@@ -22,15 +21,15 @@ const HomePage = () => {
 			PlantName:"Grundfos"
 	};
 
+
+
 	function resultReport(dataGot, apiError) {
 		if (apiError) {
 			setIsLoading(false);
 			setAPIError(true);
 		} else {
 			if (dataGot) {
-			
 				setData(dataGot);
-				
 				setIsLoading(false);
 			} else {
 				setIsLoading(false);
