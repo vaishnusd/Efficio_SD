@@ -6,10 +6,11 @@ import Login from '../screens/LoginPage/Login';
 import HomePage from '../screens/Home/HomePage';
 import RaiseIssue from '../screens/Home/RaiseIssue';
 import IssueReport from '../screens/IssueReport/IssueReport';
+import Profile from '../screens/Profile/Profile';
 
 const Stack = createNativeStackNavigator();
 
-export default Navigate = () => {
+export default NavigateMain = () => {
 	return (
 		<NavigationContainer independent={true}>
 			<Stack.Navigator
@@ -34,6 +35,11 @@ export default Navigate = () => {
 				<Stack.Screen
 					name='RaiseIssue'
 					component={RaiseIssue}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name='ProfileSection'
+					component={Profile}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>

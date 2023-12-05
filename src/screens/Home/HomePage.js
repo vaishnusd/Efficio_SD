@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, Dimensions, Image, Pressable, TouchableOpacity, FlatList } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { AntDesign, FontAwesome5, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import ProductionStatus from './ProductionStatus';
@@ -10,16 +9,10 @@ import SideMenu from '../../navigation/SideMenu';
 
 const HomePage = () => {
 	const IssueReportData = require('../../../assets/json/IssueReports.json');
-	const navigation = useNavigation();
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [apiError, setAPIError] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
-	const [menuView, setMenuView] = useState(false);
-
-	function toggleMenuView() {
-		setMenuView(menuView ? false : true);
-	}
 
 	const apiGot =
 		'https://androidapi220230605081325.azurewebsites.net/api/approval/GetLineDetails';
@@ -96,8 +89,7 @@ const HomePage = () => {
 					}
 				/>
 			</View>
-			<SideMenu isVisible={menuView} />
-			<BottomNavigator toggleMenu={toggleMenuView} />
+			<BottomNavigator />
 		</View>
 	);
 };
@@ -108,7 +100,6 @@ const styles = StyleSheet.create({
 	mainContainer: {
 		flex: 1,
 		backgroundColor: 'rgba(207, 235, 255, 1)',
-		paddingBottom: 190
 
 	},
 	dashBoard: {
@@ -116,7 +107,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		top: 2,
-		marginHorizontal: 10
+		marginHorizontal: 10,
+		flex: 2
 	},
 	dashBoardBox: {
 		width: 120,
@@ -136,7 +128,8 @@ const styles = StyleSheet.create({
 	productionStatus: {
 		top: 20,
 		marginHorizontal: 10,
-		gap: 10
+		gap: 10,
+		flex: 7
 
 	},
 	stockBody: {

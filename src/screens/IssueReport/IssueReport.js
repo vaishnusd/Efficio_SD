@@ -3,6 +3,8 @@ import { useFonts } from "expo-font";
 import { useEffect, useState } from "react";
 import APICall from "../../utils/APICall";
 import EachReport from "./EachReport";
+import BottomNavigator from "../../navigation/BottomNavigator";
+import { LinearGradient } from "expo-linear-gradient";
 // const issueReportData = require('../../../assets/json/IssueReports.json');
 
 export default IssueReport = () => {
@@ -18,7 +20,7 @@ export default IssueReport = () => {
         "OffsetRecords": "0",
         "NextRecords": "10"
     }
-    
+
     function resultReport(dataGot, action) {
         console.log("Hello Data: ", dataGot, action);
         setIssueReportData(dataGot);
@@ -30,20 +32,21 @@ export default IssueReport = () => {
     }, []);
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.reportTableHeader}>
-                <Text style={[styles.columnHeading, { flex: 1 }]}>Issue No.</Text>
-                <Text style={[styles.columnHeading, { flex: 3 }]}>Issue</Text>
-                <Text style={[styles.columnHeading, { flex: 2 }]}>Line & Station</Text>
-                <Text style={[styles.columnHeading, { flex: 2 }]}>Plant</Text>
-            </View>
-            <FlatList
-                data={issueReportData}
-                renderItem={({ item }) =>
-                    <EachReport dataToSend={item} />
-                }
-                contentContainerStyle={styles.allData}
-            />
+        <SafeAreaView style={styles.container} >
+                <LinearGradient colors={['#4C6078', '#001935']} style={styles.reportTableHeader}>
+                    <Text style={[styles.columnHeading, { flex: 2 }]}>Issue No.</Text>
+                    <Text style={[styles.columnHeading, { flex: 5 }]}>Issue</Text>
+                    <Text style={[styles.columnHeading, { flex: 3 }]}>Line & Station</Text>
+                    <Text style={[styles.columnHeading, { flex: 3 }]}>Plant</Text>
+                </LinearGradient>
+                <FlatList
+                    data={issueReportData}
+                    renderItem={({ item }) =>
+                        <EachReport dataToSend={item} />
+                    }
+                    contentContainerStyle={styles.allData}
+                />
+                <BottomNavigator />
         </SafeAreaView>
     );
 };
@@ -52,7 +55,6 @@ export default IssueReport = () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#CFEBFF',
-        paddingTop: 30,
         flex: 1
     },
     allData: {

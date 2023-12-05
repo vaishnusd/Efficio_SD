@@ -30,7 +30,7 @@ export default Login = () => {
                 <LoginForm />
             </ImageBackground>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({

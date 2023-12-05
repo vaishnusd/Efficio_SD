@@ -34,22 +34,6 @@ export default EachReportMoreInfo = ({ isVisible, onClose, dataToSend }) => {
                             <Text style={styles.dataProperty}>Problem:</Text>
                             <Text style={styles.dataValue}>{dataToSend.problemStatement}</Text>
                         </View>
-                        <View>
-                            <Text style={styles.dataProperty}>Assigned To:</Text>
-                            <Text style={styles.dataValue}>{dataToSend.assignedTo}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.dataProperty}>Counter Measure:</Text>
-                            <Text style={styles.dataValue}>{dataToSend.counterMeasure}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.dataProperty}>Corrective Action:</Text>
-                            <Text style={styles.dataValue}>{dataToSend.correctiveAction}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.dataProperty}>Action Taken:</Text>
-                            <Text style={styles.dataValue}>{dataToSend.ActionTaken}</Text>
-                        </View>
                         <View style={styles.tableRow}>
                             <View style={styles.rowData}>
                                 <Text style={styles.rowHeads}>Started At:</Text>
@@ -91,6 +75,23 @@ export default EachReportMoreInfo = ({ isVisible, onClose, dataToSend }) => {
                                 <Text style={styles.firstRowValue}>{dataToSend.ResolvedBy ? dataToSend.ResolvedBy : "Hello"}</Text>
                             </View>
                         </View>
+                        <View>
+                            <Text style={styles.dataProperty}>Assigned To:</Text>
+                            <Text style={styles.dataValue}>{dataToSend.assignedTo}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.dataProperty}>Counter Measure:</Text>
+                            <Text style={styles.dataValue}>{dataToSend.counterMeasure}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.dataProperty}>Corrective Action:</Text>
+                            <Text style={styles.dataValue}>{dataToSend.correctiveAction}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.dataProperty}>Action Taken:</Text>
+                            <Text style={styles.dataValue}>{dataToSend.ActionTaken}</Text>
+                        </View>
+
                     </LinearGradient>
                 </TouchableOpacity>
             </TouchableOpacity>
