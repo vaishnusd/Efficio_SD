@@ -59,14 +59,13 @@ const styles = StyleSheet.create({
     },
     allData: {
         paddingHorizontal: 2,
+        paddingBottom: 62
     },
     reportTableHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#002D62',
-        paddingHorizontal: 5,
-        paddingVertical: 5,
+        backgroundColor: '#002D62'
     },
     columnHeading: {
         fontFamily: 'Poppins',
