@@ -14,7 +14,7 @@ export default NavigateMain = () => {
 	return (
 		<NavigationContainer independent={true}>
 			<Stack.Navigator
-				initialRouteName='Login'
+				initialRouteName='Home'
 				screenOptions={{ headerShown: false }}
 			>
 				<Stack.Screen
