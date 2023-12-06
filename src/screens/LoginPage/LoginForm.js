@@ -6,11 +6,14 @@ import { useEffect, useState } from "react";
 import InputTextType from "../../components/InputTextType";
 import APICall from "../../utils/APICall";
 import { useNavigation } from '@react-navigation/native';
+import { ActivityIndicator } from "react-native";
 
 
 export default LoginForm = () => {
     const [fontLoaded, setFontLoaded] = useState(false);
     const navigation = useNavigation();
+    const [authenticationLoader, setAuthenticationLoader] = useState(false);
+    const [authenticationMessage, setAuthenticationMessage] = useState("Authenticating ......");
     const apiGot = "https://androidapi220230605081325.azurewebsites.net/api/approval/VerifyUserName";
 
     const {
@@ -26,14 +29,29 @@ export default LoginForm = () => {
     });
 
     function resultFunc(resultCame) {
-        console.log("Checked - ", resultCame );
-        if(resultCame === "User Authentication Success"){
-            navigation.navigate('Home');
+        console.log("Checked - ", resultCame);
+        if (resultCame === "User Authentication Success") {
+            setAuthenticationMessage("Authentication Successful");
+            setTimeout(() => {
+                navigation.navigate('Home');
+                navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+                setAuthenticationLoader(false);
+                setAuthenticationMessage("Authenticating ......");
+            }, 2 * 1000);
+        } else {
+            setAuthenticationMessage("Authentication Failed, Please enter details Carefully");
         }
     }
 
+    function toggleAuthenticationModal() {
+        setAuthenticationLoader(authenticationLoader ? false : true);
+        setAuthenticationMessage("Authenticating ......");
+    }
+
     const onSubmit = async (data) => {
-        console.log("Data - " ,data);
+        console.log("Data - ", data);
+        setAuthenticationLoader(true);
+        console.log("Authentication Loading ...", authenticationLoader);
         APICall(apiGot, data, resultFunc, "checkAuthentication")
         reset();
     }
@@ -106,6 +124,21 @@ export default LoginForm = () => {
                 <TouchableOpacity style={styles.loginButton} onPress={handleSubmit(onSubmit)}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
+                {authenticationLoader &&
+                    <Modal visible={authenticationLoader} transparent>
+                        <View style={{ height: 150, width: 340, gap: 10, top: '40%', justifyContent: 'center', alignItems: 'center', alignSelf: 'center', backgroundColor: 'white', padding: 20 }}>
+                            {!(authenticationMessage.includes("Failed")||authenticationMessage.includes("Successful")) &&
+                                <ActivityIndicator />
+                            }
+                            <Text style={{ color: authenticationMessage.includes("Failed") ? 'red' : authenticationMessage.includes("Success") ? 'green' : 'black  ' }}>{authenticationMessage}</Text>
+                            {authenticationMessage.includes("Failed") &&
+                                <TouchableOpacity style={{ backgroundColor: '#18C0C1', padding: 10 }} onPress={toggleAuthenticationModal}>
+                                    <Text>OK</Text>
+                                </TouchableOpacity>
+                            }
+                        </View>
+                    </Modal>
+                }
             </LinearGradient>
         </Modal>
     );
