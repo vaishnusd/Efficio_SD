@@ -8,7 +8,6 @@ import BottomNavigator from '../../navigation/BottomNavigator';
 import SideMenu from '../../navigation/SideMenu';
 
 const HomePage = () => {
-	const IssueReportData = require('../../../assets/json/IssueReports.json');
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [apiError, setAPIError] = useState(false);
@@ -19,6 +18,8 @@ const HomePage = () => {
 	const jsonDataToPassInApi = {
 		PlantName: "Grundfos"
 	};
+
+
 
 	function resultReport(dataGot, apiError) {
 		if (apiError) {
