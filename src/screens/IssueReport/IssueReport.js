@@ -52,7 +52,7 @@ export default IssueReport = () => {
                     }
                     contentContainerStyle={styles.allData}
                 />
-                <BottomNavigator />
+            }
         </SafeAreaView>
     );
 };
