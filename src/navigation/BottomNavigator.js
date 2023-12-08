@@ -16,11 +16,11 @@ export default BottomNavigator = () => {
         navigation.navigate('IssueReport');
     }
 
-    function goToHome(){
+    function goToHome() {
         navigation.navigate('Home');
     }
 
-    function goToProfile(){
+    function goToProfile() {
         navigation.navigate('ProfileSection')
     }
 
@@ -31,7 +31,7 @@ export default BottomNavigator = () => {
             }
             <LinearGradient colors={['#4C6078', '#001935']} style={styles.container}>
                 <TouchableOpacity style={styles.buttonContainer} onPress={goToHome}>
-                    <Image source={require('../../assets/icons/Home.png')} />
+                    <Image source={require('../../assets/icons/Home.png')} style={{ position: 'absolute', bottom: -20 }} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.buttonContainer} onPress={goTOIssueReport}>
                     <Image source={require('../../assets/icons/notificationIcon.png')} />
@@ -49,11 +49,12 @@ export default BottomNavigator = () => {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
-        padding: 8,
     
+        alignSelf: 'center',
+        padding: 5,
      
     },
     buttonContainer: {

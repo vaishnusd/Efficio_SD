@@ -9,7 +9,8 @@ export default Login = () => {
     useEffect(() => {
         async function loadFonts() {
             await Font.loadAsync({
-                Poppins: require('../../../assets/fonts/Poppins/Poppins-Bold.ttf')
+                Poppins: require('../../../assets/fonts/Poppins/Poppins-Bold.ttf'),
+                Poppins_Regular: require('../../../assets/fonts/Poppins/Poppins-Regular.ttf')
             });
             setFontLoaded(true);
         }

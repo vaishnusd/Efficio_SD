@@ -13,6 +13,7 @@ import AcknowledgeIssue from '../screens/Home/AcknowledgeIssue';
 import CloseIssue from '../screens/Home/CloseIssue';
 import IssueReport from '../screens/IssueReport/IssueReport';
 import Profile from '../screens/Profile/Profile';
+import EachReportMoreInfoPage from '../screens/IssueReport/EachReportMoreInfoPage';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -110,6 +111,11 @@ export default NavigateMain = () => {
 				<Stack.Screen
 					name='ProfileSection'
 					component={Profile}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name='EachReportMoreInfo'
+					component={EachReportMoreInfoPage}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>
