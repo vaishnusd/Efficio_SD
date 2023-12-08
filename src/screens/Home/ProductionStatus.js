@@ -61,6 +61,8 @@ export default ProductionStatus = (dataToSend) => {
                             <Text style={{ color: '#fff' }}>Raise Issue</Text>
                         </TouchableOpacity>
 
+                        
+
                     </View>
                     {/* <FontAwesome5 names="hand-paper" size={24} color="white" />
 					<Text style={styles.companyName}>ACK Issue</Text>

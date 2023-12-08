@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         padding: 8,
-        position: 'absolute',
-        bottom: 0
+    
+     
     },
     buttonContainer: {
         flex: 1,

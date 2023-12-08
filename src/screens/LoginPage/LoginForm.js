@@ -33,8 +33,8 @@ export default LoginForm = () => {
         if (resultCame === "User Authentication Success") {
             setAuthenticationMessage("Authentication Successful");
             setTimeout(() => {
-                navigation.navigate('Home');
-                navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
+                navigation.navigate('DrawerNavigator');
+                navigation.reset({ index: 0, routes: [{ name: 'DrawerNavigator' }] });
                 setAuthenticationLoader(false);
                 setAuthenticationMessage("Authenticating ......");
             }, 2 * 1000);

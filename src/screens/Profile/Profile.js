@@ -40,7 +40,7 @@ export default Profile = () => {
                     <Text style={{ color: 'white', fontSize: 16 }}>Save</Text>
                 </TouchableOpacity>
             </View>
-            <BottomNavigator />
+          
         </View>
     )
 }

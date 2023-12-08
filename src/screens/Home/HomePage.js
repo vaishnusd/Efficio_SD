@@ -6,8 +6,11 @@ import ProductionStatus from './ProductionStatus';
 import APICall from '../../utils/APICall';
 import BottomNavigator from '../../navigation/BottomNavigator';
 import SideMenu from '../../navigation/SideMenu';
+import { useNavigation } from '@react-navigation/native';
 
 const HomePage = () => {
+
+	const navigation = useNavigation();
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [apiError, setAPIError] = useState(false);
@@ -75,6 +78,34 @@ const HomePage = () => {
 					<Text style={styles.companyName}>Closed Issue</Text>
 					<Text style={styles.numberOf}>0</Text>
 				</LinearGradient>
+			
+			</View>
+			<View>
+			<TouchableOpacity
+                            style={styles.IssueButton}
+                            onPress={() => {
+                                navigation.navigate('AcknowledgeIssue');
+                            }}
+                        >
+                            <Image source={require('../../../assets/images/WebsiteBug.png')} style={{
+                                width: 25,
+                                height: 25,
+                            }} />
+                            <Text style={{ color: 'black' }}>Acknowledge Issue</Text>
+                        </TouchableOpacity>
+
+						<TouchableOpacity
+                            style={styles.IssueButton}
+                            onPress={() => {
+                                navigation.navigate('CloseIssue');
+                            }}
+                        >
+                            <Image source={require('../../../assets/images/WebsiteBug.png')} style={{
+                                width: 25,
+                                height: 25,
+                            }} />
+                            <Text style={{ color: 'black' }}>Close Issue</Text>
+                        </TouchableOpacity>
 			</View>
 			<View style={styles.productionStatus}>
 				<Text style={{
@@ -90,7 +121,7 @@ const HomePage = () => {
 					}
 				/>
 			</View>
-			<BottomNavigator />
+	
 		</View>
 	);
 };
