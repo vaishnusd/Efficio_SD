@@ -2,9 +2,11 @@ import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import EachReportMoreInfo from "./EachReportMoreInfo";
 import { useFonts } from "expo-font";
+import { useNavigation } from "@react-navigation/native";
 
 export default EachReport = ({ dataToSend }) => {
     const [infoModalView, setInfoModalView] = useState(false);
+    const navigation = useNavigation();
     const [loaded] = useFonts({
         'Poppins-Regular': require('../../../assets/fonts/Poppins/Poppins-Regular.ttf'),
     });
@@ -17,9 +19,13 @@ export default EachReport = ({ dataToSend }) => {
         setInfoModalView(infoModalView ? false : true);
     }
 
+    function goToPage(){
+        navigation.navigate("EachReportMoreInfo",{dataToSend});
+    }
+
     return (
         <View>
-            <TouchableOpacity style={styles.reportTableHeader} activeOpacity={0.6} onPress={toggleInfoModal}>
+            <TouchableOpacity style={styles.reportTableHeader} activeOpacity={0.6} onPress={goToPage}>
                 <View style={{ flex: 2, paddingHorizontal: 2 }}>
                     <Text style={[styles.columnHeading, { flex: 1 }]}>{dataToSend.issueNo}</Text>
                 </View>
