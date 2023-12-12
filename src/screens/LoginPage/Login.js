@@ -10,7 +10,10 @@ export default Login = () => {
         async function loadFonts() {
             await Font.loadAsync({
                 Poppins: require('../../../assets/fonts/Poppins/Poppins-Bold.ttf'),
-                Poppins_Regular: require('../../../assets/fonts/Poppins/Poppins-Regular.ttf')
+                Poppins_Regular: require('../../../assets/fonts/Poppins/Poppins-Regular.ttf'),
+                Poppins_LightItalic: require('../../../assets/fonts/Poppins/Poppins-LightItalic.ttf'),
+                Poppins_SemiBoldItalic: require('../../../assets/fonts/Poppins/Poppins-SemiBoldItalic.ttf'),
+                Poppins_MediumItalic: require('../../../assets/fonts/Poppins/Poppins-MediumItalic.ttf')
             });
             setFontLoaded(true);
         }

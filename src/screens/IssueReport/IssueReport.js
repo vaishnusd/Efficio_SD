@@ -3,7 +3,6 @@ import { useFonts } from "expo-font";
 import { useEffect, useState } from "react";
 import APICall from "../../utils/APICall";
 import EachReport from "./EachReport";
-import BottomNavigator from "../../navigation/BottomNavigator";
 import { LinearGradient } from "expo-linear-gradient";
 // const issueReportData = require('../../../assets/json/IssueReports.json');
 
@@ -15,11 +14,11 @@ export default IssueReport = () => {
     });
     const apiGot = "https://androidapi220230605081325.azurewebsites.net/api/approval/GetIssueList";
     const jsonDataToPassInApi = {
-        "FromDate": "2022-08-08",
+        "FromDate": "2023-11-01",
         "ToDate": "2023-12-12",
         "PlantName": "Grundfos",
         "OffsetRecords": "0",
-        "NextRecords": "10"
+        "NextRecords": "20"
     }
 
     function resultReport(dataGot, action) {
@@ -39,7 +38,7 @@ export default IssueReport = () => {
                 <Text style={[styles.columnHeading, { flex: 2 }]}>Issue No.</Text>
                 <Text style={[styles.columnHeading, { flex: 5 }]}>Issue</Text>
                 <Text style={[styles.columnHeading, { flex: 3 }]}>Line & Station</Text>
-                <Text style={[styles.columnHeading, { flex: 3 }]}>Plant</Text>
+                <Text style={[styles.columnHeading, { flex: 3 }]}>Status</Text>
             </LinearGradient>
             {loader ?
                 <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
