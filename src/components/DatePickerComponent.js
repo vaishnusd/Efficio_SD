@@ -6,12 +6,8 @@ export default DatePickerComponent = ({ initialDate, updateFunction ,mode}) => {
     const [date, setDate] = useState(initialDate);
 
     function dateFormatter(date) {
-        console.log('Inside',date,initialDate)
-        const allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const day = Number(date.split("/")[0]);
-        const month = allMonths[Number(date.split("/")[1]) - 1];
-        const year = date.split("/")[2];
-        return (day + " " + month + " " + year);
+        let dateArray = date.toString().split(" ");
+        return (Number(dateArray[2]) + " " + dateArray[1] + " " + dateArray[3]);
     }
 
     const onChange = (event, selectedDate) => {
@@ -42,9 +38,9 @@ export default DatePickerComponent = ({ initialDate, updateFunction ,mode}) => {
 
     return (
         <SafeAreaView>
-            <TouchableOpacity style={styles.dateButton} onPress={mode==='timeFormat'? showTimepicker:showDatepicker}>
-              { console.log(date.toString())}
-                <Text style={{ textAlign: 'center' }}>{dateFormatter(date.toLocaleString().split(",")[0])}</Text>
+            <TouchableOpacity style={styles.dateButton} onPress={showDatepicker}>
+                {console.log("hello to local string ", date.toString().split(" "))}
+                <Text style={{ textAlign: 'center' }}>{dateFormatter(date)}</Text>
             </TouchableOpacity>
         </SafeAreaView>
     );
