@@ -15,6 +15,8 @@ import CloseIssue from './src/screens/Home/CloseIssue'
 import Profile from './src/screens/Profile/Profile';
 import IssueReport from './src/screens/IssueReport/IssueReport';
 import SideMenu from './src/navigation/SideMenu';
+import { Provider } from 'react-redux';
+import { store } from './src/redux/store';
 
 // const Drawer=createDrawerNavigator()
 const BottomTab=createBottomTabNavigator()
@@ -46,7 +48,10 @@ export default function App() {
 				   )}}
 					/>
 				</BottomTab.Navigator> */}
+				    <Provider store={store}>
+
 				<Navigate />
+				</Provider>
 				<StatusBar barStyle='dark-content' backgroundColor='rgba(207, 235, 255, 1)' />
 			</SafeAreaView>
 		</NavigationContainer>

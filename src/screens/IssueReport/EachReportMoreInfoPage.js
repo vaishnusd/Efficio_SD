@@ -160,7 +160,7 @@ export default EachReportMoreInfoPage = ({ route }) => {
                     }
                 </View>
             </ScrollView>
-            <BottomNavigator />
+          
         </View>
     );
 }

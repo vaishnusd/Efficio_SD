@@ -7,17 +7,46 @@ import APICall from '../../utils/APICall';
 import BottomNavigator from '../../navigation/BottomNavigator';
 import SideMenu from '../../navigation/SideMenu';
 import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const HomePage = () => {
 
 	const navigation = useNavigation();
 	const [data, setData] = useState([]);
+	const [dashBoardData, setDashBoardData] = useState([]);
+
 	const [isLoading, setIsLoading] = useState(true);
 	const [apiError, setAPIError] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
 
+	const dashBoardApi = "https://androidapi220230605081325.azurewebsites.net/api/approval/GetAndonStatus"
+	const dashBoardJsonDataToPassInApi = {
+		PlantName: "Grundfos"
+	};
+
+	function dashBoardApiResultReport(dataGot, apiError) {
+		if (apiError) {
+			setIsLoading(false);
+			setAPIError(true);
+		} else {
+			if (dataGot) {
+				setDashBoardData(dataGot[0]);
+				// console.log(dataGot[0]);
+				setIsLoading(false);
+			} else {
+				setIsLoading(false);
+			}
+		}
+	}
+	useEffect(() => {
+		APICall(dashBoardApi, dashBoardJsonDataToPassInApi, dashBoardApiResultReport, 'getReport');
+	}, []);
+
+
+
 	const apiGot =
 		'https://androidapi220230605081325.azurewebsites.net/api/approval/GetLineDetails';
+
 	const jsonDataToPassInApi = {
 		PlantName: "Grundfos"
 	};
@@ -43,7 +72,7 @@ const HomePage = () => {
 	}, []);
 
 	return (
-		<View style={styles.mainContainer}>
+		<ScrollView style={styles.mainContainer}>
 			<View style={styles.dashBoard}>
 				<LinearGradient
 					colors={['rgba(0, 33, 73, 1)',
@@ -54,7 +83,7 @@ const HomePage = () => {
 				>
 					<AntDesign name='warning' size={24} color='white' />
 					<Text style={styles.companyName}>Open Issue</Text>
-					<Text style={styles.numberOf}>0</Text>
+					<Text style={styles.numberOf}>{dashBoardData.open === null ? '0' : dashBoardData.open}</Text>
 				</LinearGradient>
 				<LinearGradient
 					colors={['rgba(0, 33, 73, 1)',
@@ -65,7 +94,7 @@ const HomePage = () => {
 				>
 					<FontAwesome5 name="hand-paper" size={24} color="white" />
 					<Text style={styles.companyName}>ACK Issue</Text>
-					<Text style={styles.numberOf}>0</Text>
+					<Text style={styles.numberOf}>{dashBoardData.acknowledged}</Text>
 				</LinearGradient>
 				<LinearGradient
 					colors={['rgba(0, 33, 73, 1)',
@@ -76,36 +105,9 @@ const HomePage = () => {
 				>
 					<AntDesign name="checkcircleo" size={24} color="white" />
 					<Text style={styles.companyName}>Closed Issue</Text>
-					<Text style={styles.numberOf}>0</Text>
+					<Text style={styles.numberOf}>{dashBoardData.closed}</Text>
 				</LinearGradient>
-			
-			</View>
-			<View>
-			<TouchableOpacity
-                            style={styles.IssueButton}
-                            onPress={() => {
-                                navigation.navigate('AcknowledgeIssue');
-                            }}
-                        >
-                            <Image source={require('../../../assets/images/WebsiteBug.png')} style={{
-                                width: 25,
-                                height: 25,
-                            }} />
-                            <Text style={{ color: 'black' }}>Acknowledge Issue</Text>
-                        </TouchableOpacity>
 
-						<TouchableOpacity
-                            style={styles.IssueButton}
-                            onPress={() => {
-                                navigation.navigate('CloseIssue');
-                            }}
-                        >
-                            <Image source={require('../../../assets/images/WebsiteBug.png')} style={{
-                                width: 25,
-                                height: 25,
-                            }} />
-                            <Text style={{ color: 'black' }}>Close Issue</Text>
-                        </TouchableOpacity>
 			</View>
 			<View style={styles.productionStatus}>
 				<Text style={{
@@ -121,8 +123,8 @@ const HomePage = () => {
 					}
 				/>
 			</View>
-	
-		</View>
+
+		</ScrollView>
 	);
 };
 
@@ -132,13 +134,15 @@ const styles = StyleSheet.create({
 	mainContainer: {
 		flex: 1,
 		backgroundColor: 'rgba(207, 235, 255, 1)',
+		paddingBottom: 20
 
 	},
 	dashBoard: {
 		backgroundColor: 'Blue',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		top: 2,
+		fontWeight: 500,
+		top: 10,
 		marginHorizontal: 10,
 		flex: 2
 	},
@@ -146,6 +150,7 @@ const styles = StyleSheet.create({
 		width: 120,
 		height: 120,
 		borderRadius: 30,
+		fontWeight: 500,
 		justifyContent: 'center',
 		alignItems: 'center',
 		gap: 5,
