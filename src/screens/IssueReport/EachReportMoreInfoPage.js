@@ -7,7 +7,6 @@ export default EachReportMoreInfoPage = ({ route }) => {
     // console.log("Route - ", route);
     const dataGot = route.params.dataToSend;
     const [showTimingsDurations, setShowTimingsDurations] = useState(false);
-    const [showPeoples, setShowPeoples] = useState(false);
     const [showOtherDetails, setShowOtherDetails] = useState(false);
     const mainFontColor = 'black';
     let statusColor = 'green';
@@ -159,7 +158,7 @@ export default EachReportMoreInfoPage = ({ route }) => {
                                 <Image source={require('../../../assets/icons/path.png')} style={styles.allTimeIcon} />
                                 <View style={styles.timingContainer}>
                                     <Image source={require('../../../assets/icons/end.png')} style={styles.allTimeIcon} />
-                                    <Text style={styles.expandedContentRowHeader}>Ended At:</Text>
+                                    <Text style={styles.expandedContentRowHeader}>Ended:</Text>
                                     {dataGot.ended ?
                                         <View style={styles.timingContainer}>
                                             <Text style={[styles.timingValues, { fontFamily: 'Poppins_MediumItalic' }]}>{dateFormatter(dataGot.ended.slice(0, 10))}</Text>
@@ -180,7 +179,7 @@ export default EachReportMoreInfoPage = ({ route }) => {
                             </View>
                             <View style={styles.expandedRow}>
                                 <Text style={styles.expandedContentRowHeader}>Downtime Duration:</Text>
-                                <Text>{dataGot.downtime ? dataGot.downtime + "mins" : deliverMessage()}</Text>
+                                <Text>{dataGot.downtime ? dataGot.downtime + " mins" : deliverMessage()}</Text>
                             </View>
                         </View>
                     }
