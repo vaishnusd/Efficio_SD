@@ -29,7 +29,7 @@ export default IssueReport = () => {
         "ToDate": toDate,
         "PlantName": "Grundfos",
         "OffsetRecords": "0",
-        "NextRecords": "10"
+        "NextRecords": "1000"
     }
 
     function resultReport(dataGot, action) {
