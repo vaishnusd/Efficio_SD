@@ -3,7 +3,6 @@ import 'react-native-gesture-handler';
 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
-import { AntDesign, FontAwesome5, Entypo,Ionicons } from '@expo/vector-icons';
 import Navigate from './src/navigation/NavigateMain';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';

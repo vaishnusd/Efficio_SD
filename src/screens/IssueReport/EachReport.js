@@ -19,8 +19,8 @@ export default EachReport = ({ dataToSend }) => {
         setInfoModalView(infoModalView ? false : true);
     }
 
-    function goToPage(){
-        navigation.navigate("EachReportMoreInfo",{dataToSend});
+    function goToPage() {
+        navigation.navigate("EachReportMoreInfo", { dataToSend });
     }
 
     return (
@@ -29,18 +29,20 @@ export default EachReport = ({ dataToSend }) => {
                 <View style={{ flex: 2, paddingHorizontal: 2 }}>
                     <Text style={[styles.columnHeading, { flex: 1 }]}>{dataToSend.issueNo}</Text>
                 </View>
-                <View style={{ flex: 5, borderLeftWidth: 0.2, borderColor: 'white', paddingHorizontal: 10 }}>
+                <View style={{ flex: 5, borderLeftWidth: 0.2, borderColor: 'black', paddingHorizontal: 10 }}>
                     <Text style={[styles.columnHeading, { flex: 3 }]}>{dataToSend.issueDetails}</Text>
                 </View>
-                <View style={{ flex: 2, borderLeftWidth: 0.2, borderColor: 'white', paddingHorizontal: 10 }}>
+                <View style={{ flex: 2, borderLeftWidth: 0.2, borderColor: 'black', paddingHorizontal: 10 }}>
                     <Text style={[styles.columnHeading, { fontSize: 9 }]}>{dataToSend.line} </Text>
                     <Text style={[styles.columnHeading, { fontSize: 9 }]}>...</Text>
                     <Text style={[styles.columnHeading, { fontSize: 9 }]}>{dataToSend.station} </Text>
                 </View>
-                <View style={{ flex: 3, borderLeftWidth: 0.2, borderColor: 'white', alignItems: 'center', paddingHorizontal: 10 }}>
-                    <Text style={styles.columnHeading}>{dataToSend.plantName}</Text>
-                    <TouchableOpacity style={styles.seeMoreButton} onPress={toggleInfoModal}>
-                        <Text style={[styles.columnHeading,{fontSize: 11}]}>See More</Text>
+                <View style={{ flex: 3, borderLeftWidth: 0.2, borderColor: 'black', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 10 }}>
+                    {dataToSend.status !== 'Closed' &&
+                        <Text style={styles.columnHeading}>{dataToSend.priority}</Text>
+                    }
+                    <TouchableOpacity style={[styles.seeMoreButton, { backgroundColor: (dataToSend.status === 'Closed') ? 'green' : 'yellow' }]}>
+                        <Text style={[styles.columnHeading, { fontSize: 11, color: (dataToSend.status === 'Closed') ? 'white' : 'black' }]}>{dataToSend.status==='Acknowledged'?'Acknowle...' : dataToSend.status}</Text>
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
@@ -52,19 +54,19 @@ export default EachReport = ({ dataToSend }) => {
 const styles = StyleSheet.create({
     reportTableHeader: {
         flexDirection: 'row',
-        backgroundColor: '#489CFF',
+        backgroundColor: 'white',
         paddingHorizontal: 5,
         paddingVertical: 10,
-        borderBottomWidth: 0.5,
-        borderBottomColor: '#CFEBFF',
-        marginTop: 4,
-        borderRadius: 10,
+        // borderBottomWidth: 0.5,
+        // borderBottomColor: '#CFEBFF',
+        marginTop: 2,
+        // borderRadius: 10,
         minHeight: 80
     },
     columnHeading: {
         fontFamily: 'Poppins-Regular',
         fontSize: 14,
-        color: 'white',
+        color: 'black',
         textAlign: 'center',
         flex: 1,
         textAlignVertical: 'center'
