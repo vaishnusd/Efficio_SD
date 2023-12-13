@@ -2,13 +2,14 @@ import { Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "
 import { useState } from "react";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
-export default DatePickerComponent = ({ initialDate, updateFunction }) => {
+export default DatePickerComponent = ({ initialDate, updateFunction ,mode}) => {
     const [date, setDate] = useState(initialDate);
 
     function dateFormatter(date) {
+        console.log('Inside',date,initialDate)
         const allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const day = Number(date.split("/")[1]);
-        const month = allMonths[Number(date.split("/")[0]) - 1];
+        const day = Number(date.split("/")[0]);
+        const month = allMonths[Number(date.split("/")[1]) - 1];
         const year = date.split("/")[2];
         return (day + " " + month + " " + year);
     }
@@ -25,6 +26,7 @@ export default DatePickerComponent = ({ initialDate, updateFunction }) => {
             onChange,
             mode: currentMode,
             is24Hour: true,
+
         });
     };
 
@@ -36,9 +38,12 @@ export default DatePickerComponent = ({ initialDate, updateFunction }) => {
         showMode('time');
     };
 
+   
+
     return (
         <SafeAreaView>
-            <TouchableOpacity style={styles.dateButton} onPress={showDatepicker}>
+            <TouchableOpacity style={styles.dateButton} onPress={mode==='timeFormat'? showTimepicker:showDatepicker}>
+              { console.log(date.toString())}
                 <Text style={{ textAlign: 'center' }}>{dateFormatter(date.toLocaleString().split(",")[0])}</Text>
             </TouchableOpacity>
         </SafeAreaView>

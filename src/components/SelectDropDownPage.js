@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 		marginBottom: 5,
 	},
 	selectedRowStyle: {
-		backgroundColor: '#CE5A67',
+		backgroundColor: 'blue',
 	},
 });
 

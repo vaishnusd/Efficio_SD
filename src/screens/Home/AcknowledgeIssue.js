@@ -4,10 +4,12 @@ import { Controller, useForm } from 'react-hook-form';
 import CustomInput from '../../components/CustomInput';
 import SelectDropDownPage from '../../components/SelectDropDownPage';
 import dataAcknowledgeIssue from '../../../assets/json/AcknowledgeIssue.json'
-import DatePicker from '../../components/DatePicker';
-import TimePicker from '../../components/TimePicker';
+import DatePickerComponent from '../../components/DatePickerComponent';
+
 
 const AcknowledgeIssue = () => {
+    const [fromDate, setFromDate] = useState(new Date());
+    console.log(fromDate)
 
     const [selectProductionLineOptions, setSelectProductionLineOptions] = useState('');
     console.log(selectProductionLineOptions)
@@ -242,10 +244,10 @@ const AcknowledgeIssue = () => {
                             name='startingDate'
                             rules={{ required: 'Enter starting date !' }}
                             render={({ field: { onChange, value } }) => (
-                                <DatePicker changeValue={onChange} />
+                                <DatePickerComponent  initialDate={fromDate} />
                             )}
                         />
-
+{/* 
                         <Controller
                             control={control}
                             name='startingTime'
@@ -253,7 +255,7 @@ const AcknowledgeIssue = () => {
                             render={({ field: { onChange, value } }) => (
                                 <TimePicker changeValue={onChange} />
                             )}
-                        />
+                        /> */}
                     </View>
                 </View>
                 {(errors.startingDate || errors.startingTime) && (
