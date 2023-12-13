@@ -54,6 +54,7 @@ export default IssueReport = () => {
             {loader ?
                 <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
                     <ActivityIndicator size={"large"} />
+                    <Text>Sumen Changes</Text>
                 </View> :
                 <FlatList
                     data={filteredData}
