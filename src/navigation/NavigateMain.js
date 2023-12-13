@@ -36,21 +36,21 @@ function BottomTabNavigator() {
 				)
 			}} />
 
-		<BottomTab.Screen name="IssueReport" component={IssueReport}
+		<BottomTab.Screen name="Issue Report" component={IssueReport}
 			options={{
 				tabBarIcon: ({ color, size }) => (
 					<Ionicons name='notifications-outline' color={color} size={size} />
 				)
 			}}
 		/>
-		<BottomTab.Screen name="ProfileSection" component={Profile}
+		<BottomTab.Screen name="Profile Section" component={Profile}
 			options={{
 				tabBarIcon: ({ color, size }) => (
 					<Ionicons name='person-circle-outline' color={color} size={size} />
 				)
 			}}
 		/>
-		<BottomTab.Screen name="SideMenu" component={SideMenu}
+		<BottomTab.Screen name="Side Menu" component={SideMenu}
 			options={{
 				tabBarIcon: ({ color, size }) => (
 					<Ionicons name='reorder-four-sharp' color={color} size={size} />
