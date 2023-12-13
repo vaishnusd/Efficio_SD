@@ -6,6 +6,8 @@ export default IssueReportFilter = ({ isVisible, onClose, filterFunction }) => {
     const [filteredData, setFilteredData] = useState();
     const [toDate, setToDate] = useState(new Date());
     const [fromDate, setFromDate] = useState(new Date(toDate.getTime() - 7 * 24 * 60 * 60 * 1000));
+    const [propValue, setPropValue] = useState(0);
+    const [key, setKey] = useState(0);
 
     const apiGot = "https://androidapi220230605081325.azurewebsites.net/api/approval/GetIssueList";
     const jsonDataToPassInApi = {
@@ -13,7 +15,7 @@ export default IssueReportFilter = ({ isVisible, onClose, filterFunction }) => {
         "ToDate": toDate,
         "PlantName": "Grundfos",
         "OffsetRecords": "0",
-        "NextRecords": "10"
+        "NextRecords": "1000"
     }
 
     function getAllTheData(dataGot) {
@@ -33,14 +35,17 @@ export default IssueReportFilter = ({ isVisible, onClose, filterFunction }) => {
         setToDate(dateCame);
     }
 
-    function resetFunction(){
+    function resetFunction() {
+        let currentDate = new Date();
         setToDate(new Date());
-        setFromDate(new Date(toDate.getTime() - 7 * 24 * 60 * 60 * 1000));
+        setFromDate(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000));
+        setPropValue(propValue + 1);
+        setKey(prevKey => prevKey + 1);
     }
 
     useEffect(() => {
         APICall(apiGot, jsonDataToPassInApi, getAllTheData, 'getReport');
-    }, [fromDate,toDate]);
+    }, [fromDate, toDate]);
 
     return (
         <Modal visible={isVisible} animationType="slide" transparent>
@@ -56,11 +61,11 @@ export default IssueReportFilter = ({ isVisible, onClose, filterFunction }) => {
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ flex: 1, padding: 20, gap: 5 }}>
                                 <Text style={styles.filterProperties}>From Date: </Text>
-                                <DatePickerComponent initialDate={fromDate} updateFunction={updateFromDate}/>
+                                <DatePickerComponent key={key} prop={propValue} initialDate={fromDate} updateFunction={updateFromDate} />
                             </View>
                             <View style={{ flex: 1, padding: 20, gap: 5 }}>
                                 <Text style={styles.filterProperties}>To Date: </Text>
-                                <DatePickerComponent initialDate={toDate} updateFunction={updateToDate}/>
+                                <DatePickerComponent key={key} prop={propValue} initialDate={toDate} updateFunction={updateToDate} />
                             </View>
                         </View>
                         <View style={{ padding: 20, gap: 10 }}>
