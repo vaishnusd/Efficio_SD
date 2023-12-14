@@ -29,7 +29,7 @@ export default IssueReport = () => {
         "ToDate": toDate,
         "PlantName": "Grundfos",
         "OffsetRecords": "0",
-        "NextRecords": "1000"
+        "NextRecords": "10"
     }
 
     function resultReport(dataGot, action) {
@@ -60,11 +60,16 @@ export default IssueReport = () => {
         <SafeAreaView style={styles.container} >
             <LinearGradient colors={['#4C6078', '#001935']} >
                 <View style={styles.filterHeader}>
-                    <TextInput
-                        placeholder="Search..."
-                        style={styles.textInputStyle}
-                        onChangeText={(value) => searchFilter(value)}
-                    />
+                    <View style={styles.textInputStyle}>
+                        <View style={{flex: 1, padding: 7, justifyContent: 'center'}}>
+                            <Image source={require('../../../assets/icons/searchIcon.png')} style={{ width: 20, height: 20}} />
+                        </View>
+                        <TextInput
+                            placeholder="Search..."
+                            style={{ flex: 9, padding: 5 }}
+                            onChangeText={(value) => searchFilter(value)}
+                        />
+                    </View>
                     <TouchableOpacity style={{ flex: 2, borderRadius: 10 }} onPress={toggleFilterModal}>
                         <Image source={require('../../../assets/icons/filter-white.png')} style={styles.filterIcon} />
                     </TouchableOpacity>
@@ -128,9 +133,10 @@ const styles = StyleSheet.create({
     },
     textInputStyle: {
         borderWidth: 0.5,
-        padding: 5,
         borderRadius: 5,
         flex: 14,
+        flexDirection: 'row',
+        alignItems: 'center',
         backgroundColor: 'white'
     }
 });
