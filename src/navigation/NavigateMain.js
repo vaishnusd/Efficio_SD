@@ -14,16 +14,25 @@ import CloseIssue from '../screens/Home/CloseIssue';
 import IssueReport from '../screens/IssueReport/IssueReport';
 import Profile from '../screens/Profile/Profile';
 import EachReportMoreInfoPage from '../screens/IssueReport/EachReportMoreInfoPage';
+import CustomDrawer from './CustomDrawer';
+import ReduxCheck from '../services/ReduxCheck';
+
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
 
 function DrawerNavigator() {
-	return <Drawer.Navigator initialRouteName='BottomTabNavigatorHello' screenOptions={{ headerShown: false }} >
+
+	return <Drawer.Navigator drawerType="slide"
+	drawerStyle={{
+	  width: '100%',
+	}}  drawerContent={(props) => <CustomDrawer {...props} />} initialRouteName='BottomTabNavigatorHello' screenOptions={{ headerShown: false }} >
 		<Drawer.Screen name="Home" component={BottomTabNavigator} />
 		<Drawer.Screen name="AcknowledgeIssue" component={AcknowledgeIssue} />
 		<Drawer.Screen name="CloseIssue" component={CloseIssue} />
+		<Drawer.Screen name="ReduxCheck" component={ReduxCheck} />
+
 	</Drawer.Navigator>
 }
 
@@ -65,7 +74,7 @@ export default NavigateMain = () => {
 	return (
 		<NavigationContainer independent={true}>
 			<Stack.Navigator
-				initialRouteName='Login'
+				initialRouteName='DrawerNavigator'
 				screenOptions={{ headerShown: false }}
 			>
 				<Stack.Screen

@@ -22,8 +22,7 @@ export default ProductionStatus = (dataToSend) => {
                 <LinearGradient colors={['rgba(85, 144, 215, 1)','rgba(0, 33, 73, 1)']} style={styles.productionLineStatus}>
                     <View>
                         <Image source={{
-                            uri:
-                                'https://androidapi220211216164156.azurewebsites.net/api/Approval/DownloadFile?filename=' + data
+                            uri:'https://androidapi220211216164156.azurewebsites.net/api/Approval/DownloadFile?filename=' + data
                         }} style={styles.signatureImage} />
                     </View>
                     <View style={styles.options}>
@@ -103,6 +102,7 @@ const styles = StyleSheet.create({
         height: 400,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
+        fontWeight:500,
 
         justifyContent: 'center',
         alignItems: 'center',

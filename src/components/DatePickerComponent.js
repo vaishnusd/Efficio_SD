@@ -2,10 +2,11 @@ import { Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "
 import { useState } from "react";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
-export default DatePickerComponent = ({ initialDate, updateFunction }) => {
+export default DatePickerComponent = ({ initialDate, updateFunction ,mode}) => {
     const [date, setDate] = useState(initialDate);
 
     function dateFormatter(date) {
+        console.log('DateFormat',date)
         let dateArray = date.toString().split(" ");
         return (Number(dateArray[2]) + " " + dateArray[1] + " " + dateArray[3]);
     }
@@ -22,6 +23,7 @@ export default DatePickerComponent = ({ initialDate, updateFunction }) => {
             onChange,
             mode: currentMode,
             is24Hour: true,
+
         });
     };
 
@@ -32,6 +34,16 @@ export default DatePickerComponent = ({ initialDate, updateFunction }) => {
     const showTimepicker = () => {
         showMode('time');
     };
+
+    const dateDisplay=()=>{
+
+    }
+
+    const timeDisplay=()=>{
+        
+    }
+
+   
 
     return (
         <SafeAreaView>

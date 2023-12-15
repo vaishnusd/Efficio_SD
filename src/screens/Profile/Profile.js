@@ -5,10 +5,10 @@ import { Image, Text, View } from "react-native"
 
 export default Profile = () => {
     return (
-        <ScrollView style={{ flex: 1 }}>
+       
             <View style={styles.container}>
                 <Text style={{ fontSize: 20, fontFamily: 'Poppins' }}>Profile</Text>
-                <TouchableOpacity>
+                <TouchableOpacity  >
                     <Image source={require('../../../assets/icons/userProfileIcon.png')} style={styles.profileIcon} />
                     <View style={{ padding: 5, backgroundColor: 'white', borderRadius: 30, position: 'absolute', top: 0, right: 0 }} >
                         <Image source={require('../../../assets/icons/photoPenIcon.png')} style={styles.photoPenIcon} />
@@ -52,21 +52,22 @@ export default Profile = () => {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-        </ScrollView >
+  
     )
 }
 
 const styles = StyleSheet.create({
-    profileIcon: {
-        width: 100,
-        height: 100
-    },
+
     container: {
         backgroundColor: '#CFEBFF',
         flex: 1,
         alignItems: 'center',
         paddingTop: 20,
         gap: 20
+    },
+    profileIcon: {
+        width: 100,
+        height: 100
     },
     detailContainer: {
         width: '90%',

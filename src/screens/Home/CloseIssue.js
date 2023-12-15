@@ -173,11 +173,11 @@ const styles = StyleSheet.create({
         ,
     },
     IssueButton: {
-        width: 107,
-        height: 35,
-        backgroundColor:'rgba(195, 73, 65, 1)',
-        borderRadius:5,
-        justifyContent:'center',
+        width: 157,
+        height: 24,
+        top: 10,
+        backgroundColor:'crimson'
+     
         // alignItems:'center'
     }
 
