@@ -1,29 +1,54 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    Image,
+    Dimensions,
+    TextInput,
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import React, { useState, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import CustomInput from '../../components/CustomInput';
 import SelectDropDownPage from '../../components/SelectDropDownPage';
-import dataAcknowledgeIssue from '../../../assets/json/AcknowledgeIssue.json'
+import dataAcknowledgeIssue from '../../../assets/json/AcknowledgeIssue.json';
 import DatePickerComponent from '../../components/DatePickerComponent';
-
 
 const AcknowledgeIssue = () => {
     const [fromDate, setFromDate] = useState(new Date());
-    console.log(fromDate)
+    console.log(fromDate);
+    const [issuesData, setIssuesData] = useState([]);
 
-    const [selectProductionLineOptions, setSelectProductionLineOptions] = useState('');
-    console.log(selectProductionLineOptions)
+    const [selectProductionLineOptions, setSelectProductionLineOptions] =
+        useState('');
+    console.log(selectProductionLineOptions);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [prodLineAPIError, setProdLineAPIError] = useState(false);
-    const [stationDataOptions, setStationDataOptions] = useState('')
+    const [stationDataOptions, setStationDataOptions] = useState('');
     const [stationApiError, setStationAPIError] = useState(false);
 
-    const [issueData, setIssueData] = useState(false);
-    const [issueDataApiError, setIssueDataAPIError] = useState(false)
-
+    const [issueDataApiError, setIssueDataAPIError] = useState(false);
 
     const [refreshing, setRefreshing] = useState(false);
+
+    const [line, setLine] = useState(''); // State to hold the selected value
+
+    // Function to update state when value changes
+    const handleValueChangeProd = (newValue) => {
+        setLine(newValue);
+
+    };
+
+
+    const [station, setStation] = useState(''); // State to hold the selected value
+
+    // Function to update state when value changes
+    const handleValueChange = (newValue) => {
+        setStation(newValue);
+
+    };
 
     const {
         control,
@@ -39,17 +64,17 @@ const AcknowledgeIssue = () => {
             Priority: '',
             Description: '',
             RaisedBy: '',
-            AssignedTo: ''
-        }
-    })
+            AssignedTo: '',
+        },
+    });
 
     const prodLineAPI =
         'https://androidapi220230605081325.azurewebsites.net/api/approval/OpenIssueLines';
     const jsonDataToPassInprodLineAPI = {
-        PlantName: "Soft Designers1",
-        LineName: "",
-        StnName: "",
-        StatusRequired: "Open"
+        PlantName: 'Soft Designers1',
+        LineName: '',
+        StnName: '',
+        StatusRequired: 'Open',
     };
 
     function prodResult(dataGot, apiError) {
@@ -59,7 +84,7 @@ const AcknowledgeIssue = () => {
             // setFirstDropdownOptions('')
         } else {
             if (dataGot) {
-                console.log('Hello', dataGot)
+                console.log('Hello', dataGot);
                 setSelectProductionLineOptions(dataGot);
                 setIsLoading(false);
             } else {
@@ -68,20 +93,17 @@ const AcknowledgeIssue = () => {
         }
     }
 
-
-
     useEffect(() => {
         APICall(prodLineAPI, jsonDataToPassInprodLineAPI, prodResult, 'getReport');
     }, []);
 
-
     const stationAPI =
         'https://androidapi220230605081325.azurewebsites.net/api/approval/OpenIssueStn';
     const jsonDataToPassInStationAPI = {
-        PlantName: "Soft Designers1",
-        LineName: "Line A",
-        StnName: "",
-        StatusRequired: "Open"
+        PlantName: 'Soft Designers1',
+        LineName: line,
+        StnName: '',
+        StatusRequired: 'Open',
     };
 
     function stationAPIResult(dataGot, apiError) {
@@ -91,7 +113,7 @@ const AcknowledgeIssue = () => {
             // setFirstDropdownOptions('')
         } else {
             if (dataGot) {
-                console.log('Hello', dataGot)
+                console.log('Hello', dataGot);
                 setStationDataOptions(dataGot);
                 setIsLoading(false);
             } else {
@@ -101,16 +123,21 @@ const AcknowledgeIssue = () => {
     }
 
     useEffect(() => {
-        APICall(stationAPI, jsonDataToPassInStationAPI, stationAPIResult, 'getReport');
-    }, []);
+        APICall(
+            stationAPI,
+            jsonDataToPassInStationAPI,
+            stationAPIResult,
+            'getReport'
+        );
+    }, [line]);
 
     const issueAPI =
-        'https://androidapi220230605081325.azurewebsites.net/api/approval/OpenIssueLines';
+        'https://androidapi220230605081325.azurewebsites.net/api/approval/OpenIssueNo';
     const jsonDataToPassInIssueAPI = {
-        PlantName: "Soft Designers1",
-        LineName: "",
-        StnName: "",
-        StatusRequired: "Open"
+        PlantName: 'Soft Designers1',
+        LineName: line,
+        StnName: station,
+        StatusRequired: 'Open',
     };
 
     function issueAPIResult(dataGot, apiError) {
@@ -120,8 +147,8 @@ const AcknowledgeIssue = () => {
             // setFirstDropdownOptions('')
         } else {
             if (dataGot) {
-                console.log('Hello', dataGot)
-                setIssueData(dataGot);
+                console.log('Hello', dataGot);
+                setIssuesData(dataGot);
                 setIsLoading(false);
             } else {
                 setIsLoading(false);
@@ -129,180 +156,130 @@ const AcknowledgeIssue = () => {
         }
     }
 
-
     useEffect(() => {
         APICall(issueAPI, jsonDataToPassInIssueAPI, issueAPIResult, 'getReport');
-    }, []);
-
-
+    }, [station]);
 
     return (
         <View style={styles.mainContainer}>
-            <View style={styles.mainHeader}>
-                <Text style={styles.mainHeaderText}>Acknowledge Issue</Text>
-            </View>
-            <View style={styles.mainComponent}>
-                <View>
-                    <Controller
-                        control={control}
-                        name='selectProductionLine'
-                        rules={{ required: 'Please select your production line !' }}
-                        render={({ field: { onChange, value } }) => (
-                            <SelectDropDownPage
-                                data={selectProductionLineOptions}
-                                name={'Select Production Line'}
-                                changeValue={onChange}
-                            />
-                        )}
-                    />
-                    {errors.Department && (
-                        <Text style={{ color: 'red' }}>{errors.Department.message}</Text>
-                    )}
-                </View>
+            <Text style={{ fontSize: 20, fontFamily: 'Poppins', alignSelf: 'center',fontWeight:900,top:5 }}>Acknowledge Issue</Text>
 
-                <View>
-                    <Controller
-                        control={control}
-                        name='selectStation'
-                        rules={{ required: 'Please select Station !' }}
-                        render={({ field: { onChange, value } }) => (
-                            <SelectDropDownPage
-                                data={stationDataOptions}
-                                name={'Select Station'}
-                                changeValue={onChange}
-                            />
-                        )}
-                    />
-                    {errors.Department && (
-                        <Text style={{ color: 'red' }}>{errors.Department.message}</Text>
-                    )}
-                </View>
+            <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.dropDownComponent}>
 
-                <View>
-                    <Controller
-                        control={control}
-                        name='counterMeasure'
-                        rules={{ required: 'Please enter the Counter Measure !' }}
-                        render={({ field: { onChange, value } }) => (
-                            <View>
-                                <Text style={styles.InputHeader}>
-                                    Counter Measure<Text style={{ color: 'red' }}>*</Text>
-                                </Text>
-                                <CustomInput
-                                    name='BriefJobDescription'
-                                    changeValue={onChange}
-                                />
+
+                <SelectDropDownPage
+                    data={selectProductionLineOptions}
+                    name={'Select Production Line'}
+                    changeValue={(newValue) => {
+                        // This updates the form control's value
+                        handleValueChangeProd(newValue); // This updates your state
+                    }} />
+
+                <SelectDropDownPage
+                    data={stationDataOptions}
+                    name={'Select Station'}
+                    changeValue={(newValue) => {
+                        handleValueChange(newValue);
+                    }}
+                />
+            </LinearGradient>
+
+            <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
+
+                <LinearGradient colors={['#004799', '#419AFF']} style={styles.issueListHeader}>
+                    <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFF', left: 13 }}>
+                        Issues List
+                    </Text>
+                </LinearGradient>
+                <View style={{ padding: 10, flexDirection: "coloumn", justifyContent: "space-around" }} >
+                    {console.log('Anna', issuesData)}
+                    {issuesData.map((issue, index) => (
+                        <TouchableOpacity style={{ backgroundColor: 'rgba(255, 254, 254, 0.70)', paddingHorizontal: 15, borderRadius: 5, height: 30, justifyContent: 'center', marginVertical: 5 }}>
+                            <View key={index} style={styles.issueItem}>
+                                <Text style={styles.issueTitle}>{issue.issueNo}</Text>
+                                <Text style={styles.issueDescription}>{issue.issueDetails}</Text>
+                                {/* Add more information from the issue object as needed */}
+
                             </View>
-
-
-                        )}
-                    />
-
-                    {errors.BriefJobDescription && (
-                        <Text style={{ color: 'red' }}>
-                            {errors.BriefJobDescription.message}
-                        </Text>
-                    )}
+                        </TouchableOpacity>
+                    ))}
                 </View>
-
-
-                <View>
-                    <Controller
-                        control={control}
-                        name='Counter Measure'
-                        rules={{ required: 'Please enter the Job Description !' }}
-                        render={({ field: { onChange, value } }) => (
-                            <View>
-                                <Text style={styles.InputHeader}>
-                                    Select Category <Text style={{ color: 'red' }}>*</Text>
-                                </Text>
-                                <CustomInput
-                                    name='Select Category'
-                                    changeValue={onChange}
-                                />
-                            </View>
-
-
-                        )}
-                    />
-
-                    {errors.BriefJobDescription && (
-                        <Text style={{ color: 'red' }}>
-                            {errors.BriefJobDescription.message}
-                        </Text>
-                    )}
-                </View>
-
-                <View style={{ flexDirection: 'column', marginBottom: 50 }}>
-                    <View style={{ flexDirection: 'row' ,backgroundColor:'#19647e',height:35,borderTopLeftRadius:10,borderTopRightRadius:10}}>
-                    
-                        <Text style={{fontSize:15,fontWeight:500,color:'#FFF',}}>DueDate</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row',gap:20 }}>
-                        <Controller
-                            control={control}
-                            name='startingDate'
-                            rules={{ required: 'Enter starting date !' }}
-                            render={({ field: { onChange, value } }) => (
-                                <DatePickerComponent  initialDate={fromDate} />
-                            )}
-                        />
-{/* 
-                        <Controller
-                            control={control}
-                            name='startingTime'
-                            rules={{ required: 'Enter starting time !' }}
-                            render={({ field: { onChange, value } }) => (
-                                <TimePicker changeValue={onChange} />
-                            )}
-                        /> */}
-                    </View>
-                </View>
-                {(errors.startingDate || errors.startingTime) && (
-                    <Text style={{ color: 'red', marginTop: 50 }}>{'Required'}</Text>
-                )}
+            </LinearGradient>
 
 
 
-                <View>
-                    <TouchableOpacity
-                        style={styles.IssueButton}
-                    // onPress={() => {
-                    // 	navigation.navigate('RaiseIssue');
+            <View style={styles.issuesContainer}>
+                <LinearGradient colors={['#004799', '#419AFF']} style={styles.issueListHeader}>
+                    <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFF', left: 13 }}>
+                        Counter Measure
+                    </Text>
+                </LinearGradient>
+                <View style={{ padding: 10 }} >
+                    <TextInput
+                        style={{
+                            // color: 'white',s
+                            fontFamily: 'OpenSans',
+                            textAlignVertical: 'top',
+                            // marginVertical: 10,
+
+                            backgroundColor: '#fff',
+
+                            // borderRadius: 5,
+                            padding: 10,
+                            borderRadius: 5,
+                        }}
+                        placeholder='Please describe it in brief...'
+                        multiline
+                        placeholderTextColor={'grey'}
+                        numberOfLines={5}
+                    // onChangeText={(text, index) => {
+                    // 	let newComment = (comment[index] = text);
+                    // 	setComment(newComment);
                     // }}
-                    >
-
-                        <Text style={{ color: 'rgba(255, 255, 255, 1)', textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}>Acknowledge Issue</Text>
-                    </TouchableOpacity>
+                    />
                 </View>
 
 
+
+
             </View>
+
+
+
+
+            <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
+
+                <LinearGradient colors={['#004799', '#419AFF']} style={styles.issueListHeader}>
+                    <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFF', left: 13 }}>
+                        Due Date
+                    </Text>
+                </LinearGradient>
+                <View style={{ padding: 10, flexDirection: "row", justifyContent: "space-around" }} >
+                    <DatePickerComponent initialDate={fromDate} />
+                    <DatePickerComponent initialDate={fromDate} />
+                </View>
+            </LinearGradient>
+
+
+
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <LinearGradient colors={['#489CFF', '#002D62']} style={styles.AcknowledgeButton}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ color: 'white', fontSize: 16 }}>Acknowledge Issue</Text>
+                    </View>
+                </LinearGradient>
+            </TouchableOpacity>
+
 
         </View>
-    )
-}
-export default AcknowledgeIssue
-
+    );
+};
+export default AcknowledgeIssue;
 
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: 'rgba(207, 235, 255, 1)',
-
-    },
-    mainHeader: {
-        top: 5,
-        alignSelf: 'center',
-
-    },
-    mainHeaderText: {
-        fontSize: 25,
-        fontWeight: '600',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-
     },
     mainComponent: {
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
@@ -310,17 +287,68 @@ const styles = StyleSheet.create({
         padding: 15,
         gap: 20,
         flex: 1,
-        borderRadius: 5
-
-        ,
+        borderRadius: 5,
+    },
+    dropDownComponent: {
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        margin: 15,
+        padding: 15,
+        borderRadius: 5,
+        gap: 9,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 255, 255, 0.70)',
     },
     IssueButton: {
-        width: 107,
-        height: 35,
-        backgroundColor: 'rgba(195, 73, 65, 1)',
-        borderRadius: 5,
+        height: 40,
+        width: 180,
+        top: 20,
+        padding: 10,
         justifyContent: 'center',
-        // alignItems:'center'
-    }
+        alignSelf: 'center',
+        backgroundColor: 'rgba(0, 70, 150, 1)',
+        borderRadius: 5,
+        alignSelf: 'center'
+    },
+    issuesContainer: {
 
-})
+        margin: 15,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 255, 255, 0.7)',
+        borderRadius: 5,
+    },
+    issueListHeader: {
+        flexDirection: 'row',
+        height: 41,
+        borderRadius: 5,
+        textAlign: 'center',
+        alignItems: 'center',
+    },
+    issueItem: {
+        borderRadius: 8,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    issueTitle: {
+
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+
+    },
+    issueDescription: {
+        fontSize: 14,
+
+    },
+    AcknowledgeButton: {
+        top: 20,
+        padding: 10,
+        borderRadius: 10,
+        width: 180,
+        height: 40,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+});

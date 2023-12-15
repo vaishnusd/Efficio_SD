@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, Image, Pressable, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Image, Pressable, TouchableOpacity, FlatList,ActivityIndicator } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
 import { AntDesign, FontAwesome5, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -16,6 +16,7 @@ const HomePage = () => {
 	const [dashBoardData, setDashBoardData] = useState([]);
 
 	const [isLoading, setIsLoading] = useState(true);
+	const [loader, setLoader] = useState(true);
 	const [apiError, setAPIError] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
 
@@ -60,7 +61,7 @@ const HomePage = () => {
 		} else {
 			if (dataGot) {
 				setData(dataGot);
-				setIsLoading(false);
+				setLoader(false);
 			} else {
 				setIsLoading(false);
 			}
@@ -114,6 +115,10 @@ const HomePage = () => {
 					color: 'rgba(0, 0, 0, 1)', justifyContent: 'center', fontSize: 20, textAlign: 'center',
 					fontWeight: 700
 				}}>Production Line Status</Text>
+				 {loader ?
+                <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+                    <ActivityIndicator size={"large"} />
+                </View> :
 				<FlatList
 					data={data}
 					contentContainerStyle={styles.stockBody}
@@ -122,6 +127,7 @@ const HomePage = () => {
 							<ProductionStatus dataToSend={item} />
 					}
 				/>
+}
 			</View>
 
 		</ScrollView>

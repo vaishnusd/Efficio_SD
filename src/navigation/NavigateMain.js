@@ -17,6 +17,7 @@ import EachReportMoreInfoPage from '../screens/IssueReport/EachReportMoreInfoPag
 import CustomDrawer from './CustomDrawer';
 import ReduxCheck from '../services/ReduxCheck';
 
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();

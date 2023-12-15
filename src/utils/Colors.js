@@ -1,5 +1,5 @@
 export default {
-    backGroundColor:'',
+    backGroundColor:'#CFEBFF',
     primary: '#facd94',
 
     black: '#000000',

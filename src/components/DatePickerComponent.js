@@ -6,6 +6,7 @@ export default DatePickerComponent = ({ initialDate, updateFunction ,mode}) => {
     const [date, setDate] = useState(initialDate);
 
     function dateFormatter(date) {
+        console.log('DateFormat',date)
         let dateArray = date.toString().split(" ");
         return (Number(dateArray[2]) + " " + dateArray[1] + " " + dateArray[3]);
     }
@@ -34,11 +35,19 @@ export default DatePickerComponent = ({ initialDate, updateFunction ,mode}) => {
         showMode('time');
     };
 
+    const dateDisplay=()=>{
+
+    }
+
+    const timeDisplay=()=>{
+        
+    }
+
    
 
     return (
         <SafeAreaView>
-            <TouchableOpacity style={styles.dateButton} onPress={showDatepicker}>
+            <TouchableOpacity style={styles.dateButton} onPress={mode==='timeFormat'?showTimepicker:showDatepicker}>
                 {console.log("hello to local string ", date.toString().split(" "))}
                 <Text style={{ textAlign: 'center' }}>{dateFormatter(date)}</Text>
             </TouchableOpacity>

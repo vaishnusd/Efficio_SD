@@ -22,7 +22,7 @@ const SelectDropDownPage = ({
 			</Text>
 			<SelectDropdown
 				data={data}
-				search
+				
 				onSelect={(selectedItem) => {
 					
 					changeValue(selectedItem);
@@ -34,7 +34,7 @@ const SelectDropDownPage = ({
 					/>
 				)}
 				buttonStyle={styles.selectDropDownButton}
-				defaultButtonText={'Select '+name}
+				defaultButtonText={'Select'}
 				rowStyle={styles.selectDropDownRow}
 				rowTextStyle={styles.selectDropDownText}
 				buttonTextStyle={styles.selectDropDownButtonText}
@@ -54,36 +54,44 @@ const styles = StyleSheet.create({
 	dropDownIconStyle: {
 		width: 15,
 		height: 15,
+		left:10
 	},
 	selectDropDownText: {
 		fontSize: 16,
 	},
 	selectDropDownRow: {
-		height: 40,
+		
 		width: 'auto',
+		
 	},
 	selectDropDownButton: {
 		width: 'auto',
-		height: 50,
-		borderWidth: 1,
+		height: 45,
+		borderWidth: 2,
+		borderColor:'#004696',
 		backgroundColor: 'white',
+		borderRadius:8
 	},
 	selectDropDownButtonText: {
 		fontSize: 16,
+
 	},
 	selectDropDownButtonContainer: {
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},
 	InputHeader: {
-		fontSize: 17,
+		fontSize: 16,
 		fontWeight: '600',
-		color: 'black',
+		color: '#000',
+		fontFamily:'Poppins',
 		alignSelf: 'flex-start',
 		marginBottom: 5,
 	},
 	selectedRowStyle: {
-		backgroundColor: 'blue',
+		backgroundColor: '#219ebc',
+		color:'#fff',
+	
 	},
 });
 
