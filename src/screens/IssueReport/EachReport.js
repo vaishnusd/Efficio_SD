@@ -38,8 +38,8 @@ export default EachReport = ({ dataToSend }) => {
                     <Text style={[styles.columnHeading, { fontSize: 9 }]}>{dataToSend.station} </Text>
                 </View>
                 <View style={{ flex: 3, borderLeftWidth: 0.2, borderColor: 'black', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 10 }}>
-                    <View style={[styles.seeMoreButton, { backgroundColor: (dataToSend.status === 'Closed') ? 'green' : 'yellow' }]}>
-                        <Text style={[styles.columnHeading, { fontSize: 11, color: (dataToSend.status === 'Closed') ? 'white' : 'black' }]}>{dataToSend.status === 'Acknowledged' ? 'Acknowle...' : dataToSend.status}</Text>
+                    <View style={[styles.seeMoreButton, { backgroundColor: (dataToSend.status === 'Closed') ? 'green' : (dataToSend.status === 'Open' ? 'red' : 'yellow'), borderWidth: (dataToSend.status === 'Acknowledged') ? 1 : 0 }]}>
+                        <Text style={[styles.columnHeading, { fontSize: 11, color: (dataToSend.status === 'Acknowledged') ? 'black' : 'white' }]}>{dataToSend.status === 'Acknowledged' ? 'Acknowle...' : dataToSend.status}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

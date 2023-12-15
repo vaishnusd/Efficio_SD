@@ -47,8 +47,7 @@ export default DatePickerComponent = ({ initialDate, updateFunction ,mode}) => {
 
     return (
         <SafeAreaView>
-            <TouchableOpacity style={styles.dateButton} onPress={mode==='timeFormat'?showTimepicker:showDatepicker}>
-                {console.log("hello to local string ", date.toString().split(" "))}
+            <TouchableOpacity style={styles.dateButton} onPress={showDatepicker}>
                 <Text style={{ textAlign: 'center' }}>{dateFormatter(date)}</Text>
             </TouchableOpacity>
         </SafeAreaView>
