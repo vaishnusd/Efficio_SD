@@ -1,8 +1,4 @@
-import { createStore, combineReducers} from 'redux';
-import CountReducer from './reducers/countReducer';
- 
-const rootReducer = combineReducers({
-  count: CountReducer,
-});
- 
+import { createStore } from 'redux';
+import rootReducer from './reducers';
+
 export const store = createStore(rootReducer);

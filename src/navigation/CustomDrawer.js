@@ -12,11 +12,11 @@ import {
 } from 'react-native-paper';
 import { DrawerContentScrollView,DrawerItemList } from '@react-navigation/drawer'
 import { ScrollView } from 'react-native-gesture-handler'
+import { useSelector } from 'react-redux';
 
 const CustomDrawer = (props) => {
+  const userInfo = useSelector((state) => state.user.userProfile);
   return (
- 
-
    <View style={{flex:1}}>
         <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor:'rgba(207, 235, 255, 1)',flex:1}}>
         
@@ -30,15 +30,14 @@ const CustomDrawer = (props) => {
                                 size={50}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>Akhand_OP</Title>
-                                <Caption style={styles.caption}>@akhand_op</Caption>
+                                <Title style={styles.title}>{userInfo.fullName}</Title>
+                                <Caption style={styles.caption}>{userInfo.email}</Caption>
                             </View>
                         </View>
 
                         <View style={styles.row}>
                             <View style={styles.section}>
-                                <Paragraph style={[styles.paragraph, styles.caption]}>Grundfos</Paragraph>
-                             
+                                <Paragraph style={[styles.paragraph, styles.caption]}>{userInfo.plantName}</Paragraph>
                             </View>
                        
                         </View>

@@ -4,6 +4,7 @@ import APICall from "../../utils/APICall";
 import EachReport from "./EachReport";
 import { LinearGradient } from "expo-linear-gradient";
 import IssueReportFilter from "./IssueReportFilter";
+import * as Animatable from 'react-native-animatable';
 
 export default IssueReport = () => {
     //All Data States
@@ -167,6 +168,8 @@ export default IssueReport = () => {
     function savingFilteredData(value) {
         setFromDate(filterfromDate);
         setToDate(filtertoDate);
+        setFirstData(0);
+        setNextRecords(10);
         setFilterView(false);
         setLoader(true);
     }
@@ -183,8 +186,8 @@ export default IssueReport = () => {
 
     return (
         <SafeAreaView style={styles.container} >
-            <View style={styles.categoryContainer}>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 15, backgroundColor: '#001935', width: 300, paddingVertical: 10, borderTopLeftRadius: 30, borderTopRightRadius: 30 }}>
+            <Animatable.View style={styles.categoryContainer} animation={'slideInUp'}>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 15, backgroundColor: '#001935', width: 300, paddingVertical: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
                     <TouchableOpacity style={openStatus ? styles.filterTextButtons2 : styles.filterTextButtons1} onPress={() => setStatusFunction(1)}>
                         <Text style={openStatus ? styles.optionButtonText2 : styles.optionButtonText1}>Open</Text>
                     </TouchableOpacity>
@@ -195,31 +198,33 @@ export default IssueReport = () => {
                         <Text style={closedStatus ? styles.optionButtonText2 : styles.optionButtonText1}>Closed</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-            <LinearGradient colors={['#4C6078', '#001935']} >
-                <View style={styles.filterHeader}>
-                    <View style={styles.textInputStyle}>
-                        <View style={{ flex: 1, padding: 7, justifyContent: 'center' }}>
-                            <Image source={require('../../../assets/icons/searchIcon.png')} style={{ width: 20, height: 20 }} />
+            </Animatable.View>
+            <Animatable.View animation={'slideInDown'}>
+                <LinearGradient colors={['#001935','#4C6078']} >
+                    <View style={styles.filterHeader}>
+                        <View style={styles.textInputStyle}>
+                            <View style={{ flex: 1, padding: 7, justifyContent: 'center' }}>
+                                <Image source={require('../../../assets/icons/searchIcon.png')} style={{ width: 20, height: 20 }} />
+                            </View>
+                            <TextInput
+                                placeholder="Search..."
+                                style={{ flex: 10, padding: 5 }}
+                                onChangeText={(value) => searchFilter(value)}
+                            />
                         </View>
-                        <TextInput
-                            placeholder="Search..."
-                            style={{ flex: 10, padding: 5 }}
-                            onChangeText={(value) => searchFilter(value)}
-                        />
+                        <TouchableOpacity style={{ flex: 2, borderRadius: 10 }} onPress={toggleFilterModal}>
+                            <Image source={require('../../../assets/icons/calendar-white.png')} style={styles.filterIcon} />
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{ flex: 2, borderRadius: 10 }} onPress={toggleFilterModal}>
-                        <Image source={require('../../../assets/icons/calendar-white.png')} style={styles.filterIcon} />
-                    </TouchableOpacity>
-                </View>
 
-                <View style={styles.reportTableHeader}>
-                    <Text style={[styles.columnHeading, { flex: 2 }]}>Issue No.</Text>
-                    <Text style={[styles.columnHeading, { flex: 5 }]}>Issue</Text>
-                    <Text style={[styles.columnHeading, { flex: 3 }]}>Line & Station</Text>
-                    <Text style={[styles.columnHeading, { flex: 3 }]}>Status</Text>
-                </View>
-            </LinearGradient>
+                    <View style={styles.reportTableHeader}>
+                        <Text style={[styles.columnHeading, { flex: 2 }]}>Issue No.</Text>
+                        <Text style={[styles.columnHeading, { flex: 5 }]}>Issue</Text>
+                        <Text style={[styles.columnHeading, { flex: 3 }]}>Line & Station</Text>
+                        <Text style={[styles.columnHeading, { flex: 3 }]}>Status</Text>
+                    </View>
+                </LinearGradient>
+            </Animatable.View>
             {loader ?
                 <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
                     <ActivityIndicator size={"large"} color={"#4C6078"} />
@@ -252,31 +257,38 @@ export default IssueReport = () => {
                             }
                             contentContainerStyle={styles.allData}
                             ListFooterComponent={
-                                <View style={{ padding: 20, justifyContent: 'center', flexDirection: 'row', alignItems: 'center', gap: 20 }}>
-                                    {firstData ?
-                                        <TouchableOpacity style={styles.nextPrevButton} onPress={() => goToPage("Prev")}>
-                                            <Image source={require('../../../assets/icons/left-arrow.png')} style={styles.nextPrevbuttonIcons} />
-                                            <Text style={styles.nextPrevButtonText}>Previous</Text>
-                                        </TouchableOpacity> :
-                                        <View>
+                                <View>
+                                    {(nextRecords >= totalRecords) &&
+                                        <View style={{justifyContent: 'center', alignItems: 'center', paddingVertical: 10}}>
+                                            <Text style={{fontFamily: 'Poppins_Regular', fontSize: 12, color: 'gray'}}>- - -    No more data to show    - - -</Text>
                                         </View>
                                     }
-                                    {firstData ?
-                                        <TouchableOpacity style={styles.nextPrevButton} onPress={() => goToPage("First")}>
-                                            <Text style={styles.nextPrevButtonText}>First Page</Text>
-                                        </TouchableOpacity> :
-                                        <View>
-                                        </View>
-                                    }
-                                    {console.log(nextRecords, totalRecords)}
-                                    {nextRecords < totalRecords ?
-                                        <TouchableOpacity style={styles.nextPrevButton} onPress={() => goToPage("Next")}>
-                                            <Text style={styles.nextPrevButtonText}>Next</Text>
-                                            <Image source={require('../../../assets/icons/right-arrow.png')} style={styles.nextPrevbuttonIcons} />
-                                        </TouchableOpacity> :
-                                        <View>
-                                        </View>
-                                    }
+                                    <View style={styles.pageButtonContainer}>
+                                        {firstData ?
+                                            <TouchableOpacity style={styles.nextPrevButton} onPress={() => goToPage("Prev")}>
+                                                <Image source={require('../../../assets/icons/left-arrow.png')} style={styles.nextPrevbuttonIcons} />
+                                                <Text style={styles.nextPrevButtonText}>Previous</Text>
+                                            </TouchableOpacity> :
+                                            <View>
+                                            </View>
+                                        }
+                                        {firstData ?
+                                            <TouchableOpacity style={styles.nextPrevButton} onPress={() => goToPage("First")}>
+                                                <Text style={styles.nextPrevButtonText}>First Page</Text>
+                                            </TouchableOpacity> :
+                                            <View>
+                                            </View>
+                                        }
+                                        {console.log(nextRecords, totalRecords)}
+                                        {nextRecords < totalRecords ?
+                                            <TouchableOpacity style={styles.nextPrevButton} onPress={() => goToPage("Next")}>
+                                                <Text style={styles.nextPrevButtonText}>Next</Text>
+                                                <Image source={require('../../../assets/icons/right-arrow.png')} style={styles.nextPrevbuttonIcons} />
+                                            </TouchableOpacity> :
+                                            <View>
+                                            </View>
+                                        }
+                                    </View>
                                 </View>
                             }
                         />
@@ -314,9 +326,12 @@ const styles = StyleSheet.create({
         paddingBottom: 7,
         gap: 10,
         position: 'absolute',
+        alignSelf: 'center',
         bottom: -10,
         zIndex: 2,
-        width: '100%'
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     allData: {
         paddingHorizontal: 2,
@@ -344,6 +359,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         gap: 10,
+        borderBottomWidth: 0,
+        borderColor: 'white',
+        backgroundColor: '#001935'
     },
     textInputStyle: {
         borderWidth: 0.5,
@@ -351,7 +369,8 @@ const styles = StyleSheet.create({
         flex: 22,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        margin: 5
     },
     optionButtonText1: {
         fontFamily: 'Poppins_Regular',
@@ -394,16 +413,25 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 5
+        gap: 5,
+        left: -1
     },
     nextPrevButtonText: {
         fontSize: 12,
         color: '#4C6078',
         fontFamily: 'Poppins_Regular',
-        top: 1
+        top: 1,
     },
     nextPrevbuttonIcons: {
         width: 10,
         height: 10
+    },
+    pageButtonContainer: {
+        padding: 20,
+        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'center',
+        // gap: 20,
+        // backgroundColor: 'yellow'
     }
 });

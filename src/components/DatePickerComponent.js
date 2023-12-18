@@ -48,8 +48,7 @@ export default DatePickerComponent = ({ initialDate, updateFunction ,mode,change
     return (
         <SafeAreaView>
             <TouchableOpacity style={styles.dateButton} onPress={showDatepicker}>
-                <Image style={{height:30,width:30}} source={require('../../assets/images/calender.png')}/>
-                <Text style={{ textAlign: 'center', marginLeft: 2, fontSize: 16, fontWeight: '500',width:100 }}>{dateFormatter(date)}</Text>
+                <Text style={{ textAlign: 'center' }}>{dateFormatter(date)}</Text>
             </TouchableOpacity>
         </SafeAreaView>
     );

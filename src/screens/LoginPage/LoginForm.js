@@ -7,6 +7,8 @@ import InputTextType from "../../components/InputTextType";
 import APICall from "../../utils/APICall";
 import { useNavigation } from '@react-navigation/native';
 import { ActivityIndicator } from "react-native";
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../redux/actions/userActions';
 
 
 export default LoginForm = () => {
@@ -15,6 +17,8 @@ export default LoginForm = () => {
     const [authenticationLoader, setAuthenticationLoader] = useState(false);
     const [authenticationMessage, setAuthenticationMessage] = useState("Authenticating ......");
     const apiGot = "https://androidapi220230605081325.azurewebsites.net/api/approval/VerifyUserName";
+    const dispatch = useDispatch();
+    let formData;
 
     const {
         control,
@@ -28,10 +32,23 @@ export default LoginForm = () => {
         },
     });
 
+    function getUserInfo(dataGot, result) {
+        if (result === "Got User Info") {
+            console.log("Again", dataGot);
+            const simulatedUserData = dataGot;
+            dispatch(loginSuccess(simulatedUserData));
+        }
+    }
+
     function resultFunc(resultCame) {
         console.log("Checked - ", resultCame);
         if (resultCame === "User Authentication Success") {
             setAuthenticationMessage("Authentication Successful");
+            // const simulatedUserData = { /* Simulated user data after login */ };
+            // dispatch(loginSuccess(simulatedUserData));
+            let apiForUserInfo = "https://androidapi220230605081325.azurewebsites.net/api/approval/VerifyUserName1";
+            console.log(formData);
+            APICall(apiForUserInfo, formData, getUserInfo, "getUserInformation")
             setTimeout(() => {
                 navigation.navigate('DrawerNavigator');
                 navigation.reset({ index: 0, routes: [{ name: 'DrawerNavigator' }] });
@@ -50,6 +67,7 @@ export default LoginForm = () => {
 
     const onSubmit = async (data) => {
         console.log("Data - ", data);
+        formData = data;
         setAuthenticationLoader(true);
         console.log("Authentication Loading ...", authenticationLoader);
         APICall(apiGot, data, resultFunc, "checkAuthentication")
@@ -127,7 +145,7 @@ export default LoginForm = () => {
                 {authenticationLoader &&
                     <Modal visible={authenticationLoader} transparent>
                         <View style={{ height: 150, width: 340, gap: 10, top: '40%', justifyContent: 'center', alignItems: 'center', alignSelf: 'center', backgroundColor: 'white', padding: 20 }}>
-                            {!(authenticationMessage.includes("Failed")||authenticationMessage.includes("Successful")) &&
+                            {!(authenticationMessage.includes("Failed") || authenticationMessage.includes("Successful")) &&
                                 <ActivityIndicator />
                             }
                             <Text style={{ color: authenticationMessage.includes("Failed") ? 'red' : authenticationMessage.includes("Success") ? 'green' : 'black  ' }}>{authenticationMessage}</Text>

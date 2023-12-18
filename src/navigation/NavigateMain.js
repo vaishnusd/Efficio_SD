@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -15,7 +14,7 @@ import IssueReport from '../screens/IssueReport/IssueReport';
 import Profile from '../screens/Profile/Profile';
 import EachReportMoreInfoPage from '../screens/IssueReport/EachReportMoreInfoPage';
 import CustomDrawer from './CustomDrawer';
-import ReduxCheck from '../services/ReduxCheck';
+// import ReduxCheck from '../services/ReduxCheck';
 
 
 const Stack = createNativeStackNavigator();
@@ -25,13 +24,13 @@ const BottomTab = createBottomTabNavigator();
 function DrawerNavigator() {
 
 	return <Drawer.Navigator drawerType="slide"
-	drawerStyle={{
-	  width: '100%',
-	}}  drawerContent={(props) => <CustomDrawer {...props} />} initialRouteName='BottomTabNavigatorHello' screenOptions={{ headerShown: false }} >
+		drawerStyle={{
+			width: '100%',
+		}} drawerContent={(props) => <CustomDrawer {...props} />} initialRouteName='BottomTabNavigatorMain' screenOptions={{ headerShown: false }} >
 		<Drawer.Screen name="Home" component={BottomTabNavigator} />
 		<Drawer.Screen name="AcknowledgeIssue" component={AcknowledgeIssue} />
 		<Drawer.Screen name="CloseIssue" component={CloseIssue} />
-		<Drawer.Screen name="ReduxCheck" component={ReduxCheck} />
+		{/* <Drawer.Screen name="ReduxCheck" component={ReduxCheck} /> */}
 
 	</Drawer.Navigator>
 }
@@ -74,7 +73,7 @@ export default NavigateMain = () => {
 	return (
 		<NavigationContainer independent={true}>
 			<Stack.Navigator
-				initialRouteName='AcknowledgeIssue'
+				initialRouteName='Login'
 				screenOptions={{ headerShown: false }}
 			>
 				<Stack.Screen
@@ -88,7 +87,7 @@ export default NavigateMain = () => {
 					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
-					name='BottomTabNavigatorHello'
+					name='BottomTabNavigatorMain'
 					component={BottomTabNavigator}
 					options={{ headerShown: false }}
 				/>

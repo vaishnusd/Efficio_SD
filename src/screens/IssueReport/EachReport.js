@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import EachReportMoreInfo from "./EachReportMoreInfo";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
+import * as Animatable from 'react-native-animatable';
 
 export default EachReport = ({ dataToSend }) => {
     const [infoModalView, setInfoModalView] = useState(false);
@@ -24,7 +25,7 @@ export default EachReport = ({ dataToSend }) => {
     }
 
     return (
-        <View>
+        <Animatable.View animation={'bounceInLeft'}>
             <TouchableOpacity style={styles.reportTableHeader} activeOpacity={0.6} onPress={goToPage}>
                 <View style={{ flex: 2, paddingHorizontal: 2 }}>
                     <Text style={[styles.columnHeading, { flex: 1 }]}>{dataToSend.issueNo}</Text>
@@ -38,13 +39,13 @@ export default EachReport = ({ dataToSend }) => {
                     <Text style={[styles.columnHeading, { fontSize: 9 }]}>{dataToSend.station} </Text>
                 </View>
                 <View style={{ flex: 3, borderLeftWidth: 0.2, borderColor: 'black', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 10 }}>
-                    <View style={[styles.seeMoreButton, { backgroundColor: (dataToSend.status === 'Closed') ? 'green' : (dataToSend.status === 'Open' ? 'red' : 'yellow'), borderWidth: (dataToSend.status === 'Acknowledged') ? 1 : 0 }]}>
+                    <View style={[styles.seeMoreButton, { backgroundColor: (dataToSend.status === 'Closed') ? 'green' : (dataToSend.status === 'Open' ? 'red' : '#FFF78A'), borderWidth: (dataToSend.status === 'Acknowledged') ? 1 : 0 }]}>
                         <Text style={[styles.columnHeading, { fontSize: 11, color: (dataToSend.status === 'Acknowledged') ? 'black' : 'white' }]}>{dataToSend.status === 'Acknowledged' ? 'Acknowle...' : dataToSend.status}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
             <EachReportMoreInfo isVisible={infoModalView} onClose={toggleInfoModal} dataToSend={dataToSend} />
-        </View>
+        </Animatable.View>
     )
 }
 
