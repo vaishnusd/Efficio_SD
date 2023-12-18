@@ -74,7 +74,7 @@ export default NavigateMain = () => {
 	return (
 		<NavigationContainer independent={true}>
 			<Stack.Navigator
-				initialRouteName='DrawerNavigator'
+				initialRouteName='AcknowledgeIssue'
 				screenOptions={{ headerShown: false }}
 			>
 				<Stack.Screen

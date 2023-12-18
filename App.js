@@ -25,30 +25,7 @@ export default function App() {
 	return (
 		<NavigationContainer>
 			<SafeAreaView style={{ flex: 1 }}>
-				{/* <BottomTab.Navigator initialRouteName='AcknowledgeIssue' screenOptions={{headerShown:false}}>
-					<BottomTab.Screen name="AcknowledgeIssue" component={AcknowledgeIssue}
-					 options={{tabBarIcon:({color,size})=>(
-                           <Ionicons name='home'  color={color} size={size} />
-					)}}/>
-
-					<BottomTab.Screen name="CloseIssue" component={CloseIssue}			
-					options={{tabBarIcon:({color,size})=>(
-						  <Ionicons name='notifications-outline' color={color} size={size} />
-				   )}}
-					/>
-						<BottomTab.Screen name="ProfileSection" component={Profile}			
-					options={{tabBarIcon:({color,size})=>(
-						  <Ionicons name='person-circle-outline' color={color} size={size} />
-				   )}}
-					/>
-						<BottomTab.Screen name="SideMenu" component={SideMenu}			
-					options={{tabBarIcon:({color,size})=>(
-						  <Ionicons name='reorder-four-sharp' color={color} size={size} />
-				   )}}
-					/>
-				</BottomTab.Navigator> */}
 				    <Provider store={store}>
-
 				<Navigate />
 				</Provider>
 				<StatusBar barStyle='dark-content' backgroundColor='rgba(207, 235, 255, 1)' />

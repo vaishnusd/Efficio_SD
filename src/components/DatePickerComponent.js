@@ -1,8 +1,8 @@
-import { Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View,Image} from "react-native";
 import { useState } from "react";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
-export default DatePickerComponent = ({ initialDate, updateFunction ,mode}) => {
+export default DatePickerComponent = ({ initialDate, updateFunction ,mode,changeValue}) => {
     const [date, setDate] = useState(initialDate);
 
     function dateFormatter(date) {
@@ -48,7 +48,8 @@ export default DatePickerComponent = ({ initialDate, updateFunction ,mode}) => {
     return (
         <SafeAreaView>
             <TouchableOpacity style={styles.dateButton} onPress={showDatepicker}>
-                <Text style={{ textAlign: 'center' }}>{dateFormatter(date)}</Text>
+                <Image style={{height:30,width:30}} source={require('../../assets/images/calender.png')}/>
+                <Text style={{ textAlign: 'center', marginLeft: 2, fontSize: 16, fontWeight: '500',width:100 }}>{dateFormatter(date)}</Text>
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderBottomRightRadius: 10,
         padding: 10,
+        flexDirection:"row",
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -71,5 +73,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        alignItems:'center'
     }
 });
