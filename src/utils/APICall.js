@@ -25,6 +25,15 @@ export default APICall = (apiGot, jsonDataToPassInApi, result, action) => {
                     } else {
                         result("User Authentication Failed")
                     }
+                } else if (action === "getUserInformation") {
+                    const resp = await api.json();
+                    const ans = resp;
+                    // console.log(ans);
+                    if (ans.empId !== "") {
+                        result(ans, "Got User Info");
+                    } else {
+                        result(null, "No user");
+                    }
                 } else {
                     result("Success");
                     console.log("Data Sent");
