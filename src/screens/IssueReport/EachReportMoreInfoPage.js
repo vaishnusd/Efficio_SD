@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import * as Animatable from 'react-native-animatable';
 const dividorColor = "#103659";
 
 export default EachReportMoreInfoPage = ({ route }) => {
@@ -17,7 +18,7 @@ export default EachReportMoreInfoPage = ({ route }) => {
             statusColor = 'green';
         } else {
             if (dataGot.acknowledged) {
-                statusColor = 'yellow';
+                statusColor = '#FFF78A';
             } else {
                 statusColor = 'red';
             }
@@ -50,7 +51,7 @@ export default EachReportMoreInfoPage = ({ route }) => {
         let message;
         if (toSend) {
             message = toSend;
-        } else if (statusColor === 'yellow') {
+        } else if (statusColor === '#FFF78A') {
             message = "Issue is not ended yet!"
         } else {
             message = "Issue is not acknowledged yet!"
@@ -79,20 +80,20 @@ export default EachReportMoreInfoPage = ({ route }) => {
                             </View>
                             <View style={{ gap: -2 }}>
                                 <Text style={[styles.dataProperty,{color: mainFontColor}]}>Issue No.</Text>
-                                <Text style={[styles.dataValue, {color:mainFontColor}]}>{dataGot.issueNo}</Text>
+                                <Animatable.Text animation={'slideInLeft'} style={[styles.dataValue, {color:mainFontColor}]}>{dataGot.issueNo}</Animatable.Text>
                             </View>
                         </View>
-                        <View style={styles.firstHeadSecCol}>
+                        <Animatable.View style={styles.firstHeadSecCol} animation={'fadeIn'}>
                             <View style={[styles.plantTag, { backgroundColor: (checkStatusColor()) }]}>
-                                <Text style={[styles.dataValue, { color: (statusColor === 'yellow') ? 'black' : 'white' }]}>{dataGot.status}</Text>
+                                <Text style={[styles.dataValue, { color: (statusColor === '#FFF78A') ? 'black' : 'white' }]}>{dataGot.status}</Text>
                             </View>
-                        </View>
+                        </Animatable.View>
                     </View>
                     <View>
                         <Text style={[styles.dataProperty,{color: mainFontColor}]}>Issue:</Text>
-                        <Text style={[styles.dataValue, { fontSize: 16, color: mainFontColor }]}>{dataGot.issueDetails}</Text>
+                        <Animatable.Text animation={'slideInLeft'} style={[styles.dataValue, { fontSize: 16, color: mainFontColor }]}>{dataGot.issueDetails}</Animatable.Text>
                     </View>
-                    <View style={styles.firstRowTable}>
+                    <Animatable.View style={styles.firstRowTable} animation={'slideInUp'}>
                         <View style={[styles.eachTableSection, { borderColor: 'white', borderRightWidth: 0.2 }]}>
                             <Text style={[styles.dataProperty, { color: 'white' }]}>Line</Text>
                             <Text style={[styles.dataValue, { color: 'white' }]}>{dataGot.line}</Text>
@@ -101,8 +102,8 @@ export default EachReportMoreInfoPage = ({ route }) => {
                             <Text style={[styles.dataProperty, { color: 'white' }]}>Station</Text>
                             <Text style={[styles.dataValue, { color: 'white' }]}>{dataGot.station}</Text>
                         </View>
-                    </View>
-                    <View style={styles.secondRowTable}>
+                    </Animatable.View>
+                    <Animatable.View style={styles.secondRowTable} animation={'zoomIn'}>
                         <View style={[styles.eachTableSection, { borderRightWidth: 0.2 }]}>
                             <Text style={styles.dataProperty}>Type</Text>
                             <Text style={[styles.someFonts]}>{dataGot.type}</Text>
@@ -111,10 +112,10 @@ export default EachReportMoreInfoPage = ({ route }) => {
                             <Text style={styles.dataProperty}>Priority</Text>
                             <Text style={[styles.someFonts]}>{dataGot.priority}</Text>
                         </View>
-                    </View>
+                    </Animatable.View>
                 </LinearGradient>
                 <View style={{ paddingHorizontal: 20 }}>
-                    <View style={{ gap: 10, marginTop: 40, backgroundColor: 'white', padding: 10, borderRadius: 5 }}>
+                    <Animatable.View animation={'flipInX'} style={{ gap: 10, marginTop: 40, backgroundColor: 'white', padding: 10, borderRadius: 5 }}>
                         <View>
                             <Text style={styles.dataProperty}>Problem:</Text>
                             <Text style={styles.dataValueNormal}>{dataGot.problemStatement}</Text>
@@ -127,13 +128,13 @@ export default EachReportMoreInfoPage = ({ route }) => {
                             <Text style={styles.dataProperty}>Corrective Action:</Text>
                             <Text style={styles.dataValueNormal}>{dataGot.correctiveAction ? dataGot.correctiveAction : deliverMessage("Not Available")}</Text>
                         </View>
-                    </View>
+                    </Animatable.View>
                     <TouchableOpacity style={styles.expandableField} activeOpacity={0.5} onPress={() => openCollapse(1)}>
                         <Text style={styles.someFonts}>Track Status</Text>
                         <Image source={require('../../../assets/icons/downArrow.png')} style={{ width: 30, height: 30 }} />
                     </TouchableOpacity>
                     {showTimingsDurations &&
-                        <View style={styles.expandedContent}>
+                        <Animatable.View style={styles.expandedContent} animation={'slideInDown'} duration={500}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingVertical: 10, marginBottom: 10 }}>
                                 <View style={styles.timingContainer}>
                                     <Image source={require('../../../assets/icons/start-button.png')} style={styles.allTimeIcon} />
@@ -181,14 +182,14 @@ export default EachReportMoreInfoPage = ({ route }) => {
                                 <Text style={styles.expandedContentRowHeader}>Downtime Duration:</Text>
                                 <Text>{dataGot.downtime ? dataGot.downtime + " mins" : deliverMessage()}</Text>
                             </View>
-                        </View>
+                        </Animatable.View>
                     }
                     <TouchableOpacity style={[styles.expandableField, { marginBottom: (showOtherDetails ? 5 : 80) }]} activeOpacity={0.5} onPress={() => openCollapse(2)}>
                         <Text style={styles.someFonts}>Other Details</Text>
                         <Image source={require('../../../assets/icons/downArrow.png')} style={{ width: 30, height: 30 }} />
                     </TouchableOpacity>
                     {showOtherDetails &&
-                        <View style={{ gap: 10, padding: 10, backgroundColor: 'white', borderRadius: 10, marginBottom: 80 }}>
+                        <Animatable.View animation={'slideInDown'} duration={500} style={{ gap: 10, padding: 10, backgroundColor: 'white', borderRadius: 10, marginBottom: 80 }}>
                             <View>
                                 <Text style={styles.dataProperty}>Assigned To:</Text>
                                 <Text style={styles.dataValueNormal}>{dataGot.assignedTo}</Text>
@@ -197,7 +198,7 @@ export default EachReportMoreInfoPage = ({ route }) => {
                                 <Text style={styles.dataProperty}>Counter Measure:</Text>
                                 <Text style={styles.dataValueNormal}>{dataGot.counterMeasure}</Text>
                             </View>
-                        </View>
+                        </Animatable.View>
                     }
                 </View>
             </ScrollView>
@@ -281,9 +282,9 @@ const styles = StyleSheet.create({
             width: 0,
             height: 2,
         },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.70,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: 10,
     },
     mainInfo: {
         borderWidth: 1,
@@ -343,6 +344,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: 'white',
         justifyContent: 'space-between',
+        zIndex: 3,
         marginTop: 20,
         shadowColor: '#000',
         shadowOffset: {
@@ -362,7 +364,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 10,
         marginTop: 5,
-        borderRadius: 10
+        borderRadius: 10,
+        zIndex: 2
     },
     expandedContentRowHeader: {
         fontFamily: 'Poppins',
