@@ -34,21 +34,16 @@ export default LoginForm = () => {
 
     function getUserInfo(dataGot, result) {
         if (result === "Got User Info") {
-            console.log("Again", dataGot);
-            const simulatedUserData = dataGot;
-            dispatch(loginSuccess(simulatedUserData));
+            dispatch(loginSuccess(dataGot));
         }
     }
 
     function resultFunc(resultCame) {
         console.log("Checked - ", resultCame);
         if (resultCame === "User Authentication Success") {
-            setAuthenticationMessage("Authentication Successful");
-            // const simulatedUserData = { /* Simulated user data after login */ };
-            // dispatch(loginSuccess(simulatedUserData));
             let apiForUserInfo = "https://androidapi220230605081325.azurewebsites.net/api/approval/VerifyUserName1";
-            console.log(formData);
-            APICall(apiForUserInfo, formData, getUserInfo, "getUserInformation")
+            setAuthenticationMessage("Authentication Successful");
+            APICall(apiForUserInfo, formData, getUserInfo, "getUserInformation");
             setTimeout(() => {
                 navigation.navigate('DrawerNavigator');
                 navigation.reset({ index: 0, routes: [{ name: 'DrawerNavigator' }] });
@@ -56,7 +51,7 @@ export default LoginForm = () => {
                 setAuthenticationMessage("Authenticating ......");
             }, 2 * 1000);
         } else {
-            setAuthenticationMessage("Authentication Failed, Please enter details Carefully");
+            setAuthenticationMessage("Authentication failed !! \n *Please enter details carefully*");
         }
     }
 
@@ -144,17 +139,27 @@ export default LoginForm = () => {
                 </TouchableOpacity>
                 {authenticationLoader &&
                     <Modal visible={authenticationLoader} transparent>
-                        <View style={{ height: 150, width: 340, gap: 10, top: '40%', justifyContent: 'center', alignItems: 'center', alignSelf: 'center', backgroundColor: 'white', padding: 20 }}>
-                            {!(authenticationMessage.includes("Failed") || authenticationMessage.includes("Successful")) &&
-                                <ActivityIndicator />
-                            }
-                            <Text style={{ color: authenticationMessage.includes("Failed") ? 'red' : authenticationMessage.includes("Success") ? 'green' : 'black  ' }}>{authenticationMessage}</Text>
-                            {authenticationMessage.includes("Failed") &&
-                                <TouchableOpacity style={{ backgroundColor: '#18C0C1', padding: 10 }} onPress={toggleAuthenticationModal}>
-                                    <Text>OK</Text>
-                                </TouchableOpacity>
-                            }
-                        </View>
+                        <TouchableOpacity style={styles.messageModalBack} onPress={toggleAuthenticationModal} activeOpacity={1}>
+                            <TouchableOpacity style={styles.messageBox} activeOpacity={1}>
+                                <View style={{ justifyContent: 'center', alignItems: 'center', gap: 20, borderRadius: 10, backgroundColor: 'white', padding: 20 }}>
+                                    {!(authenticationMessage.includes("failed") || authenticationMessage.includes("Successful")) &&
+                                        <ActivityIndicator size={'large'} color={['#4E729A', '#18C0C1']} />
+                                    }
+                                    {authenticationMessage.includes("failed") &&
+                                        <Image source={require('../../../assets/icons/exclamation.png')} style={styles.messageBoxIcon}/>
+                                    }
+                                    {authenticationMessage.includes("Successful") &&
+                                        <Image source={require('../../../assets/icons/verified.png')} style={styles.messageBoxIcon}/>
+                                    }
+                                    <Text style={{ color: authenticationMessage.includes("failed") ? 'red' : authenticationMessage.includes("Success") ? 'green' : 'black', textAlign: 'center' }}>{authenticationMessage}</Text>
+                                    {authenticationMessage.includes("failed") &&
+                                        <TouchableOpacity style={{ backgroundColor: '#18C0C1', paddingVertical: 5, borderRadius: 10, paddingHorizontal: 10 }} onPress={toggleAuthenticationModal}>
+                                            <Text style={{ fontFamily: 'Poppins_Regular', color: 'white' }}>OK</Text>
+                                        </TouchableOpacity>
+                                    }
+                                </View>
+                            </TouchableOpacity>
+                        </TouchableOpacity>
                     </Modal>
                 }
             </LinearGradient>
@@ -204,5 +209,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         borderRadius: 10,
         borderWidth: 1.5
+    },
+    messageBox: {
+        width: '80%',
+        top: '40%',
+        alignSelf: 'center',
+        padding: 10
+    },
+    messageModalBack: {
+        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        flex: 1
+    }, 
+    messageBoxIcon: {
+        height: 40,
+        width: 40
     }
 });

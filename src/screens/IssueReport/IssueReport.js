@@ -187,7 +187,7 @@ export default IssueReport = () => {
     return (
         <SafeAreaView style={styles.container} >
             <Animatable.View style={styles.categoryContainer} animation={'slideInUp'}>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 15, backgroundColor: '#001935', width: 300, paddingVertical: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
+                <LinearGradient colors={['#2A5F9A','#003571']} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center',alignItems: 'center', gap: 15, width: 300, paddingVertical: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingLeft:20 }}>
                     <TouchableOpacity style={openStatus ? styles.filterTextButtons2 : styles.filterTextButtons1} onPress={() => setStatusFunction(1)}>
                         <Text style={openStatus ? styles.optionButtonText2 : styles.optionButtonText1}>Open</Text>
                     </TouchableOpacity>
@@ -197,11 +197,11 @@ export default IssueReport = () => {
                     <TouchableOpacity style={closedStatus ? styles.filterTextButtons2 : styles.filterTextButtons1} onPress={() => setStatusFunction(3)}>
                         <Text style={closedStatus ? styles.optionButtonText2 : styles.optionButtonText1}>Closed</Text>
                     </TouchableOpacity>
-                </View>
+                </LinearGradient>
             </Animatable.View>
             <Animatable.View animation={'slideInDown'}>
-                <LinearGradient colors={['#001935','#4C6078']} >
-                    <View style={styles.filterHeader}>
+                <View>
+                    <LinearGradient colors={['#235690', '#173659']} style={styles.filterHeader}>
                         <View style={styles.textInputStyle}>
                             <View style={{ flex: 1, padding: 7, justifyContent: 'center' }}>
                                 <Image source={require('../../../assets/icons/searchIcon.png')} style={{ width: 20, height: 20 }} />
@@ -215,15 +215,15 @@ export default IssueReport = () => {
                         <TouchableOpacity style={{ flex: 2, borderRadius: 10 }} onPress={toggleFilterModal}>
                             <Image source={require('../../../assets/icons/calendar-white.png')} style={styles.filterIcon} />
                         </TouchableOpacity>
-                    </View>
+                    </LinearGradient>
 
-                    <View style={styles.reportTableHeader}>
+                    <LinearGradient colors={['#2A5F9A','#003571']} style={styles.reportTableHeader}>
                         <Text style={[styles.columnHeading, { flex: 2 }]}>Issue No.</Text>
                         <Text style={[styles.columnHeading, { flex: 5 }]}>Issue</Text>
                         <Text style={[styles.columnHeading, { flex: 3 }]}>Line & Station</Text>
                         <Text style={[styles.columnHeading, { flex: 3 }]}>Status</Text>
-                    </View>
-                </LinearGradient>
+                    </LinearGradient>
+                </View>
             </Animatable.View>
             {loader ?
                 <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
         gap: 10,
         position: 'absolute',
         alignSelf: 'center',
-        bottom: -10,
+        bottom: 55,
         zIndex: 2,
         width: '100%',
         justifyContent: 'center',
