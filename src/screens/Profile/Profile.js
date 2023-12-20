@@ -12,9 +12,9 @@ export default Profile = () => {
             <Text style={{ fontSize: 20, fontFamily: 'Poppins' }}>Profile</Text>
             <TouchableOpacity  >
                 <Image source={require('../../../assets/icons/userProfileIcon.png')} style={styles.profileIcon} />
-                <View style={{ padding: 5, backgroundColor: 'white', borderRadius: 30, position: 'absolute', top: 0, right: 0 }} >
+                {/* <View style={{ padding: 5, backgroundColor: 'white', borderRadius: 30, position: 'absolute', top: 0, right: 0 }} >
                     <Image source={require('../../../assets/icons/photoPenIcon.png')} style={styles.photoPenIcon} />
-                </View>
+                </View> */}
             </TouchableOpacity>
             <View style={styles.detailContainer}>
                 <View style={styles.eachField}>
@@ -37,16 +37,10 @@ export default Profile = () => {
                     <Text style={styles.profiledataheaders}>Department</Text>
                     <TextInput style={styles.inputField} value={userInfo.dept}/>
                 </View>
-                <TouchableOpacity underlayColor={'#FFF78A'} activeOpacity={1} onPress={() => alert('Pressed!')}>
+                {/* <TouchableOpacity underlayColor={'#FFF78A'} activeOpacity={1} onPress={() => alert('Pressed!')}>
                     <Text style={{ fontFamily: 'Poppins', textDecorationLine: 'underline', textAlign: 'right', color: 'white' }}>Change Password</Text>
-                </TouchableOpacity>
-            </View>
-            {/* <TouchableOpacity style={{ width: '90%', marginBottom: 40 }}>
-                    <LinearGradient colors={['#717171', '#2F2F2F']} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 20, padding: 10 }}>
-                        <Text style={{ color: 'white', fontSize: 16 }}>Logout</Text>
-                        <Image source={require('../../../assets/icons/logoutIcon.png')} style={styles.buttonIcons} />
-                    </LinearGradient>
                 </TouchableOpacity> */}
+            </View>
         </View>
 
     )
@@ -87,8 +81,8 @@ const styles = StyleSheet.create({
     },
     profiledataheaders: {
         fontSize: 11,
-        fontFamily: 'Poppins',
-        color: 'yellow'
+        fontFamily: 'Poppins_Regular',
+        color: 'cyan'
     },
     buttonIcons: {
         height: 30,

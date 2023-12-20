@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Login from '../screens/LoginPage/Login';
 import HomePage from '../screens/Home/HomePage';
 import RaiseIssue from '../screens/Home/RaiseIssue';
@@ -23,50 +23,103 @@ const BottomTab = createBottomTabNavigator();
 
 function DrawerNavigator() {
 
-	return <Drawer.Navigator drawerType="slide"
-		drawerStyle={{
-			width: '100%',
-		}} drawerContent={(props) => <CustomDrawer {...props} />} initialRouteName='BottomTabNavigatorMain' screenOptions={{ headerShown: false }} >
-		<Drawer.Screen name="Home" component={BottomTabNavigator} />
-		<Drawer.Screen name="AcknowledgeIssue" component={AcknowledgeIssue} />
-		<Drawer.Screen name="CloseIssue" component={CloseIssue} />
-		{/* <Drawer.Screen name="ReduxCheck" component={ReduxCheck} /> */}
-	</Drawer.Navigator>
+	return (
+		<Drawer.Navigator
+			drawerType="slide"
+			drawerStyle={{
+				width: '100%',
+			}}
+			drawerContent={(props) => <CustomDrawer {...props} />}
+			initialRouteName='BottomTabNavigatorMain'
+			screenOptions={{ headerShown: false }}
+		>
+			<Drawer.Screen name="Home" component={BottomTabNavigator} />
+			<Drawer.Screen name="Acknowledge Issue" component={AcknowledgeIssue} />
+			<Drawer.Screen name="Close Issue" component={CloseIssue} />
+		</Drawer.Navigator>
+	);
+}
+
+function SideMenuButton() {
+	const navigation = useNavigation();
+
+	const openDrawer = () => {
+		navigation.openDrawer(); // Open the drawer
+	};
+
+	return (
+		<Button title="Open Drawer" onPress={openDrawer} />
+	);
 }
 
 function BottomTabNavigator() {
-	return <BottomTab.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
-		<BottomTab.Screen name="Home" component={HomePage}
-			options={{
-				tabBarIcon: ({ color, size }) => (
-					<Ionicons name='home' color={color} size={size} />
-				)
-			}} />
+	const navigation = useNavigation();
+	return (
+		<BottomTab.Navigator
+			initialRouteName='Home'
+			screenOptions={
+				({ route }) => ({
+					headerShown: false,
+					tabBarActiveTintColor: 'cyan',
+					tabBarInactiveTintColor: 'white',
+					tabBarLabelStyle: {
+						fontSize: 12,
+					},
+					tabBarStyle: {
+						backgroundColor: '#004A8E',
+						height: 65,
+						borderTopRightRadius: 30,
+						borderTopLeftRadius: 30,
+						elevation: 0,
+						position: 'absolute',
+						bottom: 0,
+						borderTopWidth: 0,
+						paddingBottom: 5
+					},
+					tabBarIcon: ({ focused, color, size }) => {
+						let iconName;
+						if (route.name === 'Home') {
+							iconName = focused ? 'home-icon-focused' : 'home-icon';
+						} else if (route.name === 'Settings') {
+							iconName = focused ? 'settings-icon-focused' : 'settings-icon';
+						}
+						return <IconComponent name={iconName} size={size} color={color} />;
+					}
+				})
+			}>
+			<BottomTab.Screen name="Home" component={HomePage}
+				options={{
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name='home' color={color} size={size} />
+					)
+				}} />
 
-		<BottomTab.Screen name="Issue Report" component={IssueReport}
-			options={{
-				tabBarIcon: ({ color, size }) => (
-					<Ionicons name='notifications-outline' color={color} size={size} />
-				)
-			}}
-		/>
-		<BottomTab.Screen name="Profile Section" component={Profile}
-			options={{
-				tabBarIcon: ({ color, size }) => (
-					<Ionicons name='person-circle-outline' color={color} size={size} />
-				)
-			}}
-		/>
-		<BottomTab.Screen name="Side Menu" component={SideMenu}
-			options={{
-				tabBarIcon: ({ color, size }) => (
-					<Ionicons name='reorder-four-sharp' color={color} size={size} />
-				)
-			}}
-		/>
-	</BottomTab.Navigator>
+			<BottomTab.Screen
+				name="Issue Report"
+				component={SideMenuButton}
+				options={{
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name='book' color={color} size={size} />
+					)
+				}}
+			/>
+			<BottomTab.Screen name="Profile" component={Profile}
+				options={{
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name='person' color={color} size={size} />
+					)
+				}}
+			/>
+			<BottomTab.Screen name="Menu" component={SideMenuButton}
+				options={{
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name='reorder-four-sharp' color={color} size={size} />
+					)
+				}}
+			/>
+		</BottomTab.Navigator>
+	);
 }
-
 
 export default NavigateMain = () => {
 	return (
