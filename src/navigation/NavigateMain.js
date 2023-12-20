@@ -97,7 +97,6 @@ function BottomTabNavigator() {
 			<BottomTab.Screen
 				name="Issue Report"
 				component={SideMenuButton}
-				listeners={() => navigation.openDrawer()}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name='book' color={color} size={size} />
