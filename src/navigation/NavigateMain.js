@@ -31,7 +31,6 @@ function DrawerNavigator() {
 		<Drawer.Screen name="AcknowledgeIssue" component={AcknowledgeIssue} />
 		<Drawer.Screen name="CloseIssue" component={CloseIssue} />
 		{/* <Drawer.Screen name="ReduxCheck" component={ReduxCheck} /> */}
-
 	</Drawer.Navigator>
 }
 

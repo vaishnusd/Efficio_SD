@@ -311,9 +311,6 @@ const AcknowledgeIssue = () => {
                 </View>
                   </LinearGradient >
 
-
-
-
             <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
 
                 <LinearGradient colors={['#002149', '#5590D7']} start={{ x: 0.03, y: 0.5 }}

@@ -11,9 +11,7 @@ const SelectDropDownPage = ({
 	changeValue
 }) => {
  
-
 	const [productSelected, setProductSelected] = useState(data[0]);
-
 	return (
 		<View style={styles.selectDropDownButtonContainer}>
 			<Text style={styles.InputHeader}>

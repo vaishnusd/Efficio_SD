@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 export default Profile = () => {
     const userInfo = useSelector((state) => state.user.userProfile);
+
     console.log("THis data from Profile Section: ", userInfo);
     return (
         <View style={styles.container}>

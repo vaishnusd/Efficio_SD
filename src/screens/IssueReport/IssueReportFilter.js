@@ -12,7 +12,6 @@ export default IssueReportFilter = ({ isVisible, onClose, dateDetails, functions
         setKey(prevKey => prevKey + 1);
     }
 
-
     return (
         <Modal visible={isVisible} animationType="slide" transparent>
             <TouchableOpacity style={styles.modalBackground} onPress={onClose} activeOpacity={1}>
