@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+// import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
 import Navigate from './src/navigation/NavigateMain';
+import { GestureHandlerRootView, NativeViewGestureHandler } from 'react-native-gesture-handler';
 
 
 export default function App() {

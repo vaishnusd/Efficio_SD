@@ -45,8 +45,8 @@ export default LoginForm = () => {
             setAuthenticationMessage("Authentication Successful");
             APICall(apiForUserInfo, formData, getUserInfo, "getUserInformation");
             setTimeout(() => {
-                navigation.navigate('DrawerNavigator');
-                navigation.reset({ index: 0, routes: [{ name: 'DrawerNavigator' }] });
+                navigation.navigate('BottomTabNavigatorMain');
+                navigation.reset({ index: 0, routes: [{ name: 'BottomTabNavigatorMain' }] });
                 setAuthenticationLoader(false);
                 setAuthenticationMessage("Authenticating ......");
             }, 2 * 1000);

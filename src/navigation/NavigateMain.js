@@ -1,10 +1,9 @@
-import { Button, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import Login from '../screens/LoginPage/Login';
 import HomePage from '../screens/Home/HomePage';
 import RaiseIssue from '../screens/Home/RaiseIssue';
@@ -13,47 +12,15 @@ import CloseIssue from '../screens/Home/CloseIssue';
 import IssueReport from '../screens/IssueReport/IssueReport';
 import Profile from '../screens/Profile/Profile';
 import EachReportMoreInfoPage from '../screens/IssueReport/EachReportMoreInfoPage';
-import CustomDrawer from './CustomDrawer';
-// import ReduxCheck from '../services/ReduxCheck';
+import SideMenu from './SideMenu';
 
 
 const Stack = createNativeStackNavigator();
-const Drawer = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
 
-function DrawerNavigator() {
 
-	return (
-		<Drawer.Navigator
-			drawerType="slide"
-			drawerStyle={{
-				width: '100%',
-			}}
-			drawerContent={(props) => <CustomDrawer {...props} />}
-			initialRouteName='BottomTabNavigatorMain'
-			screenOptions={{ headerShown: false }}
-		>
-			<Drawer.Screen name="Home" component={BottomTabNavigator} />
-			<Drawer.Screen name="Acknowledge Issue" component={AcknowledgeIssue} />
-			<Drawer.Screen name="Close Issue" component={CloseIssue} />
-		</Drawer.Navigator>
-	);
-}
-
-function SideMenuButton() {
-	const navigation = useNavigation();
-
-	const openDrawer = () => {
-		navigation.openDrawer(); // Open the drawer
-	};
-
-	return (
-		<Button title="Open Drawer" onPress={openDrawer} />
-	);
-}
 
 function BottomTabNavigator() {
-	const navigation = useNavigation();
 	return (
 		<BottomTab.Navigator
 			initialRouteName='Home'
@@ -73,7 +40,7 @@ function BottomTabNavigator() {
 						elevation: 0,
 						position: 'absolute',
 						bottom: 0,
-						borderTopWidth: 0,
+						borderColor: 'cyan',
 						paddingBottom: 5
 					},
 					tabBarIcon: ({ focused, color, size }) => {
@@ -87,6 +54,15 @@ function BottomTabNavigator() {
 					}
 				})
 			}>
+			<BottomTab.Screen
+				name="Issue Report"
+				component={IssueReport}
+				options={{
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name='book' color={color} size={size} />
+					)
+				}}
+			/>
 			<BottomTab.Screen name="Home" component={HomePage}
 				options={{
 					tabBarIcon: ({ color, size }) => (
@@ -94,15 +70,6 @@ function BottomTabNavigator() {
 					)
 				}} />
 
-			<BottomTab.Screen
-				name="Issue Report"
-				component={SideMenuButton}
-				options={{
-					tabBarIcon: ({ color, size }) => (
-						<Ionicons name='book' color={color} size={size} />
-					)
-				}}
-			/>
 			<BottomTab.Screen name="Profile" component={Profile}
 				options={{
 					tabBarIcon: ({ color, size }) => (
@@ -110,7 +77,7 @@ function BottomTabNavigator() {
 					)
 				}}
 			/>
-			<BottomTab.Screen name="Menu" component={SideMenuButton}
+			<BottomTab.Screen name="Menu" component={SideMenu}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name='reorder-four-sharp' color={color} size={size} />
@@ -131,11 +98,6 @@ export default NavigateMain = () => {
 				<Stack.Screen
 					name='Login'
 					component={Login}
-					options={{ headerShown: false }}
-				/>
-				<Stack.Screen
-					name='DrawerNavigator'
-					component={DrawerNavigator}
 					options={{ headerShown: false }}
 				/>
 				<Stack.Screen

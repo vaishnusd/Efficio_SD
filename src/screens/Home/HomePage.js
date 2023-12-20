@@ -1,13 +1,10 @@
-import { View, Text, StyleSheet, Dimensions, Image, Pressable, TouchableOpacity, FlatList,ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
 import { AntDesign, FontAwesome5, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import ProductionStatus from './ProductionStatus';
 import APICall from '../../utils/APICall';
-import BottomNavigator from '../../navigation/BottomNavigator';
-import SideMenu from '../../navigation/SideMenu';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const HomePage = () => {
 
@@ -115,19 +112,19 @@ const HomePage = () => {
 					color: 'rgba(0, 0, 0, 1)', justifyContent: 'center', fontSize: 20, textAlign: 'center',
 					fontWeight: 700
 				}}>Production Line Status</Text>
-				 {loader ?
-                <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-                    <ActivityIndicator size={"large"} />
-                </View> :
-				<FlatList
-					data={data}
-					contentContainerStyle={styles.stockBody}
-					renderItem={
-						({ item }) =>
-							<ProductionStatus dataToSend={item} />
-					}
-				/>
-}
+				{loader ?
+					<View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+						<ActivityIndicator size={"large"} />
+					</View> :
+					<FlatList
+						data={data}
+						contentContainerStyle={styles.stockBody}
+						renderItem={
+							({ item }) =>
+								<ProductionStatus dataToSend={item} />
+						}
+					/>
+				}
 			</View>
 
 		</ScrollView>
