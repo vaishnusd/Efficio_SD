@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
         gap: 10,
         position: 'absolute',
         alignSelf: 'center',
-        bottom: 55,
+        bottom: -10,
         zIndex: 2,
         width: '100%',
         justifyContent: 'center',
@@ -430,8 +430,6 @@ const styles = StyleSheet.create({
         padding: 20,
         justifyContent: 'center',
         flexDirection: 'row',
-        alignItems: 'center',
-        // gap: 20,
-        // backgroundColor: 'yellow'
+        alignItems: 'center'
     }
 });

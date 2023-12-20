@@ -30,17 +30,17 @@ function BottomTabNavigator() {
 					tabBarActiveTintColor: 'cyan',
 					tabBarInactiveTintColor: 'white',
 					tabBarLabelStyle: {
-						fontSize: 12,
+						fontSize: 10,
 					},
 					tabBarStyle: {
 						backgroundColor: '#004A8E',
-						height: 65,
+						height: 55,
 						borderTopRightRadius: 30,
 						borderTopLeftRadius: 30,
 						elevation: 0,
 						position: 'absolute',
 						bottom: 0,
-						borderColor: 'cyan',
+						borderTopWidth: 0,
 						paddingBottom: 5
 					},
 					tabBarIcon: ({ focused, color, size }) => {
@@ -54,6 +54,13 @@ function BottomTabNavigator() {
 					}
 				})
 			}>
+			<BottomTab.Screen name="Home" component={HomePage}
+				options={{
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name='home' color={color} size={size} />
+					)
+				}} />
+
 			<BottomTab.Screen
 				name="Issue Report"
 				component={IssueReport}
@@ -63,12 +70,6 @@ function BottomTabNavigator() {
 					)
 				}}
 			/>
-			<BottomTab.Screen name="Home" component={HomePage}
-				options={{
-					tabBarIcon: ({ color, size }) => (
-						<Ionicons name='home' color={color} size={size} />
-					)
-				}} />
 
 			<BottomTab.Screen name="Profile" component={Profile}
 				options={{
@@ -80,7 +81,7 @@ function BottomTabNavigator() {
 			<BottomTab.Screen name="Menu" component={SideMenu}
 				options={{
 					tabBarIcon: ({ color, size }) => (
-						<Ionicons name='reorder-four-sharp' color={color} size={size} />
+						<Ionicons name='md-menu-sharp' color={color} size={size} />
 					)
 				}}
 			/>
@@ -138,6 +139,11 @@ export default NavigateMain = () => {
 				<Stack.Screen
 					name='EachReportMoreInfo'
 					component={EachReportMoreInfoPage}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="Menu"
+					component={SideMenu}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>
