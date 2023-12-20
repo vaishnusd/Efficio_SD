@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, Image, Pressable, TouchableOpacity, FlatList,ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Image, Pressable, TouchableOpacity, FlatList,ActivityIndicator,ScrollView } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
 import { AntDesign, FontAwesome5, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,7 +7,7 @@ import APICall from '../../utils/APICall';
 import BottomNavigator from '../../navigation/BottomNavigator';
 import SideMenu from '../../navigation/SideMenu';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
+
 
 const HomePage = () => {
 

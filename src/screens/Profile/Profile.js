@@ -1,6 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient"
-import { ScrollView, TouchableOpacity, StyleSheet, Image, Text, View, TouchableHighlight } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity, StyleSheet, Image, Text, View, TouchableHighlight,TextInput} from "react-native";
 import { useSelector } from 'react-redux';
 
 export default Profile = () => {

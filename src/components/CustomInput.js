@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	input: {
-		backgroundColor:'rgba(218, 218, 218, 0.3)',
+		backgroundColor:'#fff',
 		height:45,
         borderColor:'rgba(0, 148, 255, 1)',
-		borderWidth:1,
+		borderWidth:2,
 		borderRadius:5,
 		paddingHorizontal: 15,
 

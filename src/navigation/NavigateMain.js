@@ -21,36 +21,36 @@ const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
 
-function DrawerNavigator() {
+// function DrawerNavigator() {
 
-	return (
-		<Drawer.Navigator
-			drawerType="slide"
-			drawerStyle={{
-				width: '100%',
-			}}
-			drawerContent={(props) => <CustomDrawer {...props} />}
-			initialRouteName='BottomTabNavigatorMain'
-			screenOptions={{ headerShown: false }}
-		>
-			<Drawer.Screen name="Home" component={BottomTabNavigator} />
-			<Drawer.Screen name="Acknowledge Issue" component={AcknowledgeIssue} />
-			<Drawer.Screen name="Close Issue" component={CloseIssue} />
-		</Drawer.Navigator>
-	);
-}
+// 	return (
+// 		<Drawer.Navigator
+// 			drawerType="slide"
+// 			drawerStyle={{
+// 				width: '100%',
+// 			}}
+// 			drawerContent={(props) => <CustomDrawer {...props} />}
+// 			initialRouteName='BottomTabNavigatorMain'
+// 			screenOptions={{ headerShown: false }}
+// 		>
+// 			<Drawer.Screen name="Home" component={BottomTabNavigator} />
+// 			<Drawer.Screen name="Acknowledge Issue" component={AcknowledgeIssue} />
+// 			<Drawer.Screen name="Close Issue" component={CloseIssue} />
+// 		</Drawer.Navigator>
+// 	);
+// }
 
-function SideMenuButton() {
-	const navigation = useNavigation();
+// function SideMenuButton() {
+// 	const navigation = useNavigation();
 
-	const openDrawer = () => {
-		navigation.openDrawer(); // Open the drawer
-	};
+// 	const openDrawer = () => {
+// 		navigation.openDrawer(); // Open the drawer
+// 	};
 
-	return (
-		<Button title="Open Drawer" onPress={openDrawer} />
-	);
-}
+// 	return (
+// 		<Button title="Open Drawer" onPress={openDrawer} />
+// 	);
+// }
 
 function BottomTabNavigator() {
 	const navigation = useNavigation();
@@ -96,7 +96,7 @@ function BottomTabNavigator() {
 
 			<BottomTab.Screen
 				name="Issue Report"
-				component={SideMenuButton}
+				component={IssueReport}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name='book' color={color} size={size} />
@@ -110,13 +110,13 @@ function BottomTabNavigator() {
 					)
 				}}
 			/>
-			<BottomTab.Screen name="Menu" component={SideMenuButton}
+			{/* <BottomTab.Screen name="Menu" component={SideMenuButton}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name='reorder-four-sharp' color={color} size={size} />
 					)
 				}}
-			/>
+			/> */}
 		</BottomTab.Navigator>
 	);
 }
@@ -133,11 +133,11 @@ export default NavigateMain = () => {
 					component={Login}
 					options={{ headerShown: false }}
 				/>
-				<Stack.Screen
+				{/* <Stack.Screen
 					name='DrawerNavigator'
 					component={DrawerNavigator}
 					options={{ headerShown: false }}
-				/>
+				/> */}
 				<Stack.Screen
 					name='BottomTabNavigatorMain'
 					component={BottomTabNavigator}
