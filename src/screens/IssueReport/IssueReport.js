@@ -5,8 +5,12 @@ import EachReport from "./EachReport";
 import { LinearGradient } from "expo-linear-gradient";
 import IssueReportFilter from "./IssueReportFilter";
 import * as Animatable from 'react-native-animatable';
+import { useSelector } from "react-redux";
 
 export default IssueReport = () => {
+    const userInfo = useSelector((state) => state.user.userProfile);
+    console.log(userInfo);
+
     //All Data States
     const [issueReportData, setIssueReportData] = useState();
     const [filteredData, setFilteredData] = useState();
@@ -39,7 +43,7 @@ export default IssueReport = () => {
     let jsonDataToPassInApi = {
         "FromDate": fromDate,
         "ToDate": toDate,
-        "PlantName": "Grundfos",
+        "PlantName": userInfo.plantName,
         "OffsetRecords": '0',
         "NextRecords": "10000"
     }
@@ -129,11 +133,6 @@ export default IssueReport = () => {
     function toggleFilterModal() {
         setFilterView(filterView ? false : true);
     }
-
-    //Get the Filtered Data
-    // function filterFunction(filtered) {
-    //     setTempData(filtered);
-    // }
 
     //Updating the Filter From Date
     function updateFromDate(dateCame) {
@@ -327,7 +326,7 @@ const styles = StyleSheet.create({
         gap: 10,
         position: 'absolute',
         alignSelf: 'center',
-        bottom: 55,
+        bottom: 45,
         zIndex: 2,
         width: '100%',
         justifyContent: 'center',
@@ -335,7 +334,7 @@ const styles = StyleSheet.create({
     },
     allData: {
         paddingHorizontal: 2,
-        paddingBottom: 62
+        paddingBottom: 100
     },
     reportTableHeader: {
         flexDirection: 'row',
@@ -430,8 +429,6 @@ const styles = StyleSheet.create({
         padding: 20,
         justifyContent: 'center',
         flexDirection: 'row',
-        alignItems: 'center',
-        // gap: 20,
-        // backgroundColor: 'yellow'
+        alignItems: 'center'
     }
 });

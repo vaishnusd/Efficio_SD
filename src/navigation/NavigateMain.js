@@ -13,6 +13,9 @@ import IssueReport from '../screens/IssueReport/IssueReport';
 import Profile from '../screens/Profile/Profile';
 import EachReportMoreInfoPage from '../screens/IssueReport/EachReportMoreInfoPage';
 import SideMenu from './SideMenu';
+import AboutUs from '../screens/MoreInfo/AboutUs';
+import Contacts from '../screens/MoreInfo/Contacts';
+
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -21,50 +24,49 @@ function BottomTabNavigator() {
 	return (
 		<BottomTab.Navigator
 			initialRouteName='Home'
-			screenOptions={({ route }) => ({
-				headerShown: false,
-				tabBarActiveTintColor: 'cyan',
-				tabBarInactiveTintColor: 'white',
-				tabBarLabelStyle: {
-					fontSize: 12,
-				},
-				tabBarStyle: {
-					backgroundColor: '#004A8E',
-					height: 65,
-					borderTopRightRadius: 30,
-					borderTopLeftRadius: 30,
-					elevation: 0,
-					position: 'absolute',
-					bottom: 0,
-					borderColor: 'cyan',
-					paddingBottom: 5,
-				},
-				tabBarIcon: ({ focused, color, size }) => {
-					let iconName;
-					if (route.name === 'Home') {
-						iconName = focused ? 'home-icon-focused' : 'home-icon';
-					} else if (route.name === 'Settings') {
-						iconName = focused ? 'settings-icon-focused' : 'settings-icon';
+			screenOptions={
+				({ route }) => ({
+					headerShown: false,
+					tabBarActiveTintColor: 'cyan',
+					tabBarInactiveTintColor: 'white',
+					tabBarLabelStyle: {
+						fontSize: 10,
+					},
+					tabBarStyle: {
+						backgroundColor: '#004A8E',
+						height: 55,
+						borderTopRightRadius: 30,
+						borderTopLeftRadius: 30,
+						elevation: 0,
+						position: 'absolute',
+						bottom: 0,
+						borderTopWidth: 0,
+						paddingBottom: 5
+					},
+					tabBarIcon: ({ focused, color, size }) => {
+						let iconName;
+						if (route.name === 'Home') {
+							iconName = focused ? 'home-icon-focused' : 'home-icon';
+						} else if (route.name === 'Settings') {
+							iconName = focused ? 'settings-icon-focused' : 'settings-icon';
+						}
+						return <IconComponent name={iconName} size={size} color={color} />;
 					}
-					return <IconComponent name={iconName} size={size} color={color} />;
-				},
-			})}
-		>
+				})
+			}>
+			<BottomTab.Screen name="Home" component={HomePage}
+				options={{
+					tabBarIcon: ({ color, size }) => (
+						<Ionicons name='home' color={color} size={size} />
+					)
+				}} />
+
 			<BottomTab.Screen
-				name='Issue Report'
+				name="Issues"
 				component={IssueReport}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name='book' color={color} size={size} />
-					),
-				}}
-			/>
-			<BottomTab.Screen
-				name='Home'
-				component={HomePage}
-				options={{
-					tabBarIcon: ({ color, size }) => (
-						<Ionicons name='home' color={color} size={size} />
 					),
 				}}
 			/>
@@ -83,8 +85,8 @@ function BottomTabNavigator() {
 				component={SideMenu}
 				options={{
 					tabBarIcon: ({ color, size }) => (
-						<Ionicons name='reorder-four-sharp' color={color} size={size} />
-					),
+						<Ionicons name='md-menu-sharp' color={color} size={size} />
+					)
 				}}
 			/>
 		</BottomTab.Navigator>
@@ -106,6 +108,11 @@ export default NavigateMain = () => {
 				<Stack.Screen
 					name='BottomTabNavigatorMain'
 					component={BottomTabNavigator}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name='AboutUs'
+					component={AboutUs}
 					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
@@ -141,6 +148,16 @@ export default NavigateMain = () => {
 				<Stack.Screen
 					name='EachReportMoreInfo'
 					component={EachReportMoreInfoPage}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="Menu"
+					component={SideMenu}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name='Contacts'
+					component={Contacts}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>

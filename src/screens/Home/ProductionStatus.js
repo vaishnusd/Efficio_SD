@@ -1,74 +1,69 @@
-import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity, Dimensions } from 'react-native'
-import React from 'react'
-import { Entypo, } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
+import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity, Dimensions } from 'react-native';
+import React from 'react';
+import { Entypo, } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 
 export default ProductionStatus = (dataToSend) => {
     const data = dataToSend.dataToSend;
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
+    const imageName = data.imagePath.split("/").find((eachName) => (eachName.includes(".")));
+    const imgURL = 'https://androidapi220211216164156.azurewebsites.net/api/Approval/DownloadFile?filename=' + imageName;
+    console.log(imgURL);
+
     return (
-        <View style={styles.mainContainer}>
-            <View>
-                <View style={styles.productionStatusHeader}>
-                    <Text style={{ color: '#fff' }}>{data.lineName}</Text>
-                    {/* {console.log('Hi',typeof (dataToSend))} */}
-                    <View style={{ flexDirection: 'row' }}>
-                        <Entypo name="bug" size={24} color="white" />
-                        <Text style={{ color: '#fff' }}>Issue:0</Text>
-                    </View>
-
+        <Animatable.View style={styles.mainContainer} animation={'slideInDown'}>
+            <View style={styles.productionStatusHeader}>
+                <Text style={{ color: '#fff', fontFamily: 'Poppins_Regular' }}>{data.lineName}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Entypo name="bug" size={24} color="white" />
+                    <Text style={{ color: '#fff', fontFamily: 'Poppins_Regular', top: 1 }}> Issue : {data.issueNo}</Text>
                 </View>
-                <LinearGradient colors={['rgba(85, 144, 215, 1)','rgba(0, 33, 73, 1)']} style={styles.productionLineStatus}>
-                    <View>
-                        <Image source={{
-                            uri:'https://androidapi220211216164156.azurewebsites.net/api/Approval/DownloadFile?filename=' + data
-                        }} style={styles.signatureImage} />
-                    </View>
-                    <View style={styles.options}>
-                        <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
-                            <Text>Name Plate Printing</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
-                            <Text>Stage 1</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'} >
-                            <Text>Stage 2</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
-                            <Text>Stage 3</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
-                            <Text>Testing</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
-                            <Text>Packing</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.footerProduction}>
-                        <TouchableOpacity
-                            style={styles.IssueButton}
-                            onPress={() => {
-                                navigation.navigate('RaiseIssue');
-                            }}
-                        >
-                            <Image source={require('../../../assets/images/WebsiteBug.png')} style={{
-                                width: 25,
-                                height: 25,
-                            }} />
-                            <Text style={{ color: '#fff' }}>Raise Issue</Text>
-                        </TouchableOpacity>
-
-                        
-
-                    </View>
-                    {/* <FontAwesome5 names="hand-paper" size={24} color="white" />
-					<Text style={styles.companyName}>ACK Issue</Text>
-					<Text style={styles.numberOf}>0</Text> */}
-                </LinearGradient>
             </View>
-        </View>
+            <LinearGradient colors={['rgba(85, 144, 215, 1)', 'rgba(0, 33, 73, 1)']} style={styles.productionLineStatus}>
+                <View style={{flex: 1, width: '100%', justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+                    <Image source={{
+                        uri: imgURL
+                    }} style={styles.signatureImage} />
+                </View>
+                {/* <View style={styles.options}>
+                    <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
+                        <Text style={styles.optionButtonText}>Name Plate Printing</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
+                        <Text style={styles.optionButtonText}>Stage 1</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'} >
+                        <Text style={styles.optionButtonText}>Stage 2</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
+                        <Text style={styles.optionButtonText}>Stage 3</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
+                        <Text style={styles.optionButtonText}>Testing</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionsButton} onPress={'handlePress'}>
+                        <Text style={styles.optionButtonText}>Packing</Text>
+                    </TouchableOpacity>
+                </View> */}
+
+                {/* <View style={styles.footerProduction}>
+                    <TouchableOpacity
+                        style={styles.IssueButton}
+                        onPress={() => {
+                            navigation.navigate('RaiseIssue');
+                        }}
+                    >
+                        <Image source={require('../../../assets/images/WebsiteBug.png')} style={{
+                            width: 25,
+                            height: 25,
+                        }} />
+                        <Text style={{ color: '#fff', fontFamily: 'Poppins_Regular' }}>  Raise Issue</Text>
+                    </TouchableOpacity>
+                </View> */}
+            </LinearGradient>
+        </Animatable.View>
     )
 }
 
@@ -81,16 +76,11 @@ const styles = StyleSheet.create({
     productionStatus: {
         top: 20,
         marginHorizontal: 10,
-
-
-
     },
     productionStatusHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         height: 40,
-
-
         backgroundColor: 'rgba(0, 70, 150, 1)',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
@@ -102,18 +92,14 @@ const styles = StyleSheet.create({
         height: 400,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
-        fontWeight:500,
-
-        justifyContent: 'center',
-        alignItems: 'center',
         gap: 5,
         padding: 10
-
-
     },
     signatureImage: {
-        width: 108,
-        height: 189,
+        width: '100%',
+        height: "100%",
+        objectFit: 'contain',
+        borderRadius: 20
     },
     options: {
         alignItems: 'center',
@@ -121,17 +107,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         maxWidth: Dimensions.get('window'),
-
         gap: 5,
     },
     optionsButton: {
-
         height: 24,
-        padding: 3,
+        paddingVertical: 2,
+        paddingHorizontal: 6,
         borderRadius: 8,
-        backgroundColor: 'rgba(24, 192, 193, 1)',
-        justifyContent: 'center',
-        alignItems: 'center'
+        backgroundColor: 'rgba(24, 192, 193, 1)'
     },
     IssueButton: {
         flexDirection: 'row',
@@ -145,5 +128,10 @@ const styles = StyleSheet.create({
     },
     footerProduction: {
         gap: 10
+    },
+    optionButtonText: {
+        color: 'white',
+        fontFamily: 'Poppins_Regular',
+        fontSize: 12,
     }
 })
