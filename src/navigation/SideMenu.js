@@ -8,7 +8,7 @@ export default SideMenu = ({ isVisible }) => {
     const navigation = useNavigation();
     const [logoutConfirmationMessage, setLogoutConformationMessage] = useState(false);
 
-    console.log("Triggered Menu", isVisible);
+    // console.log("Triggered Menu", isVisible);
 
     const selectedButtonStyle = {
         backgroundColor: '#489CFF',
@@ -22,6 +22,14 @@ export default SideMenu = ({ isVisible }) => {
 
     function toggleLogoutConfirmation(){
         setLogoutConformationMessage(logoutConfirmationMessage?false:true);
+    }
+
+    function openAcknowledgeIssueForm(){
+        navigation.navigate('AcknowledgeIssue')
+    }
+
+    function openCloseIssueForm(){
+        navigation.navigate('CloseIssue')
     }
 
     function goToLoginPage() {
@@ -39,6 +47,12 @@ export default SideMenu = ({ isVisible }) => {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.mainButtons}>
                     <Text style={styles.mainButtonText}>Reports</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.mainButtons} onPress={openAcknowledgeIssueForm}>
+                    <Text style={styles.mainButtonText}>Acknowledge Issue</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.mainButtons} onPress={openCloseIssueForm}>
+                    <Text style={styles.mainButtonText}>Close Issue</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.mainButtons} onPress={toggleLogoutConfirmation}>
                     <Text style={styles.mainButtonText}>Logout</Text>
@@ -69,7 +83,6 @@ const styles = StyleSheet.create({
     mainButtons: {
         padding: 10,
         heigth: 60,
-        borderTopWidth: 1,
         borderBottomWidth: 1
     },
     mainButtonText: {
