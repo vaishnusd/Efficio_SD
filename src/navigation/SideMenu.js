@@ -1,6 +1,5 @@
 import { Image, ScrollView, StyleSheet } from "react-native";
 import { Text, View, Modal, TouchableOpacity } from "react-native";
-import BottomNavigator from "./BottomNavigator";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -15,15 +14,6 @@ export default SideMenu = () => {
     const [menuItemSideIcon1, setMenuItemSideIcon1] = useState(arrRight);
     const [menuItemSideIcon2, setMenuItemSideIcon2] = useState(arrRight);
     const userInfo = useSelector((state) => state.user.userProfile);
-    // const userInfo = {
-    //     fullName: 'Chinnaswami Muthuswami Venugopal Iyer',
-    //     email: 'sumenmeranaamhaidekhlo_2201sqaudronleader@yahoo.com',
-    //     plantName: 'Grundfos'
-    // }
-
-    function toggleLogoutConfirmation() {
-        setLogoutConformationMessage(logoutConfirmationMessage ? false : true);
-    }
 
     function toggleLogoutConfirmation() {
         setLogoutConformationMessage(logoutConfirmationMessage ? false : true);
@@ -37,26 +27,8 @@ export default SideMenu = () => {
         setMenuItemSideIcon2(menuItemSideIcon2 === arrRight ? arrDown : arrRight);
     }
 
-    function openAcknowledgeIssueForm() {
-        navigation.navigate('AcknowledgeIssue');
-        setMenuItemSideIcon2(arrRight);
-        setMenuItemSideIcon1(arrRight);
-    }
-
-    function openCloseIssueForm() {
-        navigation.navigate('CloseIssue');
-        setMenuItemSideIcon2(arrRight);
-        setMenuItemSideIcon1(arrRight);
-    }
-
-    function goToLoginPage() {
-        navigation.navigate('Login');
-        setMenuItemSideIcon2(arrRight);
-        setMenuItemSideIcon1(arrRight);
-    }
-
-    function goToIssueReport() {
-        navigation.navigate('IssueReport');
+    function goToPage(pageGiven) {
+        navigation.navigate(pageGiven);
         setMenuItemSideIcon2(arrRight);
         setMenuItemSideIcon1(arrRight);
     }
@@ -65,7 +37,17 @@ export default SideMenu = () => {
         <Animatable.View animation={'slideInLeft'}>
             {console.log(menuItemSideIcon1, menuItemSideIcon2)}
             <ScrollView style={styles.container}>
-                <View style={styles.userInfoSection}>
+                {userInfo.plantName.includes('Grundfos') &&
+                    <View style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 10 }}>
+                        <Image source={{ uri: 'https://coltarapumpsandseals.com.au/wp-content/uploads/2017/12/grundfos-logo.png' }} style={{ height: 50, width: 200 }} />
+                    </View>
+                }
+                {userInfo.plantName.includes('Soft Designers1') &&
+                    <View style={{ alignItems: 'center', justifyContent: 'center', paddingTop: 10 }}>
+                        <Image source={{ uri: 'https://www.softdesigners.co.in/wp-content/uploads/2022/05/Softdesigners-logo.png' }} style={{ height: 80, width: 240, objectFit: 'contain' }} />
+                    </View>
+                }
+                <TouchableOpacity style={styles.userInfoSection} onPress={() => goToPage('Profile')}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <View style={{ flex: 1, padding: 10 }}>
                             <Avatar.Image
@@ -79,17 +61,17 @@ export default SideMenu = () => {
                             <Text style={styles.caption}>{userInfo.email}</Text>
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
                 <TouchableOpacity style={[styles.menuButtons, { backgroundColor: (menuItemSideIcon1 === arrDown) ? '#489CFF' : 'rgba(141, 194, 255, 0.30)' }]} onPress={expandAndon}>
                     <Text style={[styles.menuButtonText]}>Andon</Text>
                     <Image source={menuItemSideIcon1} style={{ width: 20, height: 20, right: 20 }} />
                 </TouchableOpacity>
                 {(menuItemSideIcon1 === arrDown) &&
                     <View>
-                        <TouchableOpacity style={styles.subMenuButtons} onPress={openAcknowledgeIssueForm}>
+                        <TouchableOpacity style={styles.subMenuButtons} onPress={() => goToPage('AcknowledgeIssue')}>
                             <Text style={styles.subMenuButtonText}>Acknowledge Issue</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.subMenuButtons} onPress={openCloseIssueForm}>
+                        <TouchableOpacity style={styles.subMenuButtons} onPress={() => goToPage('CloseIssue')}>
                             <Text style={styles.subMenuButtonText}>Close Issue</Text>
                         </TouchableOpacity>
                     </View>
@@ -100,43 +82,51 @@ export default SideMenu = () => {
                 </TouchableOpacity>
                 {(menuItemSideIcon2 === arrDown) &&
                     <View>
-                        <TouchableOpacity style={styles.subMenuButtons} onPress={goToIssueReport}>
+                        <TouchableOpacity style={styles.subMenuButtons} onPress={() => goToPage('Issues')}>
                             <Text style={styles.subMenuButtonText}>Issue Report</Text>
                         </TouchableOpacity>
                     </View>
                 }
-                <TouchableOpacity style={styles.menuButtons}>
-                    <Text style={styles.menuButtonText}>Terms & Privacy</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuButtons}>
+                <TouchableOpacity style={styles.menuButtons} onPress={() => goToPage('AboutUs')}>
                     <Text style={styles.menuButtonText}>About Us</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.menuButtons}>
-                    <Text style={styles.menuButtonText}>Contacts</Text>
+                <TouchableOpacity style={styles.menuButtons} onPress={() => goToPage('Contacts')} >
+                    <Text style={styles.menuButtonText}>Contact Us</Text>
                 </TouchableOpacity>
-                <View style={{ alignItems: 'center', marginTop: '40%', marginBottom: 100 }}>
+                <TouchableOpacity style={styles.menuButtons} onPress={toggleLogoutConfirmation}>
+                    <Text style={styles.menuButtonText}>Logout</Text>
+                </TouchableOpacity>
+                <View style={{ alignItems: 'center', marginTop: '25%', marginBottom: 30, gap: 20 }}>
                     <View>
-                        <TouchableOpacity style={styles.mainButtons} onPress={toggleLogoutConfirmation}>
-                            <Text style={styles.mainButtonText}>Logout</Text>
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                            <Text style={{ fontSize: 30, fontFamily: 'Poppins', color: '#003571' }}>EFFICIO</Text>
+                            <Text style={{ fontSize: 10, fontFamily: 'Poppins_SemiBold', alignSelf: 'flex-end', bottom: 13, marginLeft: 5, color: '#003571' }}>v1.0.0</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ fontSize: 7, fontFamily: 'Poppins_Regular' }}>Developed by  </Text>
+                            <Image
+                                source={{ uri: 'https://cdn-hipjp.nitrocdn.com/UVqClfNzszdreQcdMkVmNGxHoABDKrFo/assets/static/optimized/wp-content/uploads/2022/05/f283e8cf3d1b2793cdcdf6b4f2102c76.Softdesigners-logo.png' }}
+                                style={{
+                                    height: 30,
+                                    width: 80,
+                                    objectFit: 'contain'
+                                }}
+                            />
+                        </View>
                     </View>
-                    {userInfo.plantName.includes('Grundfos') &&
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Image source={{ uri: 'https://coltarapumpsandseals.com.au/wp-content/uploads/2017/12/grundfos-logo.png' }} style={{ height: 50, width: 200 }} />
-                        </View>
-                    }
-                    {userInfo.plantName.includes('Soft Designers1') &&
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Image source={{ uri: 'https://www.softdesigners.co.in/wp-content/uploads/2022/05/Softdesigners-logo.png' }} style={{ height: 80, width: 240, objectFit: 'contain' }} />
-                        </View>
-                    }
                 </View>
+                <View style={styles.footer}>
+                        <TouchableOpacity>
+                            <Text style={{ color: 'blue', fontSize: 10 }}>Terms & Privacy</Text>
+                        </TouchableOpacity>
+                        <Text style={{ fontSize: 10 }}>Efficio 2023 from ©www.softdesigners.co.in</Text>
+                    </View>
                 <Modal visible={logoutConfirmationMessage} transparent>
                     <TouchableOpacity style={{ flex: 1, backgroundColor: 'rgba(52, 52, 52, 0.8)', alignItems: 'center' }} activeOpacity={1} onPress={toggleLogoutConfirmation}>
                         <TouchableOpacity style={{ top: '40%', backgroundColor: 'white', padding: 20, gap: 20, borderRadius: 10 }} activeOpacity={1}>
                             <Text style={{ fontSize: 14, fontFamily: 'Poppins_Regular' }}>Are you sure want to logout?</Text>
                             <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center', alignSelf: 'center' }}>
-                                <TouchableOpacity style={{ backgroundColor: 'rgba(85, 144, 215, 1)', paddingVertical: 5, paddingHorizontal: 10 }} onPress={goToLoginPage}>
+                                <TouchableOpacity style={{ backgroundColor: 'rgba(85, 144, 215, 1)', paddingVertical: 5, paddingHorizontal: 10 }} onPress={() => goToPage('Login')}>
                                     <Text style={{ color: 'white', fontFamily: 'Poppins_Regular' }}>Yes</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{ backgroundColor: 'rgba(85, 144, 215, 1)', paddingVertical: 5, paddingHorizontal: 10 }} onPress={toggleLogoutConfirmation}>
@@ -155,12 +145,12 @@ const styles = StyleSheet.create({
     container: {
         height: '100%',
         backgroundColor: '#CFEBFF',
-        paddingBottom: 100
+        paddingBottom: 90
     },
     userInfoSection: {
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        borderRadius: 15,
-        margin: 10
+        borderRadius: 10,
+        margin: 10,
     },
     title: {
         fontSize: 16,
@@ -175,7 +165,7 @@ const styles = StyleSheet.create({
     mainButtons: {
         padding: 5,
         heigth: 60,
-        backgroundColor: '#004A8E',
+        backgroundColor: '#003571',
         paddingHorizontal: 10,
         borderRadius: 5
     },
@@ -206,5 +196,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'Poppins_Regular',
         left: 40
+    },
+    footer: { 
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 50
     }
 });

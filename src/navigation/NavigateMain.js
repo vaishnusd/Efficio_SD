@@ -13,6 +13,8 @@ import IssueReport from '../screens/IssueReport/IssueReport';
 import Profile from '../screens/Profile/Profile';
 import EachReportMoreInfoPage from '../screens/IssueReport/EachReportMoreInfoPage';
 import SideMenu from './SideMenu';
+import AboutUs from '../screens/MoreInfo/AboutUs';
+import Contacts from '../screens/MoreInfo/Contacts';
 
 
 const Stack = createNativeStackNavigator();
@@ -62,7 +64,7 @@ function BottomTabNavigator() {
 				}} />
 
 			<BottomTab.Screen
-				name="Issue Report"
+				name="Issues"
 				component={IssueReport}
 				options={{
 					tabBarIcon: ({ color, size }) => (
@@ -107,6 +109,11 @@ export default NavigateMain = () => {
 					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
+					name='AboutUs'
+					component={AboutUs}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
 					name='IssueReport'
 					component={IssueReport}
 					options={{ headerShown: false }}
@@ -144,6 +151,11 @@ export default NavigateMain = () => {
 				<Stack.Screen
 					name="Menu"
 					component={SideMenu}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name='Contacts'
+					component={Contacts}
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>

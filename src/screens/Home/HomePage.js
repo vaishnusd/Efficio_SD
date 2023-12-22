@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, ScrollView, Image } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
 import { AntDesign, FontAwesome5, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import ProductionStatus from './ProductionStatus';
 import APICall from '../../utils/APICall';
 import { useNavigation } from '@react-navigation/native';
+import * as Animatable from 'react-native-animatable';
 
 const HomePage = () => {
 
@@ -21,6 +22,7 @@ const HomePage = () => {
 	const dashBoardJsonDataToPassInApi = {
 		PlantName: "Grundfos"
 	};
+	const loaderImageAddress = 'https://icaengineeringacademy.com/wp-content/uploads/2019/01/ajax-loading-gif-transparent-background-2.gif';
 
 	function dashBoardApiResultReport(dataGot, apiError) {
 		if (apiError) {
@@ -29,7 +31,6 @@ const HomePage = () => {
 		} else {
 			if (dataGot) {
 				setDashBoardData(dataGot[0]);
-				// console.log(dataGot[0]);
 				setIsLoading(false);
 			} else {
 				setIsLoading(false);
@@ -71,7 +72,7 @@ const HomePage = () => {
 
 	return (
 		<ScrollView style={styles.mainContainer}>
-			<View style={styles.dashBoard}>
+			<Animatable.View style={styles.dashBoard} animation={'slideInDown'}>
 				<LinearGradient
 					colors={['rgba(0, 33, 73, 1)',
 						'rgba(85, 144, 215, 1)']}
@@ -79,7 +80,7 @@ const HomePage = () => {
 					start={{ x: 0, y: 0.3 }}
 					end={{ x: 0.7, y: 1 }}
 				>
-					<AntDesign name='warning' size={24} color='white' />
+					<AntDesign name='warning' size={30} color='white' />
 					<Text style={styles.companyName}>Open Issue</Text>
 					<Text style={styles.numberOf}>{dashBoardData.open === null ? '0' : dashBoardData.open}</Text>
 				</LinearGradient>
@@ -90,7 +91,7 @@ const HomePage = () => {
 					start={{ x: 0, y: 0.3 }}
 					end={{ x: 0.7, y: 1 }}
 				>
-					<FontAwesome5 name="hand-paper" size={24} color="white" />
+					<FontAwesome5 name="hand-paper" size={30} color="white" />
 					<Text style={styles.companyName}>ACK Issue</Text>
 					<Text style={styles.numberOf}>{dashBoardData.acknowledged}</Text>
 				</LinearGradient>
@@ -101,20 +102,28 @@ const HomePage = () => {
 					start={{ x: 0, y: 0.3 }}
 					end={{ x: 0.7, y: 1 }}
 				>
-					<AntDesign name="checkcircleo" size={24} color="white" />
+					<AntDesign name="checkcircleo" size={30} color="white" />
 					<Text style={styles.companyName}>Closed Issue</Text>
 					<Text style={styles.numberOf}>{dashBoardData.closed}</Text>
 				</LinearGradient>
 
-			</View>
+			</Animatable.View>
 			<View style={styles.productionStatus}>
-				<Text style={{
-					color: 'rgba(0, 0, 0, 1)', justifyContent: 'center', fontSize: 20, textAlign: 'center',
-					fontWeight: 700
-				}}>Production Line Status</Text>
+				<Animatable.Text
+					style={{
+						color: 'rgba(0, 0, 0, 1)', justifyContent: 'center', fontSize: 20, textAlign: 'center', fontFamily: 'Poppins'
+					}}
+					animation={'slideInLeft'}
+				>
+					Production Line Status
+				</Animatable.Text>
 				{loader ?
-					<View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-						<ActivityIndicator size={"large"} />
+					<View style={{ alignItems: 'center', flex: 1, justifyContent: 'center', marginTop: '40%' }}>
+						{/* <ActivityIndicator size={'large'} color={'#003571'} /> */}
+						<View style={{width: 300, height: 100, alignItems: 'center', justifyContent: 'center'}}>
+							<Image source={{uri: loaderImageAddress}} style={{ width: 80, height: 80 }} />
+						</View>
+						<Text style={{ color: '#003571', fontSize: 20, marginTop: 20, fontFamily: 'Poppins_SemiBold' }}>Loading...</Text>
 					</View> :
 					<FlatList
 						data={data}
@@ -138,39 +147,35 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: 'rgba(207, 235, 255, 1)',
 		paddingBottom: 20
-
 	},
 	dashBoard: {
 		backgroundColor: 'Blue',
 		flexDirection: 'row',
-		justifyContent: 'space-between',
-		fontWeight: 500,
+		justifyContent: 'center',
 		top: 10,
-		marginHorizontal: 10,
-		flex: 2
+		gap: 5
 	},
 	dashBoardBox: {
-		width: 120,
-		height: 120,
+		width: 110,
+		height: 110,
 		borderRadius: 30,
-		fontWeight: 500,
 		justifyContent: 'center',
-		alignItems: 'center',
-		gap: 5,
-
+		alignItems: 'center'
 	},
 	companyName: {
 		color: '#fff',
+		fontFamily: 'Poppins_SemiBold',
+		marginTop: 10
 	},
 	numberOf: {
-		color: '#fff'
+		color: '#fff',
+		fontFamily: 'Poppins_Regular',
 	},
 	productionStatus: {
-		top: 20,
 		marginHorizontal: 10,
 		gap: 10,
-		flex: 7
-
+		marginTop: 40,
+		paddingBottom: 100
 	},
 	stockBody: {
 		gap: 20
