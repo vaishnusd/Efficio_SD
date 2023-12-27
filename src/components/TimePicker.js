@@ -31,8 +31,6 @@ const TimePicker = ({
 		changeValue(formattedTime);
 	};
 
-	
-
 	return (
 		<View>
 			<TouchableOpacity
