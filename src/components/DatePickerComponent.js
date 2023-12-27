@@ -35,16 +35,6 @@ export default DatePickerComponent = ({ initialDate, updateFunction ,mode,change
         showMode('time');
     };
 
-    const dateDisplay=()=>{
-
-    }
-
-    const timeDisplay=()=>{
-        
-    }
-
-   
-
     return (
         <SafeAreaView>
             <TouchableOpacity style={styles.dateButton} onPress={showDatepicker}>
@@ -72,6 +62,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent: 'center'
     }
 });

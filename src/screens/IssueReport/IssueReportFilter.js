@@ -1,5 +1,6 @@
 import { Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import DatePickerComponent from "../../components/DatePickerComponent";
+import * as Animatable from 'react-native-animatable';
 import { useState } from "react";
 
 export default IssueReportFilter = ({ isVisible, onClose, dateDetails, functionsPassed }) => {
@@ -20,11 +21,12 @@ export default IssueReportFilter = ({ isVisible, onClose, dateDetails, functions
                         <Text style={styles.filterHeading}>Date Filter</Text>
                     </View>
                     <View>
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <View style={{ flex: 1, padding: 20, gap: 5 }}>
                                 <Text style={styles.filterProperties}>From Date: </Text>
                                 <DatePickerComponent key={key} prop={propValue} initialDate={dateDetails.fromDate} updateFunction={dateDetails.updateFromDate} />
                             </View>
+                            <Image source={require('../../../assets/icons/dot_line.png')} style={{ width: 30, height: 10, top: 10 }} />
                             <View style={{ flex: 1, padding: 20, gap: 5 }}>
                                 <Text style={styles.filterProperties}>To Date: </Text>
                                 <DatePickerComponent key={key} prop={propValue} initialDate={dateDetails.toDate} updateFunction={dateDetails.updateToDate} />
@@ -50,7 +52,7 @@ export default IssueReportFilter = ({ isVisible, onClose, dateDetails, functions
 
 const styles = StyleSheet.create({
     modalBackground: {
-        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        backgroundColor: 'rgba(52, 52, 52, 0.6)',
         flex: 1,
     },
     modalContent: {
@@ -73,6 +75,7 @@ const styles = StyleSheet.create({
     filterHeader: {
         backgroundColor: '#4C6078',
         paddingVertical: 5,
+        gap: 10,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

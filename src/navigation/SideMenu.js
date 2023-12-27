@@ -51,7 +51,7 @@ export default SideMenu = () => {
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <View style={{ flex: 1, padding: 10 }}>
                             <Avatar.Image
-                                source={require('../../assets/icons/userProfileIcon.png')
+                                source={require('../../assets/icons/userProfile.gif')
                                 }
                                 size={70}
                             />

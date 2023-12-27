@@ -5,7 +5,7 @@ export default Contacts = () => {
         <View style={styles.container}>
             <View style={styles.firstSection}>
                 <Text style={styles.firstSectionHeading}>Get in touch</Text>
-                <Image source={require('../../../assets/icons/contactsIcon.png')} />
+                <Image source={require('../../../assets/icons/consult.gif')} style={{width: 300, height: 170, objectFit: 'contain'}} />
             </View>
             <View style={styles.detailContainer}>
                 <View>

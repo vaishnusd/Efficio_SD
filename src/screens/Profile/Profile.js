@@ -1,16 +1,94 @@
-import { LinearGradient } from "expo-linear-gradient"
-import { TouchableOpacity, StyleSheet, Image, Text, View, TextInput } from "react-native";
+import { TouchableOpacity, StyleSheet, Image, Text, View, TextInput, Button, Alert, Modal } from "react-native";
+import { Avatar } from "react-native-paper";
 import { useSelector } from 'react-redux';
+import * as Notifications from 'expo-notifications';
+import { useEffect, useState } from "react";
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true
+    }),
+});
 
 export default Profile = () => {
     const userInfo = useSelector((state) => state.user.userProfile);
+    const [showNotification, setShowNotification] = useState(false);
+    const [showNotificationData, setShowNotificationData] = useState();
 
-    console.log("THis data from Profile Section: ", userInfo);
+    function toggleNotification(notificationData) {
+        console.log("Notification Data inside the Toggle Function - ", notificationData);
+        setShowNotificationData(notificationData);
+        setShowNotification(showNotification ? false : true);
+    }
+
+    useEffect(() => {
+        registerForPushNotificationsAsync();
+        Notifications.addNotificationReceivedListener(handleNotification);
+    }, []);
+
+    const registerForPushNotificationsAsync = async () => {
+        if (Platform.OS === 'android') {
+            try {
+                let token;
+                const { status: existingStatus } = await Notifications.getPermissionsAsync();
+                let finalStatus = existingStatus;
+                if (existingStatus !== 'granted') {
+                    const { status } = await Notifications.requestPermissionsAsync();
+                    finalStatus = status;
+                }
+                if (finalStatus !== 'granted') {
+                    throw new Error('Permission to receive push notifications denied');
+                }
+                console.log(finalStatus);
+                token = (await Notifications.getExpoPushTokenAsync()).data;
+                console.log(token);
+            } catch (error) {
+                console.log('Error getting Expo push token:', error);
+            }
+        }
+    };
+
+    const NotificationGot = (notificationData) => {
+        console.log("Notification Data - ", notificationData);
+        return (
+            <Modal visible={showNotification} transparent>
+                <TouchableOpacity style={styles.modalBackground} onPress={toggleNotification} activeOpacity={1}>
+                    <TouchableOpacity activeOpacity={1} style={styles.modalContent}>
+                        <Image source={require('../../../assets/icons/alert.gif')} style={{width: 40, height: 40}} />
+                        <Text style={styles.notificationHeading}>{showNotificationData?.request?.content.title}</Text>
+                        <Text style={styles.notificationBody}>{showNotificationData?.request?.content.body}</Text>
+                        <View style={{flexDirection: 'row', gap: 20}}>
+                            <TouchableOpacity onPress={toggleNotification} style={styles.notificationButtons}>
+                                <Text style={styles.notificationButtonText}>Reject</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={toggleNotification} style={styles.notificationButtons}>
+                                <Text style={styles.notificationButtonText}>Accept</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={toggleNotification} style={styles.notificationButtons}>
+                                <Text style={styles.notificationButtonText}>Ignore</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </Modal>
+        );
+    }
+
+    const handleNotification = (notificationData) => {
+        toggleNotification(notificationData);
+    };
+
     return (
         <View style={styles.container}>
             <Text style={{ fontSize: 20, fontFamily: 'Poppins' }}>Profile</Text>
             <TouchableOpacity  >
-                <Image source={require('../../../assets/icons/userProfileIcon.png')} style={styles.profileIcon} />
+                <Avatar.Image
+                    source={require('../../../assets/icons/userProfile.gif')
+                    }
+                    size={120}
+                />
                 {/* <View style={{ padding: 5, backgroundColor: 'white', borderRadius: 30, position: 'absolute', top: 0, right: 0 }} >
                     <Image source={require('../../../assets/icons/photoPenIcon.png')} style={styles.photoPenIcon} />
                 </View> */}
@@ -22,27 +100,47 @@ export default Profile = () => {
                 </View>
                 <View style={styles.eachField}>
                     <Text style={styles.profiledataheaders}>Phone</Text>
-                    <TextInput style={styles.inputField} value={userInfo.phone}/>
+                    <TextInput style={styles.inputField} value={userInfo.phone} />
                 </View>
                 <View style={styles.eachField}>
                     <Text style={styles.profiledataheaders}>Email</Text>
-                    <TextInput style={styles.inputField} value={userInfo.email}/>
+                    <TextInput style={styles.inputField} value={userInfo.email} />
                 </View>
                 <View style={styles.eachField}>
                     <Text style={styles.profiledataheaders}>Username</Text>
-                    <TextInput style={styles.inputField} value={userInfo.empId}/>
+                    <TextInput style={styles.inputField} value={userInfo.empId} />
                 </View>
                 <View style={styles.eachField}>
                     <Text style={styles.profiledataheaders}>Department</Text>
-                    <TextInput style={styles.inputField} value={userInfo.dept}/>
+                    <TextInput style={styles.inputField} value={userInfo.dept} />
                 </View>
                 {/* <TouchableOpacity underlayColor={'#FFF78A'} activeOpacity={1} onPress={() => alert('Pressed!')}>
                     <Text style={{ fontFamily: 'Poppins', textDecorationLine: 'underline', textAlign: 'right', color: 'white' }}>Change Password</Text>
                 </TouchableOpacity> */}
+                <Button
+                    title="Notification"
+                    onPress={async () => {
+                        await schedulePushNotification(userInfo);
+                    }}
+                />
+                <NotificationGot />
             </View>
         </View>
-
     )
+}
+
+async function schedulePushNotification(details) {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: "Welcome to Efficio, " + details.fullName,
+            body: 'We hope you have the best experience using this app. Your employee Id is ' + details.empId,
+            data: { data: 'goes here' }
+        },
+        trigger: {
+            seconds: 2,
+            repeats: false
+        },
+    });
 }
 
 const styles = StyleSheet.create({
@@ -95,5 +193,37 @@ const styles = StyleSheet.create({
     inputField: {
         color: 'white',
         fontFamily: 'Poppins_Regular'
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 15,
+        padding: 15,
+        width: '80%',
+        borderRadius: 10
+    },
+    modalBackground: {
+        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
+    },
+    notificationButtons: {
+        backgroundColor: '#4C6078',
+        paddingHorizontal: 10,
+        paddingVertical: 5
+    },
+    notificationButtonText: {
+        color: 'white',
+        fontFamily: 'Poppins_SemiBold'
+    },
+    notificationHeading: {
+        fontFamily: 'Poppins',
+        fontSize: 14
+    },
+    notificationBody: {
+        fontFamily: 'Poppins_Regular',
+        fontSize: 12
     }
 });

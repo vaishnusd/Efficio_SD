@@ -90,7 +90,7 @@ export default IssueReport = () => {
 
     //Scroll to Top
     const scrollToTop = () => {
-        flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+        flatListRef.current.scrollToOffset({ animated: true });
     };
 
     // Checking Categories of Issues
@@ -186,7 +186,7 @@ export default IssueReport = () => {
     return (
         <SafeAreaView style={styles.container} >
             <Animatable.View style={styles.categoryContainer} animation={'slideInUp'}>
-                <LinearGradient colors={['#2A5F9A','#003571']} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center',alignItems: 'center', gap: 15, width: 300, paddingVertical: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingLeft:20 }}>
+                <LinearGradient colors={['#2A5F9A', '#003571']} style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: 15, width: 300, paddingVertical: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingLeft: 20 }}>
                     <TouchableOpacity style={openStatus ? styles.filterTextButtons2 : styles.filterTextButtons1} onPress={() => setStatusFunction(1)}>
                         <Text style={openStatus ? styles.optionButtonText2 : styles.optionButtonText1}>Open</Text>
                     </TouchableOpacity>
@@ -216,7 +216,7 @@ export default IssueReport = () => {
                         </TouchableOpacity>
                     </LinearGradient>
 
-                    <LinearGradient colors={['#2A5F9A','#003571']} style={styles.reportTableHeader}>
+                    <LinearGradient colors={['#2A5F9A', '#003571']} style={styles.reportTableHeader}>
                         <Text style={[styles.columnHeading, { flex: 2 }]}>Issue No.</Text>
                         <Text style={[styles.columnHeading, { flex: 5 }]}>Issue</Text>
                         <Text style={[styles.columnHeading, { flex: 3 }]}>Line & Station</Text>
@@ -225,16 +225,18 @@ export default IssueReport = () => {
                 </View>
             </Animatable.View>
             {loader ?
-                <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-                    <ActivityIndicator size={"large"} color={"#4C6078"} />
+                <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center', bottom: 50 }}>
+                    <View style={{ width: 300, height: 100, alignItems: 'center', justifyContent: 'center' }}>
+                        <Image source={require('../../../assets/images/reportLoader.gif')} style={{ width: 80, height: 80 }} />
+                    </View>
                 </View> :
                 errorGot ?
-                    <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center', gap: 10 }}>
+                    <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center', gap: 10, bottom: 50 }}>
                         <Image source={require('../../../assets/icons/internalServer.png')} style={styles.messageIcon} />
                         <Text style={styles.messageTextGiven}> Internal Server Error!! </Text>
                     </View> :
                     noData ?
-                        <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center', gap: 10 }}>
+                        <View style={{ alignItems: 'center', flex: 1, justifyContent: 'center', gap: 10, bottom: 50 }}>
                             <Image source={require('../../../assets/icons/noData.png')} style={styles.messageIcon} />
                             <Text style={styles.messageTextGiven}> No Data Available!! </Text>
                         </View> :
@@ -258,8 +260,8 @@ export default IssueReport = () => {
                             ListFooterComponent={
                                 <View>
                                     {(nextRecords >= totalRecords) &&
-                                        <View style={{justifyContent: 'center', alignItems: 'center', paddingVertical: 10}}>
-                                            <Text style={{fontFamily: 'Poppins_Regular', fontSize: 12, color: 'gray'}}>- - -    No more data to show    - - -</Text>
+                                        <View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 10 }}>
+                                            <Text style={{ fontFamily: 'Poppins_Regular', fontSize: 12, color: 'gray' }}>- - -    No more data to show    - - -</Text>
                                         </View>
                                     }
                                     <View style={styles.pageButtonContainer}>

@@ -80,7 +80,10 @@ const HomePage = () => {
 					start={{ x: 0, y: 0.3 }}
 					end={{ x: 0.7, y: 1 }}
 				>
-					<AntDesign name='warning' size={30} color='white' />
+					{dashBoardData.open ?
+						<Image source={require('../../../assets/icons/openIssueIcon.gif')} style={{ width: 40, height: 40, marginBottom: -5 }} /> :
+						<AntDesign name='warning' size={30} color='white' />
+					}
 					<Text style={styles.companyName}>Open Issue</Text>
 					<Text style={styles.numberOf}>{dashBoardData.open === null ? '0' : dashBoardData.open}</Text>
 				</LinearGradient>
@@ -93,7 +96,7 @@ const HomePage = () => {
 				>
 					<FontAwesome5 name="hand-paper" size={30} color="white" />
 					<Text style={styles.companyName}>ACK Issue</Text>
-					<Text style={styles.numberOf}>{dashBoardData.acknowledged}</Text>
+					<Text style={styles.numberOf}>{dashBoardData.acknowledged === null ? '0' : dashBoardData.acknowledged}</Text>
 				</LinearGradient>
 				<LinearGradient
 					colors={['rgba(0, 33, 73, 1)',
@@ -120,8 +123,8 @@ const HomePage = () => {
 				{loader ?
 					<View style={{ alignItems: 'center', flex: 1, justifyContent: 'center', marginTop: '40%' }}>
 						{/* <ActivityIndicator size={'large'} color={'#003571'} /> */}
-						<View style={{width: 300, height: 100, alignItems: 'center', justifyContent: 'center'}}>
-							<Image source={{uri: loaderImageAddress}} style={{ width: 80, height: 80 }} />
+						<View style={{ width: 300, height: 100, alignItems: 'center', justifyContent: 'center' }}>
+							<Image source={require('../../../assets/images/customer-service.gif')} style={{ width: 80, height: 80 }} />
 						</View>
 						<Text style={{ color: '#003571', fontSize: 20, marginTop: 20, fontFamily: 'Poppins_SemiBold' }}>Loading...</Text>
 					</View> :

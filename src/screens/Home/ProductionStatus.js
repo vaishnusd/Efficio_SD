@@ -10,7 +10,7 @@ export default ProductionStatus = (dataToSend) => {
     // const navigation = useNavigation();
     const imageName = data.imagePath.split("/").find((eachName) => (eachName.includes(".")));
     const imgURL = 'https://androidapi220211216164156.azurewebsites.net/api/Approval/DownloadFile?filename=' + imageName;
-    console.log(imgURL);
+    // console.log(imgURL);
 
     return (
         <Animatable.View style={styles.mainContainer} animation={'slideInDown'}>

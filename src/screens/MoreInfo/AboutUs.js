@@ -100,8 +100,8 @@ export default AboutUs = () => {
                     <View style={{ alignItems: 'center', marginTop: '15%', marginBottom: 20, gap: 20 }}>
                         <View>
                             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 30, fontFamily: 'Poppins', color: '#003571' }}>EFFICIO</Text>
-                                <Text style={{ fontSize: 10, fontFamily: 'Poppins_SemiBold', alignSelf: 'flex-end', bottom: 13, marginLeft: 5, color: '#003571 ' }}>v1.0.0</Text>
+                                <Text style={{ fontSize: 30, fontFamily: 'Poppins', color: "#003571" }}>EFFICIO</Text>
+                                <Text style={{ fontSize: 10, fontFamily: 'Poppins_SemiBold', alignSelf: 'flex-end', bottom: 13, marginLeft: 5, color: "#003571" }}>v1.0.0</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 7, fontFamily: 'Poppins_Regular' }}>Developed by  </Text>
