@@ -31,25 +31,23 @@ const AcknowledgeIssue = () => {
     const [prodLineAPIError, setProdLineAPIError] = useState(false);
     const [stationDataOptions, setStationDataOptions] = useState('');
     const [stationApiError, setStationAPIError] = useState(false);
-
     const [issueDataApiError, setIssueDataAPIError] = useState(false);
-
     const [refreshing, setRefreshing] = useState(false);
 
     const [line, setLine] = useState(''); // State to hold the selected value
-
-    // Function to update state when value changes
-    const handleValueChangeProd = (newValue) => {
-        setLine(newValue);
-
-    };
-
+    const [selectedIssueNum,setSelectedIssueNum]=useState('')
+    const [selectedIssue,setSelectedIssue] =useState(false)
 
     const [station, setStation] = useState(''); // State to hold the selected value
 
     // Function to update state when value changes
     const handleValueChange = (newValue) => {
         setStation(newValue);
+
+    };
+     // Function to update state when value changes
+     const handleValueChangeProd = (newValue) => {
+        setLine(newValue);
 
     };
 
@@ -63,7 +61,7 @@ const AcknowledgeIssue = () => {
             CounterMeasure: '',
             DueDateOnly: '',
             DueTime: '',
-            IssueNo: '',
+            IssueNo: selectedIssueNum,
 
         },
     });
@@ -208,6 +206,12 @@ const AcknowledgeIssue = () => {
         }
     }
 
+    function selectedIssueNo(params) {
+        console.log('Hi Params heelo :',params)
+        setSelectedIssueNum(params.issueNo)
+        setSelectedIssue(true)
+    }
+
     useEffect(() => {
         APICall(issueAPI, jsonDataToPassInIssueAPI, issueAPIResult, 'getReport');
     }, [station]);
@@ -250,7 +254,7 @@ const AcknowledgeIssue = () => {
                 }} >
                     {console.log('Anna', issuesData)}
                     {issuesData.map((issue, index) => (
-                        <TouchableOpacity style={{
+                        <TouchableOpacity  onPress={() => selectedIssueNo(issue)} style={{
                             backgroundColor: '#fff', paddingHorizontal: 15, borderRadius: 2, height: 45, justifyContent: 'center', marginVertical: 5,
                             shadowColor: '#000',
                             shadowOffset: {
@@ -260,11 +264,12 @@ const AcknowledgeIssue = () => {
                             shadowOpacity: 1,
                             shadowRadius: 100,
                             elevation:5,
-                        }}>
+                        } 
+                        }>
                             <View key={index} style={styles.issueItem}>
                                 <Text style={styles.issueTitle}>{issue.issueNo}</Text>
                                 <Text style={styles.issueDescription}>{issue.issueDetails}</Text>
-                                {/* Add more information from the issue object as needed */}
+                              
 
                             </View>
                         </TouchableOpacity>
@@ -273,7 +278,8 @@ const AcknowledgeIssue = () => {
             </LinearGradient >
 
 
-
+            {selectedIssue && (
+                <View>
             <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
 
                 <LinearGradient colors={['#002149', '#5590D7']} start={{ x: 0.03, y: 0.5 }}
@@ -353,6 +359,8 @@ const AcknowledgeIssue = () => {
                     </View>
                 </LinearGradient>
             </TouchableOpacity>
+            </View>
+            )} 
 
 
         </View >
