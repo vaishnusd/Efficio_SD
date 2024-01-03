@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {createBottomTabNavigator
-} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from '../screens/LoginPage/Login';
@@ -16,7 +15,6 @@ import SideMenu from './SideMenu';
 import AboutUs from '../screens/MoreInfo/AboutUs';
 import Contacts from '../screens/MoreInfo/Contacts';
 
-
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
@@ -24,45 +22,47 @@ function BottomTabNavigator() {
 	return (
 		<BottomTab.Navigator
 			initialRouteName='Home'
-			screenOptions={
-				({ route }) => ({
-					headerShown: false,
-					tabBarActiveTintColor: 'cyan',
-					tabBarInactiveTintColor: 'white',
-					tabBarLabelStyle: {
-						fontSize: 10,
-					},
-					tabBarStyle: {
-						backgroundColor: '#004A8E',
-						height: 55,
-						borderTopRightRadius: 30,
-						borderTopLeftRadius: 30,
-						elevation: 0,
-						position: 'absolute',
-						bottom: 0,
-						borderTopWidth: 0,
-						paddingBottom: 5
-					},
-					tabBarIcon: ({ focused, color, size }) => {
-						let iconName;
-						if (route.name === 'Home') {
-							iconName = focused ? 'home-icon-focused' : 'home-icon';
-						} else if (route.name === 'Settings') {
-							iconName = focused ? 'settings-icon-focused' : 'settings-icon';
-						}
-						return <IconComponent name={iconName} size={size} color={color} />;
+			screenOptions={({ route }) => ({
+				headerShown: false,
+				tabBarActiveTintColor: 'cyan',
+				tabBarInactiveTintColor: 'white',
+				tabBarLabelStyle: {
+					fontSize: 10,
+				},
+				tabBarStyle: {
+					backgroundColor: '#004A8E',
+					height: 55,
+					borderTopRightRadius: 30,
+					borderTopLeftRadius: 30,
+					elevation: 0,
+					position: 'absolute',
+					bottom: 0,
+					borderTopWidth: 0,
+					paddingBottom: 5,
+				},
+				tabBarIcon: ({ focused, color, size }) => {
+					let iconName;
+					if (route.name === 'Home') {
+						iconName = focused ? 'home-icon-focused' : 'home-icon';
+					} else if (route.name === 'Settings') {
+						iconName = focused ? 'settings-icon-focused' : 'settings-icon';
 					}
-				})
-			}>
-			<BottomTab.Screen name="Home" component={HomePage}
+					return <IconComponent name={iconName} size={size} color={color} />;
+				},
+			})}
+		>
+			<BottomTab.Screen
+				name='Home'
+				component={HomePage}
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name='home' color={color} size={size} />
-					)
-				}} />
+					),
+				}}
+			/>
 
 			<BottomTab.Screen
-				name="Issues"
+				name='Issues'
 				component={IssueReport}
 				options={{
 					tabBarIcon: ({ color, size }) => (
@@ -86,7 +86,7 @@ function BottomTabNavigator() {
 				options={{
 					tabBarIcon: ({ color, size }) => (
 						<Ionicons name='md-menu-sharp' color={color} size={size} />
-					)
+					),
 				}}
 			/>
 		</BottomTab.Navigator>
@@ -151,7 +151,7 @@ export default NavigateMain = () => {
 					options={{ headerShown: false }}
 				/>
 				<Stack.Screen
-					name="Menu"
+					name='Menu'
 					component={SideMenu}
 					options={{ headerShown: false }}
 				/>
