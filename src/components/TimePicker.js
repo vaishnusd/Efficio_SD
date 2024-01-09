@@ -46,7 +46,7 @@ const TimePicker = ({
 				/>
 
 				<Text
-					style={{ marginLeft: 5, fontSize: 16, fontWeight: '500',width:100 }}
+					style={{ marginLeft: 10, fontSize: 16, fontWeight: '500',width:100 }}
 				>
 					{!selectTimePiker && timeToDisplay}
 				</Text>
@@ -55,6 +55,8 @@ const TimePicker = ({
 			<DateTimePickerModal
 				isVisible={isTimePickerVisible}
 				mode='time'
+				// maximumDate={null}
+				// minimumDate={new Date()}
 				onConfirm={handleConfirm}
 				onCancel={hideTimePicker}
 			/>

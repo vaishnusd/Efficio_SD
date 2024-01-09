@@ -17,8 +17,10 @@ import SelectDropDownPage from '../../components/SelectDropDownPage';
 import dataAcknowledgeIssue from '../../../assets/json/AcknowledgeIssue.json';
 import DatePickerComponent from '../../components/DatePickerComponent';
 import TimePicker from '../../components/TimePicker';
+import CustomDateTimePicker from '../../components/CustomDateTimePicker';
+import AckIssueSubmitMessage from '../../components/AckIssueSubmitMessage';
 
-const CloseIssue = () => {
+const AcknowledgeIssue = () => {
     const [fromDate, setFromDate] = useState(new Date());
     console.log(fromDate);
     const [issuesData, setIssuesData] = useState([]);
@@ -31,25 +33,27 @@ const CloseIssue = () => {
     const [prodLineAPIError, setProdLineAPIError] = useState(false);
     const [stationDataOptions, setStationDataOptions] = useState('');
     const [stationApiError, setStationAPIError] = useState(false);
-
     const [issueDataApiError, setIssueDataAPIError] = useState(false);
-
     const [refreshing, setRefreshing] = useState(false);
 
     const [line, setLine] = useState(''); // State to hold the selected value
-
-    // Function to update state when value changes
-    const handleValueChangeProd = (newValue) => {
-        setLine(newValue);
-
-    };
-
+    const [selectedIssueNum, setSelectedIssueNum] = useState('')
+    const [selectedIssue, setSelectedIssue] = useState(false)
 
     const [station, setStation] = useState(''); // State to hold the selected value
+    const [comment, setComment] = useState('');
+
+    const [dataInsertedMessageDisplay, setDataInsertMessageDisplay] = useState(false);
+    const [successDataInserted, setSuccessDataInsert] = useState(false);
+    const [submitButtonDisplay, setSubmitButtonDisplay] = useState(true);
 
     // Function to update state when value changes
     const handleValueChange = (newValue) => {
         setStation(newValue);
+    };
+    // Function to update state when value changes
+    const handleValueChangeProd = (newValue) => {
+        setLine(newValue);
 
     };
 
@@ -60,11 +64,11 @@ const CloseIssue = () => {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            CounterMeasure: '',
-            DueDateOnly: '',
-            DueTime: '',
-            IssueNo: '',
-
+            EndedBy:"",
+            Reason:"",
+            Downtime:"",
+            CorrectiveAction:"",
+            IssueNo: '7432',
         },
     });
 
@@ -92,27 +96,19 @@ const CloseIssue = () => {
 
     const onSubmit = async (data) => {
         console.log('Data Coming', data);
-
+        let DueDate2 = data.startingDate.toISOString().split('T')[0]
+        console.log(typeof DueDate2)
         let DueDate =
-            data.DueDateOnly +
-            ' ' +
-            data.DueTime.slice(0, -2) +
-            data.DueTime.slice(-2).toUpperCase();
-
+            DueDate2 + ' ' + data.startingTime.slice(0, -2) + data.startingTime.slice(-2).toUpperCase();
 
         const apiGot =
             'https://androidapi220230605081325.azurewebsites.net/api/approval/AckIssue';
 
-
-
         delete data.startingDate;
         delete data.startingTime;
+        data.DueDate = DueDate;
 
-
-        data.DatetimeOfWork = DatetimeOfWork;
-        data.ExpectedCompletionDate = ExpectedCompletionDate;
-
-        console.log(DatetimeOfWork, ExpectedCompletionDate);
+        console.log('Data Sent To Api', DueDate);
         // console.log('Hello');
 
         console.log('Data Formed', data);
@@ -123,7 +119,7 @@ const CloseIssue = () => {
     const prodLineAPI =
         'https://androidapi220230605081325.azurewebsites.net/api/approval/OpenIssueLines';
     const jsonDataToPassInprodLineAPI = {
-        PlantName: 'Grundfos',
+        PlantName: 'Soft Designers1',
         LineName: '',
         StnName: '',
         StatusRequired: 'Acknowledged',
@@ -152,7 +148,7 @@ const CloseIssue = () => {
     const stationAPI =
         'https://androidapi220230605081325.azurewebsites.net/api/approval/OpenIssueStn';
     const jsonDataToPassInStationAPI = {
-        PlantName: 'Grundfos',
+        PlantName: 'Soft Designers1',
         LineName: line,
         StnName: '',
         StatusRequired: 'Acknowledged',
@@ -186,7 +182,7 @@ const CloseIssue = () => {
     const issueAPI =
         'https://androidapi220230605081325.azurewebsites.net/api/approval/OpenIssueNo';
     const jsonDataToPassInIssueAPI = {
-        PlantName: 'Grundfos',
+        PlantName: 'Soft Designers1',
         LineName: line,
         StnName: station,
         StatusRequired: 'Acknowledged',
@@ -208,13 +204,19 @@ const CloseIssue = () => {
         }
     }
 
+    function selectedIssueNo(params) {
+        console.log('Hi Params heelo :', params)
+        setSelectedIssueNum(params.issueNo)
+        setSelectedIssue(true)
+    }
+
     useEffect(() => {
         APICall(issueAPI, jsonDataToPassInIssueAPI, issueAPIResult, 'getReport');
     }, [station]);
 
     return (
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <View style={styles.mainContainer}>
+
                 <Text style={{ fontSize: 20, fontFamily: 'Poppins', alignSelf: 'center', fontWeight: 900, top: 5 }}>Close Issue</Text>
 
                 <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.dropDownComponent}>
@@ -224,7 +226,7 @@ const CloseIssue = () => {
                         data={selectProductionLineOptions}
                         name={'Select Production Line'}
                         changeValue={(newValue) => {
-                            // This updates the form control's value
+                          
                             handleValueChangeProd(newValue); // This updates your state
                         }} />
 
@@ -250,7 +252,7 @@ const CloseIssue = () => {
                     }} >
                         {console.log('Anna', issuesData)}
                         {issuesData.map((issue, index) => (
-                            <TouchableOpacity style={{
+                            <TouchableOpacity onPress={() => selectedIssueNo(issue)} style={{
                                 backgroundColor: '#fff', paddingHorizontal: 15, borderRadius: 2, height: 45, justifyContent: 'center', marginVertical: 5,
                                 shadowColor: '#000',
                                 shadowOffset: {
@@ -260,12 +262,11 @@ const CloseIssue = () => {
                                 shadowOpacity: 1,
                                 shadowRadius: 100,
                                 elevation: 5,
-                            }}>
+                            }
+                            }>
                                 <View key={index} style={styles.issueItem}>
                                     <Text style={styles.issueTitle}>{issue.issueNo}</Text>
                                     <Text style={styles.issueDescription}>{issue.issueDetails}</Text>
-                                    {/* Add more information from the issue object as needed */}
-
                                 </View>
                             </TouchableOpacity>
                         ))}
@@ -273,135 +274,146 @@ const CloseIssue = () => {
                 </LinearGradient >
 
 
+                {selectedIssue && (
+                    <View>
+                        <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
 
-                <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
-
-                    <LinearGradient colors={['#002149', '#5590D7']} start={{ x: 0.03, y: 0.5 }}
-                        end={{ x: 0.92, y: 0.5 }} style={styles.issueListHeader}>
-                        <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFF', left: 13 }}>
-                            Counter Measure
-                        </Text>
-                    </LinearGradient>
-                    <View style={{ padding: 10 }} >
-                        <Controller
-                            control={control}
-                            name='CounterMeasure'
-                            render={({ field: { onChange, onBlur, value, ref } }) => (
-                                <TextInput
-                                    style={{
-                                        fontFamily: 'OpenSans',
-                                        textAlignVertical: 'top',
-                                        backgroundColor: '#fff',
-                                        padding: 10,
-                                        borderRadius: 5,
-                                    }}
-                                    placeholder='Please describe it in brief...'
-                                    multiline
-                                    placeholderTextColor={'grey'}
-                                    numberOfLines={5}
-                                // onChangeText={(text, index) => {
-                                // 	let newComment = (comment[index] = text);
-                                // 	setComment(newComment);
-                                // }}
+                            <LinearGradient colors={['#002149', '#5590D7']} start={{ x: 0.03, y: 0.5 }}
+                                end={{ x: 0.92, y: 0.5 }} style={styles.issueListHeader}>
+                                <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFF', left: 13 }}>
+                                    Reason
+                                </Text>
+                            </LinearGradient>
+                            <View style={{ padding: 10 }} >
+                                <Controller
+                                    control={control}
+                                    name='Reason'
+                                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                                        <TextInput
+                                            style={{
+                                                fontFamily: 'OpenSans',
+                                                textAlignVertical: 'top',
+                                                backgroundColor: '#fff',
+                                                padding: 10,
+                                                borderRadius: 5,
+                                            }}
+                                            placeholder='Please describe it in brief...'
+                                            multiline
+                                            placeholderTextColor={'grey'}
+                                            numberOfLines={2}
+                                            onChangeText={(text, index) => {
+                                                let newComment = (comment[index] = text);
+                                                onChange(newComment);
+                                            }}
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
+                            </View>
+                        </LinearGradient >
+
+
+                        <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
+
+                            <LinearGradient colors={['#002149', '#5590D7']} start={{ x: 0.03, y: 0.5 }}
+                                end={{ x: 0.92, y: 0.5 }} style={styles.issueListHeader}>
+                                <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFF', left: 13 }}>
+                                    Corrective Action
+                                </Text>
+                            </LinearGradient>
+                            <View style={{ padding: 10 }} >
+                                <Controller
+                                    control={control}
+                                    name='CorrectiveAction'
+                                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                                        <TextInput
+                                            style={{
+                                                fontFamily: 'OpenSans',
+                                                textAlignVertical: 'top',
+                                                backgroundColor: '#fff',
+                                                padding: 10,
+                                                borderRadius: 5,
+                                            }}
+                                            placeholder='Please describe it in brief...'
+                                            multiline
+                                            placeholderTextColor={'grey'}
+                                            numberOfLines={3}
+                                            onChangeText={(text, index) => {
+                                                let newComment = (comment[index] = text);
+                                                onChange(newComment);
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </View>
+                        </LinearGradient >
+
+
+                        <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
+
+                            <LinearGradient colors={['#002149', '#5590D7']} start={{ x: 0.03, y: 0.5 }}
+                                end={{ x: 0.92, y: 0.5 }} style={styles.issueListHeader}>
+                                <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFF', left: 13 }}>
+                                    Resolved By
+                                </Text>
+                            </LinearGradient>
+                            <View style={{ padding: 10 }} >
+                                <Controller
+                                    control={control}
+                                    name='EndedBy'
+                                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                                        <TextInput
+                                            style={{
+                                                fontFamily: 'OpenSans',
+                                                textAlignVertical: 'top',
+                                                backgroundColor: '#fff',
+                                                padding: 10,
+                                                borderRadius: 5,
+                                            }}
+                                            placeholder='Please describe it in brief...'
+                                            multiline
+                                            placeholderTextColor={'grey'}
+                                            numberOfLines={5}
+                                            onChangeText={(text, index) => {
+                                                let newComment = (comment[index] = text);
+                                                onChange(newComment);
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </View>
+                        </LinearGradient >                   
                     </View>
-                </LinearGradient >
+                )}
 
-                <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
-
-                    <LinearGradient colors={['#002149', '#5590D7']} start={{ x: 0.03, y: 0.5 }}
-                        end={{ x: 0.92, y: 0.5 }} style={styles.issueListHeader}>
-                        <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFF', left: 13 }}>
-                            Counter Measure
-                        </Text>
-                    </LinearGradient>
-                    <View style={{ padding: 10 }} >
-                        <Controller
-                            control={control}
-                            name='CounterMeasure'
-                            render={({ field: { onChange, onBlur, value, ref } }) => (
-                                <CustomInput />
-                            )}
-                        />
-                    </View>
-                </LinearGradient >
-
-                <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
-
-                    <LinearGradient colors={['#002149', '#5590D7']} start={{ x: 0.03, y: 0.5 }}
-                        end={{ x: 0.92, y: 0.5 }} style={styles.issueListHeader}>
-                        <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFF', left: 13 }}>
-                            Counter Measure
-                        </Text>
-                    </LinearGradient>
-                    <View style={{ padding: 10 }} >
-                        <Controller
-                            control={control}
-                            name='CounterMeasure'
-                            render={({ field: { onChange, onBlur, value, ref } }) => (
-                                <CustomInput />
-                            )}
-                        />
-                    </View>
-                </LinearGradient >
-
-                <LinearGradient colors={['rgba(0, 133, 255, 0.50)', 'rgba(93, 158, 218, 0.50)']} style={styles.issuesContainer}>
-
-                    <LinearGradient colors={['#002149', '#5590D7']} start={{ x: 0.03, y: 0.5 }}
-                        end={{ x: 0.92, y: 0.5 }} style={styles.issueListHeader}>
-                        <Text style={{ fontSize: 15, fontWeight: 500, color: '#FFF', left: 13 }}>
-                            Due Date
-                        </Text>
-                    </LinearGradient>
-                    <View style={{ padding: 10, flexDirection: "row", justifyContent: "space-around" }} >
-
-                        <Controller
-                            control={control}
-                            name='startingDate'
-                            rules={{ required: 'Enter starting date !' }}
-                            render={({ field: { onChange, value } }) => (
-
-                                <DatePickerComponent initialDate={fromDate} changeValue={onChange} />
-                            )}
-                        />
-
-
-                        <Controller
-                            control={control}
-                            name='startingDate'
-                            rules={{ required: 'Enter starting date !' }}
-                            render={({ field: { onChange, value } }) => (
-                                <TimePicker changeValue={onChange} />
-                            )}
-                        />
-
-                    </View>
-                </LinearGradient>
-
-
-
-                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }} onPress={onSubmit}>
-                    <LinearGradient colors={['#489CFF', '#002D62']} style={styles.AcknowledgeButton}>
+            {Object.keys(errors).length !== 0 && (
+                <Text style={{ color: 'red' }}>Some details are missing !</Text>
+            )}
+            {submitButtonDisplay ? (
+                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }} onPress={handleSubmit(onSubmit)}>
+                    <LinearGradient colors={['#489CFF', '#002D62']} style={styles.CloseButton}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={{ color: 'white', fontSize: 16 }}>Close Issue</Text>
                         </View>
                     </LinearGradient>
                 </TouchableOpacity>
-
-
-            </View >
+            ) : (
+                <Text>Please Wait ....</Text>
+            )}
+            <AckIssueSubmitMessage
+                isVisible={dataInsertedMessageDisplay}
+                onClose={toggleDataInsertMessage}
+                message={successDataInserted ? 'Success' : 'False'}
+                continuing={whileClosingTheModal}
+            />
         </ScrollView>
     );
 };
-export default CloseIssue;
+export default AcknowledgeIssue;
 
 const styles = StyleSheet.create({
     scrollViewContent: {
-      
+      paddingBottom:'20%',
         backgroundColor: 'rgba(207, 235, 255, 1)',
-        paddingBottom:50
     },
     dropDownComponent: {
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
@@ -453,7 +465,7 @@ const styles = StyleSheet.create({
     issueDescription: {
         fontSize: 16,
     },
-    AcknowledgeButton: {
+    CloseButton: {
         top: 20,
         padding: 10,
         borderRadius: 10,
@@ -463,4 +475,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    compStyleDate: {
+        borderWidth: 2,
+        borderColor: "#4C6078",
+        backgroundColor: 'white',
+        borderTopLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        padding: 10,
+        flexDirection: "row",
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        alignItems: 'center'
+    }
 });

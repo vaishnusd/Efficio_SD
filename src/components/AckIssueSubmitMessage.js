@@ -1,6 +1,6 @@
 import { Modal, StyleSheet, Text, View } from 'react-native';
-import CustomButton from '../utils/CustomButton';
-import { Colors } from '../utils/Colors';
+import CustomButton from '../../src/utils/CustomButton';
+import Colors from '../../src/utils/Colors'
 
 export default AckIssueSubmitMessage = ({
 	isVisible,
@@ -27,7 +27,7 @@ export default AckIssueSubmitMessage = ({
 									paddingBottom: 20,
 								}}
 							>
-								Work Permit Details has been entered successfully
+								Issue successfully Acknowledged
 							</Text>
 							<View
 								style={{
@@ -53,7 +53,7 @@ export default AckIssueSubmitMessage = ({
 									textAlign: 'center',
 								}}
 							>
-								Work Permit Details Submission Unsuccessfull
+								Acknowledge Issue Submission Unsuccessfull
 							</Text>
 							<CustomButton
 								functionPassed={onClose}
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: 'crimson',
+		backgroundColor: '#000',
 	},
 	modalContent: {
 		padding: 20,
